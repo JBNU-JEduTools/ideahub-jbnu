@@ -4,7 +4,7 @@ import Joi from 'joi';
 import User from '../../models/user';
 
 export const register = async ctx => {
-  //request body °ËÁõ
+  //request body ï¿½ï¿½ï¿½ï¿½
   const schema = Joi.object().keys({
     username: Joi.string()
       .alphanum()
@@ -22,7 +22,7 @@ export const register = async ctx => {
 
   const { username, password } = ctx.request.body;
   try {
-    //±âÁ¸¿¡ ¾ÆÀÌµð°¡ Á¸ÀçÇÏ¸é register ¼öÇàÇÏÁö ¾ÊÀ½
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ register ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     const exitsts = await User.findByUsername(username);
     if (exitsts) {
       ctx.status = 409; //conflict
@@ -82,7 +82,7 @@ export const login = async ctx => {
   }
 };
 export const check = async ctx => {
-  //·Î±×ÀÎ »óÅÂ È®ÀÎ
+  //ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
   const { user } = ctx.state;
   if (!user) {
     ctx.status = 401;
@@ -92,7 +92,7 @@ export const check = async ctx => {
   ctx.body = user;
 };
 export const logout = async ctx => {
-  //ÄíÅ° ³¯·Á¹ö¸²
+  //ï¿½ï¿½Å° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
   ctx.cookies.set('access_token');
   ctx.status = 204;
 };

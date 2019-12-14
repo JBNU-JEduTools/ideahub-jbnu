@@ -5,8 +5,12 @@ const { Schema } = mongoose;
 
 const PostSchema = new Schema({
   title: String,
-  body: String,
-  tags: [String],
+  category: String,
+  status: String,
+  //대회 일정
+  date: String,
+  place: String,
+  description: String,
   publishedDate: {
     type: Date,
     default: Date.now,

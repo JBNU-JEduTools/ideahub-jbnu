@@ -1,7 +1,7 @@
 require('dotenv').config();
 import Koa from 'koa';
 import Router from 'koa-router';
-import api from './api'; //api µð·ºÅä¸®ÀÇ index.js°¡ exportÇÑ api ¶ó¿ìÆ® °´Ã¼¸¦ ÀúÀå
+import api from './api'; //api ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ index.jsï¿½ï¿½ exportï¿½ï¿½ api ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 import bodyParser from 'koa-bodyparser';
 import mongoose from 'mongoose';
 import jwtMiddleware from './lib/jwtMiddleware';
@@ -25,11 +25,11 @@ const app = new Koa();
 const router = new Router();
 
 router.use('/api', api.routes());
-
 app.use(bodyParser());
+
 app.use(jwtMiddleware);
 
-//app ÀÎ½ºÅÏ½º¿¡ ¶ó¿ìÅÍ Àû¿ë
+//app ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 app.use(router.routes()).use(router.allowedMethods());
 
 const port = PORT || 4000;

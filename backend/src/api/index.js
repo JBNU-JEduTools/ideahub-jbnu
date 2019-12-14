@@ -1,11 +1,13 @@
 import Router from 'koa-router';
 import posts from './posts';
 import auth from './auth';
+import contents from './contents';
 
 const api = new Router();
 
 api.use('/posts', posts.routes());
+api.use('/contents', contents.routes());
 api.use('/auth', auth.routes());
 
-//¶ó¿ìÅÍ °´Ã¼¸¦ ¿ÜºÎ·Î export
+//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ÜºÎ·ï¿½ export
 export default api;

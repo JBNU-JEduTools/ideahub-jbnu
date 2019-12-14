@@ -2,8 +2,8 @@ import React from 'react';
 import AuthTemplate from '../components/auth/AuthTemplate';
 import RegisterForm from '../containers/auth/RegisterForm';
 import styled from 'styled-components';
-import Header from '../components/common/Header';
 import TopSpace from '../components/common/TopSpace';
+import HeaderContainer from '../containers/common/HeaerContainer';
 
 const Spacer = styled.div`
   height: 4rem;
@@ -12,7 +12,7 @@ const Spacer = styled.div`
 const RegisterPage = () => {
   return (
     <>
-      <Header />
+      <HeaderContainer />
       <TopSpace title="회원가입" />
       <Spacer />
       <AuthTemplate>

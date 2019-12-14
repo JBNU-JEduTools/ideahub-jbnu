@@ -29,7 +29,7 @@ const buttonStyle = css`
     props.fullHeight &&
     css`
       height: 100%;
-      padding-top: 25%;
+      padding-top: 1.25rem;
     `}
   ${props =>
     props.toDefaultColor &&

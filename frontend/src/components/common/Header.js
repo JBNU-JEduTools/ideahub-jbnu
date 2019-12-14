@@ -54,31 +54,39 @@ const Header = ({ user, onLogout }) => {
           <Link to="/" className="logo">
             CMANAGER
           </Link>
-          {user ? (
-            <div className="topMenu">
-              <UserInfo>{user.username + ' 님'}</UserInfo>
-              <Button
-                onClick={onLogout}
-                fullHeight
-                style={{ paddingTop: '0px' }}
-              >
-                로그아웃
-              </Button>
-            </div>
-          ) : (
-            <div className="topMenu">
-              <Button
-                to="/register"
-                fullHeight
-                style={{ background: palette.gray[8], paddingTop: '1.3rem' }}
-              >
-                회원가입
-              </Button>
-              <Button to="/login" fullHeight style={{ paddingTop: '1.3rem' }}>
-                로그인
-              </Button>
-            </div>
-          )}
+          <div style={{ display: 'flex', height: '100%' }}>
+            <Button to="/postlist" fullHeight toDefaultColor>
+              대회 목록
+            </Button>
+            <Button to="/contentlist" fullHeight toDefaultColor>
+              작품 정보
+            </Button>
+            {user ? (
+              <div className="topMenu">
+                <UserInfo>{user.username + ' 님'}</UserInfo>
+                <Button
+                  onClick={onLogout}
+                  fullHeight
+                  style={{ paddingTop: '0px' }}
+                >
+                  로그아웃
+                </Button>
+              </div>
+            ) : (
+              <div className="topMenu">
+                <Button
+                  to="/register"
+                  fullHeight
+                  style={{ background: palette.gray[8], paddingTop: '1.3rem' }}
+                >
+                  회원가입
+                </Button>
+                <Button to="/login" fullHeight style={{ paddingTop: '1.3rem' }}>
+                  로그인
+                </Button>
+              </div>
+            )}
+          </div>
         </Wrapper>
       </HeaderBlock>
       <Spacer />

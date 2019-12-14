@@ -30,7 +30,7 @@ const TopSpace = props => {
     <TopBlock>
       <Wrapper>
         <div className="menuTitle">{props.title}</div>
-        <div className="menuDiscription">{props.discription}</div>
+        <div className="menuDiscription">{props.description}</div>
       </Wrapper>
     </TopBlock>
   );

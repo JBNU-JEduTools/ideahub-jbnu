@@ -34,18 +34,19 @@ export const checkOwnPost = (ctx, next) => {
   return next();
 };
 
-//Æ÷½ºÆ® ÀÛ¼º
+//ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Û¼ï¿½
 export const write = async ctx => {
   const schema = Joi.object().keys({
-    //°´Ã¼°¡ ´ÙÀ½ ÇÊµå¸¦ °¡Áö°í ÀÖÀ½À» °ËÁõ
+    //ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Êµå¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     title: Joi.string().required(),
-    body: Joi.string().required(),
-    tags: Joi.array()
-      .items(Joi.string())
-      .required(),
+    category: Joi.string().required(),
+    status: Joi.string().required(),
+    date: Joi.string().required(),
+    place: Joi.string().required(),
+    description: Joi.string().required(),
   });
 
-  //°ËÁõ ÈÄ, ½ÇÆÐÀÎ °æ¿ì ¿¡·¯Ã³¸®
+  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½
   const result = Joi.validate(ctx.request.body, schema);
   if (result.error) {
     ctx.status = 400;
@@ -53,12 +54,22 @@ export const write = async ctx => {
     return;
   }
 
-  const { title, body, tags } = ctx.request.body;
+  const {
+    title,
+    category,
+    status,
+    date,
+    place,
+    description,
+  } = ctx.request.body;
   const post = new Post({
     title,
-    body,
-    tags,
-    user: ctx.state.user, //Æ÷½ºÆ® ÀÛ¼º½Ã ·Î±×ÀÎÇÑ À¯Àú Á¤º¸¸¦ Æ÷½ºÆ® °´Ã¼¿¡ ´ãÀ½
+    category,
+    status,
+    date,
+    place,
+    description,
+    user: ctx.state.user, //ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
   });
   try {
     await post.save();
@@ -67,10 +78,10 @@ export const write = async ctx => {
     ctx.throw(500, e);
   }
 };
-//µ¥ÀÌÅÍ Á¶È¸
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 export const list = async ctx => {
-  //http://localhost:4000/api/posts?page=2 ·Î ÆäÀÌÁö¸¦ ÁöÁ¤ÇÏ¿© Á¶È¸
-  //page Äõ¸®°ªÀÌ ÀÖÀ¸¸é ±× °ªÀ» int·Î ÆÄ½ÌÇÏ°í, ¾øÀ¸¸é 1À» ÆÄ½Ì
+  //http://localhost:4000/api/posts?page=2 ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½È¸
+  //page ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ intï¿½ï¿½ ï¿½Ä½ï¿½ï¿½Ï°ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½Ä½ï¿½
   const page = parseInt(ctx.query.page || '1', 10);
 
   if (page < 1) {
@@ -78,40 +89,41 @@ export const list = async ctx => {
     return;
   }
 
-  const { tag, username } = ctx.query;
+  const { username } = ctx.query;
+  console.log(ctx.query);
   //??
   const query = {
-    //username, tag°ªÀÌ À¯È¿ÇÏ¸é °´Ã¼ ¾È¿¡ ³Ö°í, ¾Æ´Ï¸é ³ÖÁö ¾ÊÀ½
+    //username, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ï¿½Ï¸ï¿½ ï¿½ï¿½Ã¼ ï¿½È¿ï¿½ ï¿½Ö°ï¿½, ï¿½Æ´Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     ...(username ? { 'user.username': username } : {}),
-    ...(tag ? { tags: tag } : {}),
   };
 
   try {
-    //ÃÖ½Å¼ø Á¤·Ä, ÇÑ¹ø¿¡ Ã£À» µ¥ÀÌÅÍ¸¦ 10°³·Î Á¦ÇÑ, (ÁÖ¾îÁø pageÄõ¸®°ª - 1) * 10°³ÀÇ µ¥ÀÌÅÍ´Â °Ç³Ê¶Ü.
-    //posts´Â °´Ã¼ÀÇ ¹è¿­
+    //ï¿½Ö½Å¼ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ñ¹ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ 10ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, (ï¿½Ö¾ï¿½ï¿½ï¿½ pageï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - 1) * 10ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í´ï¿½ ï¿½Ç³Ê¶ï¿½.
+    //postsï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½è¿­
     const posts = await Post.find(query)
       .sort({ _id: -1 })
       .limit(10)
       .skip((page - 1) * 10)
       .exec();
-
-    //postCount´Â db ³»ÀÇ document(row)ÀÇ °³¼ö
+    //postCountï¿½ï¿½ db ï¿½ï¿½ï¿½ï¿½ document(row)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     const postCount = await Post.countDocuments().exec();
-    //Last-Page¶ó´Â Ä¿½ºÅÒ HTTP Çì´õ°ªÀ» document °³¼ö/10 + 1·Î ¼³Á¤.
+    //Last-Pageï¿½ï¿½ï¿½ Ä¿ï¿½ï¿½ï¿½ï¿½ HTTP ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ document ï¿½ï¿½ï¿½ï¿½/10 + 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
     ctx.set('Last-Page', Math.ceil(postCount / 10));
-    //three dotÇ¥±â »ç¿ë½Ã, ¿ÀºêÁ§Æ®ÀÇ ÇÁ·ÎÆÛÆ¼¸¦ ³ª¿­ÇÒ ¶§ ¶È°°Àº ÇÁ·ÎÆÛÆ¼°¡ ÀÖÀ¸¸é µÚ¿¡ ¾´°É·Î µ¤¾î¾²±âµÊ.
+    //three dotÇ¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½È°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½É·ï¿½ ï¿½ï¿½ï¿½î¾²ï¿½ï¿½ï¿½.
     ctx.body = posts
       .map(post => post.toJSON())
       .map(post => ({
         ...post,
-        body:
-          post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`,
+        description:
+          post.description.length < 300
+            ? post.description
+            : `${post.description.slice(0, 300)}...`,
       }));
   } catch (e) {
     ctx.throw(500, e);
   }
 };
-//Æ¯Á¤ µ¥ÀÌÅÍ Á¶È¸
+//Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 export const read = ctx => {
   ctx.body = ctx.state.post;
 };
@@ -126,13 +138,16 @@ export const remove = async ctx => {
 };
 export const update = async ctx => {
   const schema = Joi.object().keys({
-    //°´Ã¼°¡ ´ÙÀ½ ÇÊµå¸¦ °¡Áö°í ÀÖÀ½À» °ËÁõ
+    //ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Êµå¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     title: Joi.string(),
-    body: Joi.string(),
-    tags: Joi.array().items(Joi.string()),
+    category: Joi.string(),
+    status: Joi.string(),
+    date: Joi.string(),
+    place: Joi.string(),
+    description: Joi.string(),
   });
 
-  //°ËÁõ ÈÄ, ½ÇÆÐÀÎ °æ¿ì ¿¡·¯Ã³¸®
+  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½
   const result = Joi.validate(ctx.request.body, schema);
   if (result.error) {
     ctx.status = 400;

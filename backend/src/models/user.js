@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   hashedPassword: String,
 });
 
-//this »ç¿ëÀ» À§ÇØ È­»ìÇ¥ ÇÔ¼öx, function Å°¿öµå·Î ±¸Çö
+//this ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½Ç¥ ï¿½Ô¼ï¿½x, function Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 UserSchema.methods.setPassword = async function(password) {
   const hash = await bcrypt.hash(password, 10);
   this.hashedPassword = hash;
@@ -21,15 +21,15 @@ UserSchema.methods.checkPassword = async function(password) {
   return result;
 };
 
-//static ÇÔ¼öÀÇ this´Â ¸ðµ¨(User)¸¦ °¡¸®Å´
+//static ï¿½Ô¼ï¿½ï¿½ï¿½ thisï¿½ï¿½ ï¿½ï¿½(User)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å´
 UserSchema.statics.findByUsername = function(username) {
   return this.findOne({ username });
 };
 
 UserSchema.methods.serialize = function() {
   const data = this.toJSON();
-  //ºñ¹Ð¹øÈ£ ¼³Á¤ °úÁ¤¿¡¼­ ¸¸µé¾îÁø hashedPassword¸¦ JSON°´Ã¼¿¡¼­ Á¦°Å
-  //µ¥ÀÌÅÍº£ÀÌ½º¿¡ ÀúÀåÀº ÇÏÁö¸¸, JSONÀ¸·Î ¸®ÅÏÇÏÁö´Â ¾ÊÀ½
+  //ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ hashedPasswordï¿½ï¿½ JSONï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+  //ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, JSONï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
   delete data.hashedPassword;
   return data;
 };
