@@ -2,9 +2,52 @@
 
 cmanager is competition management service, made with React, Koa.js and MongoDB.
 
-on progress😔
+Prerequisites:
+be sure to
 
 ---
+
+on progress😔
+
+## get started!
+
+you should run backend and frontend server respectively.
+
+1. make .env file containing DB informations in backend directory.
+
+```
+//YOURDIRECTORY\cmanager\backend\.env
+
+PORT=YOUR_PORT
+MONGO_URI=YOUR_DB_URL
+JWT_SECRET=YOUR_SECRET_KEY
+```
+
+2. move into frontend directory then run the following code.
+
+```
+cd YOURDIRECTORY\cmanager\frontend
+yarn start
+```
+
+3. move into backend directory then run the following code.
+
+```
+cd YOURDIRECTORY\cmanager\backend
+yarn start:dev
+```
+
+example website will be presented on browser. or visit localhost:3000
+
+## 🎨Style
+
+this project uses [styled-components](https://github.com/styled-components/styled-components).
+
+if you want change style or theme, check out styled-components in each file in
+
+```
+YOUR_DIRECTORY\cmanager\frontend\src\components
+```
 
 ## ⚙Structure - frontend
 
@@ -38,3 +81,9 @@ src
 └── models // Schema, methods...
 
 ```
+
+## contributing
+
+WE NEED YOUR HELP!
+wanna contribute on this project?
+check out [contributing guidline](https://github.com/repusjh/cmanager-public/blob/master/CONTRIBUTING.md).

@@ -4,6 +4,7 @@ import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import ContentInfoSide from './ContentInfoSide';
 import Button from '../common/Button';
+import Comments from './Comments';
 
 const ContentViewerBlock = styled(Responsive)`
   width: 852px;
@@ -113,6 +114,8 @@ const ContentViewer = ({ content, error, loading }) => {
             __html: body,
           }}
         />
+
+        <Comments></Comments>
       </ContentViewerBlock>
       <ContentInfoSide
         title={title}

@@ -127,6 +127,22 @@ export const remove = async ctx => {
   }
 };
 
+//댓글이 달렸을 때 업데이트 할 수 있도록.
+export const updateComment = async ctx => {
+  const { id } = ctx.params;
+  try {
+    const content = await Content.findById(id).exec();
+    if (!content) {
+      ctx.status = 404;
+      return;
+    }
+    content.comments.push(ctx.request);
+    ctx.reponse = content;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
 export const update = async ctx => {
   //객체의 필드를 검증하기 위함
   const schema = Joi.object().keys({
