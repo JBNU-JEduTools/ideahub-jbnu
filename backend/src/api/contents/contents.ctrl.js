@@ -66,8 +66,6 @@ export const write = async ctx => {
 export const list = async ctx => {
   //current page number
   const page = parseInt(ctx.query.page || '1', 10);
-  console.log(ctx.query.page);
-  console.log(ctx.query);
 
   if (page < 1) {
     ctx.status = 400;
@@ -75,7 +73,7 @@ export const list = async ctx => {
   }
 
   //get taggedContest from url
-  const contest = ctx.query.taggedContest; //NUULLL!!!
+  const contest = ctx.query.taggedContest;
   const query = contest ? { taggedContest: contest } : {};
 
   try {

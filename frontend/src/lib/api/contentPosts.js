@@ -10,7 +10,7 @@ export const contentWritePost = ({
   status,
   comments,
 }) =>
-  client.post('api/contents', {
+  client.post('/api/contents', {
     title,
     body,
     taggedContest,
@@ -27,5 +27,9 @@ export const listContents = ({ page, taggedContest }) => {
     page,
     taggedContest,
   });
-  return client.get(`/api/contents?${queryString}`);
+  return client.get(`/api/contents?${queryString}`, {
+    params: {
+      taggedContest: queryString.taggedContest,
+    },
+  });
 };

@@ -13,9 +13,8 @@ const [
 
 export const listContents = createAction(
   LIST_CONTENTS,
-  ({ tag, username, page }) => ({
-    tag,
-    username,
+  ({ taggedContest, page }) => ({
+    taggedContest,
     page,
   }),
 );

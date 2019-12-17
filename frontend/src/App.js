@@ -16,7 +16,7 @@ const App = () => {
       <Route component={MainPage} path="/" exact />
       <Route component={ContentWritePage} path="/contentwrite" />
       <Route component={ContentPostPage} path="/content/:contentId" />
-      <Route component={ContentListPage} path={'/contentlist'} />
+      <Route component={ContentListPage} path="/contentlist" />
       <Route
         component={PostListPage}
         path={['/@:username/postlist', '/postlist']}

@@ -70,7 +70,7 @@ const PostInfoSide = ({ title, category, status, date, place }) => {
             <Button
               toDefaultColor
               fullWidth
-              style={{ marginTop: '1.5rem' }}
+              style={{ margin: '1.5rem' }}
               to="/contentwrite"
             >
               작품 등록
@@ -80,6 +80,13 @@ const PostInfoSide = ({ title, category, status, date, place }) => {
               접수가 마감되었습니다
             </Button>
           )}
+          <Button
+            to={`/contentlist?taggedContest=${title}`}
+            toDefaultColor
+            fullWidth
+          >
+            작품 목록
+          </Button>
         </div>
       </PostInfoSideBlock>
     </Wraper>
