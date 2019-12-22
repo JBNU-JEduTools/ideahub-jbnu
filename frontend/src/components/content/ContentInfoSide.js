@@ -7,6 +7,7 @@ const ContentInfoSideBlock = styled.div`
   width: 300px;
   border: 1px solid ${palette.gray[4]};
   padding-top: 3rem;
+  padding-bottom: 3rem;
   align-items: center;
   justify-content: space-between;
 `;
@@ -65,10 +66,6 @@ const ContentInfoSide = ({ title, taggedContest, team, status, stars }) => {
           </StyledTextContainer>
           <StatusBox>{status}</StatusBox>
           <StyledTextContainer>팀원 : {team}</StyledTextContainer>
-          <StyledTextContainer>STARS : {stars}</StyledTextContainer>
-          <Button fullWidth toDefaultColor>
-            GIVE STAR
-          </Button>
         </div>
       </ContentInfoSideBlock>
     </Wraper>

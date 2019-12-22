@@ -90,7 +90,6 @@ export const list = async ctx => {
   }
 
   const { username } = ctx.query;
-  console.log(ctx.query);
   //??
   const query = {
     //username, ���� ��ȿ�ϸ� ��ü �ȿ� �ְ�, �ƴϸ� ���� ����

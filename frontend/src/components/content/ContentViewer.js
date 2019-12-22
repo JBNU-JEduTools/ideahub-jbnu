@@ -64,6 +64,26 @@ const TitleArea = styled.div`
   }
 `;
 
+const StarBox = styled.div`
+  display: flex;
+  border: solid 1px;
+  border-radius: 5px;
+  height: 2rem;
+  border-color: ${palette.gray[5]};
+  button {
+    background: ${palette.gray[2]};
+    fontsize: 16px;
+    color: black;
+    &:hover {
+      background: ${palette.gray[3]};
+    }
+  }
+  div {
+    font-size: 16px;
+    padding: 0.2rem 0.5rem;
+  }
+`;
+
 const ContentViewer = ({ content, error, loading }) => {
   if (error) {
     if (error.response && error.response.status === 404) {
@@ -94,9 +114,10 @@ const ContentViewer = ({ content, error, loading }) => {
           <SubContents>#{taggedContest}</SubContents>
           <TitleArea>
             <h1>{title}</h1>
-            <Button style={{ fontSize: '16px', borderRadius: '5px' }}>
-              {stars}
-            </Button>
+            <StarBox>
+              <Button>star</Button>
+              <div>{stars}</div>
+            </StarBox>
           </TitleArea>
         </ContentHead>
 
