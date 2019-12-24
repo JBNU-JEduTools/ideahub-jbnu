@@ -3,9 +3,12 @@
 cmanager is competition management service, made with React, Koa.js and MongoDB.
 
 used...
+
+```
 nodejs v12.13.0
 npm 6.12.0
 yarn 1.19.1
+```
 
 ---
 
