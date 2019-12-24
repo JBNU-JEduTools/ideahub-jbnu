@@ -45,7 +45,9 @@ yarn start:dev
 example website will be presented on browser. or visit localhost:3000
 
 4. trouble shotting
+
    [react-scrpts: Permission denied](https://github.com/facebook/create-react-app/issues/5773)
+
    [ENOENT ERROR](https://stackoverflow.com/questions/42308879/npm-err-code-elifecycle)
 
 ## 🎨Style
