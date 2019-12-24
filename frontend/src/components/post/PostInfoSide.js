@@ -66,29 +66,29 @@ const PostInfoSide = ({ title, category, status, date, place }) => {
           <StatusBox>{status}</StatusBox>
           <StyledTextContainer>대회 일정 : {date}</StyledTextContainer>
           <StyledTextContainer>장소 : {place}</StyledTextContainer>
-          {status === '접수중' ? (
-            <Button
-              toDefaultColor
-              fullWidth
-              style={{ margin: '1.5rem' }}
-              to="/contentwrite"
-            >
-              작품 등록
-            </Button>
-          ) : (
-            <Button fullWidth style={{ marginTop: '1.5rem' }}>
-              접수가 마감되었습니다
-            </Button>
-          )}
-          <Button
-            to={`/contentlist?taggedContest=${title}`}
-            toDefaultColor
-            fullWidth
-          >
-            작품 목록
-          </Button>
         </div>
       </PostInfoSideBlock>
+      {status === '접수중' ? (
+        <Button
+          toDefaultColor
+          fullWidth
+          style={{ margin: '1.5rem' }}
+          to="/contentwrite"
+        >
+          작품 등록
+        </Button>
+      ) : (
+        <Button fullWidth style={{ marginTop: '1.5rem' }} disable={true}>
+          접수가 마감되었습니다
+        </Button>
+      )}
+      <Button
+        to={`/contentlist?taggedContest=${title}`}
+        toDefaultColor
+        fullWidth
+      >
+        작품 목록
+      </Button>
     </Wraper>
   );
 };

@@ -9,12 +9,18 @@ const buttonStyle = css`
   font-weigt: bold;
   padding: 0.25rem 1rem;
   color: white;
-  coutline: none;
+  outline: none;
   cursor: pointer;
 
   background-color: ${palette.gray[7]};
   &:hover {
     background: ${palette.gray[9]};
+  }
+
+  &:disabled{
+    background: ${palette.gray[3]};
+    color: ${palette.gray[5]};
+    cursor: not-allowed;
   }
 
   ${props =>
@@ -34,9 +40,9 @@ const buttonStyle = css`
   ${props =>
     props.toDefaultColor &&
     css`
-      background-color: #ff4e50;
+      background-color: #ff814b;
       &:hover {
-        background-color: #d63842;
+        background-color: #eb713d;
       }
     `}
 `;
@@ -47,6 +53,7 @@ const StyledButton = styled.button`
 
 const StyledLink = styled(Link)`
   ${buttonStyle}
+  display: flex;
 `;
 
 const Button = props => {

@@ -136,7 +136,7 @@ const ContentViewer = ({ content, error, loading }) => {
           }}
         />
 
-        <Comments></Comments>
+        <Comments comments={comments}></Comments>
       </ContentViewerBlock>
       <ContentInfoSide
         title={title}

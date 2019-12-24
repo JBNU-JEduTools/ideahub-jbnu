@@ -4,7 +4,6 @@ import Responsive from '../common/Responsive';
 import Button from '../common/Button';
 import palette from '../../lib/styles/palette';
 import { Link } from 'react-router-dom';
-import mainImg from '../../images/main.png';
 
 const MainViewerBlock = styled(Responsive)`
   margin-top: 3rem;
@@ -61,7 +60,6 @@ const FeatureBox = styled.div`
 const MainViewer = () => {
   return (
     <>
-      <img src={mainImg} alt="main" width="100%" height="380px" />
       <MainViewerBlock>
         <StaredWorks>
           <StyledH1>Stared Works</StyledH1>

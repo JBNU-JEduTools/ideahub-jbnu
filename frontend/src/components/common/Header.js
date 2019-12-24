@@ -5,11 +5,11 @@ import Button from './Button';
 import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 
+//기존 색 : #ff4e50
 const HeaderBlock = styled.div`
   position: fixed;
-  margin-bottom: 4rem;
   width: 100%;
-  background: #ff4e50;
+  background: ${palette.mainColor};
 `;
 
 const Wrapper = styled(Responsive)`
@@ -43,7 +43,7 @@ const UserInfo = styled.div`
 
 //Header에 콘텐츠가 가려지지 않도록 삽입
 const Spacer = styled.div`
-  height: 4rem;
+  height: 2rem;
 `;
 
 const Header = ({ user, onLogout }) => {
@@ -52,7 +52,7 @@ const Header = ({ user, onLogout }) => {
       <HeaderBlock>
         <Wrapper>
           <Link to="/" className="logo">
-            CMANAGER
+            IDEA HUB
           </Link>
           <div style={{ display: 'flex', height: '100%' }}>
             <Button to="/postlist" fullHeight toDefaultColor>

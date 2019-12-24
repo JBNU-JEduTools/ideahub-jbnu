@@ -2,6 +2,7 @@
 import Content from '../../models/content';
 import mongoose from 'mongoose';
 import Joi from 'joi';
+import sanitizeHtml from 'sanitize-html';
 
 const { ObjectId } = mongoose.Types;
 //params로 들어오는 id가 유효한 ObjectId인지 검사하는 미들웨어
@@ -62,6 +63,34 @@ export const write = async ctx => {
   }
 };
 
+//removes html tags, slices paragraph.
+const removeHtmlAndShorten = body => {
+  const filtered = sanitizeHtml(body, {
+    allowedTags: [],
+    //   'h1',
+    //   'h2',
+    //   'b',
+    //   'i',
+    //   'u',
+    //   's',
+    //   'p',
+    //   'ul',
+    //   'ol',
+    //   'li',
+    //   'blockquote',
+    //   'a',
+    //   'img',
+    // ],
+    // allowedAttributes: {
+    //   a: ['href', 'name', 'target'],
+    //   img: ['src'],
+    //   li: ['class'],
+    // },
+    // allowedSchemes: ['data', 'http'],
+  });
+  return filtered.length < 200 ? filtered : `${filtered.slice(0, 200)}...`;
+};
+
 //포스트 목록 조회
 export const list = async ctx => {
   //current page number
@@ -88,10 +117,7 @@ export const list = async ctx => {
     ctx.set('Last-Page', Math.ceil(contentCount / 10));
     ctx.body = contents.map(content => ({
       ...content,
-      body:
-        content.body.length < 200
-          ? content.body
-          : `${content.body.slice(0, 200)}...`,
+      body: removeHtmlAndShorten(content.body),
     }));
   } catch (e) {
     ctx.throw(500, e);
@@ -134,13 +160,22 @@ export const updateComment = async ctx => {
       ctx.status = 404;
       return;
     }
-    content.comments.push(ctx.request);
-    ctx.reponse = content;
+    let comment = {};
+    comment.username = ctx.request.body.username;
+    comment.commentBody = ctx.request.body.commentBody;
+
+    let comments = content.comments;
+    comments.push(comment);
+    content.comments = comments;
+
+    await content.save();
+    ctx.body = content;
   } catch (e) {
     ctx.throw(500, e);
   }
 };
 
+//현재 사용 불가
 export const update = async ctx => {
   //객체의 필드를 검증하기 위함
   const schema = Joi.object().keys({

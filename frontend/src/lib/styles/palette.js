@@ -23,6 +23,8 @@ const palette = {
     '#0c8599',
     '#0b7285',
   ],
+  mainColor: '#ff814b',
+  mainColorHovered: '#eb713d',
 };
 
 export default palette;

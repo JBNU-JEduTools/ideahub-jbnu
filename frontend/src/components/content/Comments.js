@@ -17,29 +17,11 @@ const Wrapper = styled.div`
   }
 `;
 
-const Comments = () => {
+const Comments = ({ comments }) => {
   return (
     <Wrapper>
       <h2 style={{ fontWeight: '500' }}>Comments</h2>
-      <CommentsViewer
-        comments={[
-          {
-            username: 'sangseok',
-            commentBody: '와우 정말 멋져요',
-            commentPublishDate: Date.now,
-          },
-          {
-            username: 'ddang',
-            commentBody: '대단해요!',
-            commentPublishDate: Date.now,
-          },
-          {
-            username: 'deokbae',
-            commentBody: '너무 멋있어요',
-            commentPublishDate: Date.now,
-          },
-        ]}
-      />
+      <CommentsViewer comments={comments} />
       <CommentsWriter />
     </Wrapper>
   );

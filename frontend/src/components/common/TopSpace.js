@@ -23,6 +23,9 @@ const Wrapper = styled(Responsive)`
     display: flex;
     color: white;
   }
+  div {
+    font-weight: 200;
+  }
 `;
 
 const TopSpace = props => {

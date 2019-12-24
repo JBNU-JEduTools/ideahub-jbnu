@@ -3,6 +3,7 @@
 import Post from '../../models/post';
 import mongoose from 'mongoose';
 import Joi from 'joi';
+import sanitizeHtml from 'sanitize-html';
 
 const { ObjectId } = mongoose.Types;
 
@@ -78,11 +79,40 @@ export const write = async ctx => {
     ctx.throw(500, e);
   }
 };
+
+//removes html tags, slices paragraph.
+const removeHtmlAndShorten = body => {
+  const filtered = sanitizeHtml(body, {
+    allowedTags: [],
+    //   'h1',
+    //   'h2',
+    //   'b',
+    //   'i',
+    //   'u',
+    //   's',
+    //   'p',
+    //   'ul',
+    //   'ol',
+    //   'li',
+    //   'blockquote',
+    //   'a',
+    //   'img',
+    // ],
+    // allowedAttributes: {
+    //   a: ['href', 'name', 'target'],
+    //   img: ['src'],
+    //   li: ['class'],
+    // },
+    // allowedSchemes: ['data', 'http'],
+  });
+  return filtered.length < 300 ? filtered : `${filtered.slice(0, 300)}...`;
+};
+
 //������ ��ȸ
 export const list = async ctx => {
   //http://localhost:4000/api/posts?page=2 �� �������� �����Ͽ� ��ȸ
   //page �������� ������ �� ���� int�� �Ľ��ϰ�, ������ 1�� �Ľ�
-  const page = parseInt(ctx.query.page || '1', 10);
+  const page = parseInt(ctx.query.page || '1', 5);
 
   if (page < 1) {
     ctx.status = 400;
@@ -97,26 +127,23 @@ export const list = async ctx => {
   };
 
   try {
-    //�ֽż� ����, �ѹ��� ã�� �����͸� 10���� ����, (�־��� page������ - 1) * 10���� �����ʹ� �ǳʶ�.
+    //�ֽż� ����, �ѹ��� ã�� �����͸� 5���� ����, (�־��� page������ - 1) * 5���� �����ʹ� �ǳʶ�.
     //posts�� ��ü�� �迭
     const posts = await Post.find(query)
       .sort({ _id: -1 })
-      .limit(10)
-      .skip((page - 1) * 10)
+      .limit(5)
+      .skip((page - 1) * 5)
       .exec();
     //postCount�� db ���� document(row)�� ����
     const postCount = await Post.countDocuments().exec();
-    //Last-Page��� Ŀ���� HTTP ������� document ����/10 + 1�� ����.
-    ctx.set('Last-Page', Math.ceil(postCount / 10));
+    //Last-Page��� Ŀ���� HTTP ������� document ����/5 + 1�� ����.
+    ctx.set('Last-Page', Math.ceil(postCount / 5));
     //three dotǥ�� ����, ������Ʈ�� ������Ƽ�� ������ �� �Ȱ��� ������Ƽ�� ������ �ڿ� ���ɷ� ������.
     ctx.body = posts
       .map(post => post.toJSON())
       .map(post => ({
         ...post,
-        description:
-          post.description.length < 300
-            ? post.description
-            : `${post.description.slice(0, 300)}...`,
+        description: removeHtmlAndShorten(post.description),
       }));
   } catch (e) {
     ctx.throw(500, e);
