@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import { Link } from 'react-router-dom';
+import Responsive from '../common/Responsive';
 
 const AuthTemplateBlock = styled.div`
   background-color: white;
@@ -11,7 +12,7 @@ const AuthTemplateBlock = styled.div`
   align-items: center;
 `;
 
-const WhiteBox = styled.div`
+const WhiteBox = styled(Responsive)`
   .logo-area {
     display: block;
     padding-bottom: 2rem;
@@ -19,8 +20,12 @@ const WhiteBox = styled.div`
     font-weight: bold;
     letter-spacing: 2px;
   }
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 0 2rem;
+  }
   padding: 2rem;
-  width: 600px;
+  width: 40rem;
   background-color: white;
   border: 0.5px solid ${palette.gray[4]};
 `;

@@ -20,6 +20,7 @@ const MainImg = styled(Responsive)`
     color: white;
     font-weight: lighter;
     text-align: center;
+    font-size: 2rem;
   }
 `;
 

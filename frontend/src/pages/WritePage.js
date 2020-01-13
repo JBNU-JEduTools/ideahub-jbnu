@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from '../components/common/Header';
 import Responsive from '../components/common/Responsive';
 import TopSpace from '../components/common/TopSpace';
 import WriteActionButtonsContainer from '../containers/write/WriteActionButtonsContainer';
 import EditorContainer from '../containers/write/EditorContainer';
 import styled from 'styled-components';
 import BottomInfo from '../components/common/BottomInfo';
+import HeaderWithHamburger from '../components/common/HeaderWithHamburger';
 
 const Spacer = styled.div`
   height: 2rem;
@@ -14,7 +14,7 @@ const Spacer = styled.div`
 const WritePage = () => {
   return (
     <>
-      <Header />
+      <HeaderWithHamburger />
       <Spacer />
       <TopSpace title="대회 개최" description="개최할 대회 정보 입력" />
       <Responsive>

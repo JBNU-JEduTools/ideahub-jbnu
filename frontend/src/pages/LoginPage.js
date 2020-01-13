@@ -3,8 +3,8 @@ import AuthTemplate from '../components/auth/AuthTemplate';
 import LoginForm from '../containers/auth/LoginForm';
 import styled from 'styled-components';
 import TopSpace from '../components/common/TopSpace';
-import HeaderContainer from '../containers/common/HeaerContainer';
 import BottomInfo from '../components/common/BottomInfo';
+import HeaderWithHamburger from '../components/common/HeaderWithHamburger';
 
 const Spacer = styled.div`
   height: 2rem;
@@ -13,7 +13,7 @@ const Spacer = styled.div`
 const LoginPage = () => {
   return (
     <>
-      <HeaderContainer />
+      <HeaderWithHamburger />
       <Spacer />
       <TopSpace title="로그인" />
       <Spacer />

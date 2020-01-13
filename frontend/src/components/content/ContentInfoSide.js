@@ -10,6 +10,9 @@ const ContentInfoSideBlock = styled.div`
   padding-bottom: 3rem;
   align-items: center;
   justify-content: space-between;
+  @media (max-width: 1152px) {
+    width: 100%;
+  }
 `;
 const StyledTextContainer = styled.div`
   color: ${palette.gray[7]}
@@ -31,13 +34,18 @@ const StyledTextContainer = styled.div`
 const Wraper = styled.div`
   width: 300px;
   margin-left: 5px;
+  @media (max-width: 1152px) {
+    width: 100%;
+    margin: 2rem 0rem;
+  }
 `;
 
 const StatusBox = styled.div`
   height: 1.6rem;
   color: #ff4e50;
-  margin: 1.5rem;
-  margin-left: 6.5rem;
+  margin: auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   border-radius: 20px;
   border: 1px solid #ff4e50;
   text-align: center;

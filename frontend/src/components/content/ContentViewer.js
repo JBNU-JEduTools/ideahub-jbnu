@@ -9,8 +9,8 @@ import Comments from './Comments';
 const ContentViewerBlock = styled(Responsive)`
   width: 852px;
 
-  @media (max-width: 852px) {
-    width: 468px;
+  @media (max-width: 1152px) {
+    width: 100%;
   }
   @media (max-width: 468px) {
     width: 100%;
@@ -53,6 +53,9 @@ const ContentsHolder = styled(Responsive)`
   display: flex;
   margin-top: 4rem;
   margin-bottom: 10rem;
+  @media (max-width: 1152px) {
+    flex-direction: column;
+  }
 `;
 
 const TitleArea = styled.div`
@@ -139,6 +142,7 @@ const ContentViewer = ({ content, error, loading }) => {
         <Comments comments={comments}></Comments>
       </ContentViewerBlock>
       <ContentInfoSide
+        className="sideInfo"
         title={title}
         taggedContest={taggedContest}
         status={status}
