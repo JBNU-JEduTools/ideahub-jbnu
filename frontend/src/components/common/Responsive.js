@@ -10,7 +10,7 @@ const ResponsiveBlock = styled.div`
     font-size: 3rem;
   }
   .contentItemBlock {
-    width: 45%;
+    width: 47%;
   }
 
   @media (max-width: 1152px) {
@@ -19,7 +19,7 @@ const ResponsiveBlock = styled.div`
       font-size: 2rem;
     }
     .contentItemBlock {
-      width: 70%;
+      width: 45%;
     }
   }
   @media (max-width: 768px) {

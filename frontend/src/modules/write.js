@@ -13,6 +13,12 @@ const [
   WRITE_POST_SUCCESS,
   WRITE_POST_FAILURE,
 ] = createRequestActionTypes('write/WRITE_POST');
+const SET_ORIGINAL_POST = 'write/SET_ORIGINAL_POST'; // 글 수정
+const [
+  UPDATE_POST,
+  UPDATE_POST_SUCCESS,
+  UPDATE_POST_FAILURE,
+] = createRequestActionTypes('write/UPDATE_POST');
 
 //action creating functions
 export const initialize = createAction(INITIALIZE);
@@ -31,11 +37,27 @@ export const writePost = createAction(
     description,
   }),
 );
+export const setOriginalPost = createAction(SET_ORIGINAL_POST, post => post);
+export const updatePost = createAction(
+  UPDATE_POST,
+  ({ id, title, category, status, date, place, description }) => ({
+    id,
+    title,
+    category,
+    status,
+    date,
+    place,
+    description,
+  }),
+);
 
 //create saga
 const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
+const updatePostSaga = createRequestSaga(UPDATE_POST, postsAPI.updatePost);
+
 export function* writeSaga() {
   yield takeLatest(WRITE_POST, writePostSaga);
+  yield takeLatest(UPDATE_POST, updatePostSaga);
 }
 
 //initial state
@@ -48,6 +70,7 @@ const initialState = {
   description: '',
   post: null,
   postError: null,
+  originalPostId: null,
 };
 
 //reducer
@@ -68,6 +91,24 @@ const write = handleActions(
       post,
     }),
     [WRITE_POST_FAILURE]: (state, { payload: postError }) => ({
+      ...state,
+      postError,
+    }),
+    [SET_ORIGINAL_POST]: (state, { payload: post }) => ({
+      ...state,
+      title: post.title,
+      category: post.category,
+      status: post.status,
+      date: post.date,
+      place: post.place,
+      description: post.description,
+      originalPostId: post._id,
+    }),
+    [UPDATE_POST_SUCCESS]: (state, { payload: post }) => ({
+      ...state,
+      post,
+    }),
+    [UPDATE_POST_FAILURE]: (state, { payload: postError }) => ({
       ...state,
       postError,
     }),

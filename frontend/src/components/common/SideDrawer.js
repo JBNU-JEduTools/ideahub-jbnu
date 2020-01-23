@@ -2,6 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 
+const Wrapper = styled.div`
+  .side-drawer {
+    transform: translateX(100%);
+    transition: transform 300ms ease;
+  }
+
+  .open {
+    transform: translateX(0);
+  }
+`;
+
 const SideDrawerBlock = styled.nav`
   height: 100%;
   background: white;
@@ -26,23 +37,31 @@ const SideDrawerBlock = styled.nav`
   }
 `;
 
-const SideDrawer = () => (
-  <SideDrawerBlock>
-    <ul>
-      <li>
-        <a href="/postlist">대회 목록</a>
-      </li>
-      <li>
-        <a href="/contentlist">작품 목록</a>
-      </li>
-      <li>
-        <a href="/register">회원가입</a>
-      </li>
-      <li>
-        <a href="/login">로그인</a>
-      </li>
-    </ul>
-  </SideDrawerBlock>
-);
+const SideDrawer = ({ show }) => {
+  let drawerClasses = ['side-drawer'];
+  if (show) {
+    drawerClasses = ['side-drawer', 'open'];
+  }
+  return (
+    <Wrapper>
+      <SideDrawerBlock className={drawerClasses}>
+        <ul>
+          <li>
+            <a href="/postlist">대회 목록</a>
+          </li>
+          <li>
+            <a href="/contentlist">작품 목록</a>
+          </li>
+          <li>
+            <a href="/register">회원가입</a>
+          </li>
+          <li>
+            <a href="/login">로그인</a>
+          </li>
+        </ul>
+      </SideDrawerBlock>
+    </Wrapper>
+  );
+};
 
 export default SideDrawer;

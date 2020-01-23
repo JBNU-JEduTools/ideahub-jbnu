@@ -53,7 +53,7 @@ const ContentsHolder = styled(Responsive)`
   margin-bottom: 10rem;
 `;
 
-const PostViewer = ({ post, error, loading }) => {
+const PostViewer = ({ post, user, error, loading, actionButtons }) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       return <PostViewerBlock>404! post not found</PostViewerBlock>;
@@ -67,6 +67,17 @@ const PostViewer = ({ post, error, loading }) => {
 
   const { title, category, status, date, place, description } = post;
 
+  //자신이 개최한 대회인지 검사
+  const isOwnPost = () => {
+    // console.log('user: ', user);
+    // console.log('post: ', post);
+    // console.log('user.username: ', user.username);
+    // console.log('post.user._id: ', post.user._id);
+    let ownPostResult = user && post && user._id === post.user._id;
+    console.log('ownPostResult: ', ownPostResult);
+    return ownPostResult;
+  };
+
   return (
     <ContentsHolder>
       <PostViewerBlock>
@@ -74,6 +85,7 @@ const PostViewer = ({ post, error, loading }) => {
           <SubContents>카테고리 #{category}</SubContents>
           <h1>{title}</h1>
         </PostHead>
+        {isOwnPost() ? actionButtons : <div />}
         <PostContent
           dangerouslySetInnerHTML={{
             __html: description,

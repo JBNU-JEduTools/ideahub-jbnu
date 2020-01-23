@@ -29,3 +29,23 @@ export const listPosts = ({ page, username }) => {
   });
   return client.get(`/api/posts?${queryString}`);
 };
+
+export const updatePost = ({
+  id,
+  title,
+  category,
+  status,
+  date,
+  place,
+  description,
+}) =>
+  client.patch(`/api/posts/${id}`, {
+    title,
+    category,
+    status,
+    date,
+    place,
+    description,
+  });
+
+export const removePost = id => client.delete(`/api/posts/${id}`);

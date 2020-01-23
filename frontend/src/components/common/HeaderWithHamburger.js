@@ -19,7 +19,7 @@ const HeaderWithHamburger = () => {
   let backgroundBlinder;
 
   if (sideDrawerOpen) {
-    sideDrawer = <SideDrawer />;
+    sideDrawer = <SideDrawer show={sideDrawerOpen} />;
     backgroundBlinder = (
       <BackgroundBlinder click={backgroundBlinderClickHandler} />
     );

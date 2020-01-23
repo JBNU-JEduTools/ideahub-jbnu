@@ -4,7 +4,7 @@ import checkLoggedIn from '../../lib/checkLoggedIn';
 
 const posts = new Router();
 
-//posts¶ó¿ìÅÍ¿¡ °¢ °æ·Î¿¡ ÇØ´çÇÏ´Â ¹Ìµé¿þ¾î µî·Ï
+//postsï¿½ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ ï¿½ï¿½Î¿ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 posts.get('/', postsCtrl.list);
 posts.post('/', checkLoggedIn, postsCtrl.write);
 
@@ -13,7 +13,7 @@ post.get('/', postsCtrl.read);
 post.delete('/', checkLoggedIn, postsCtrl.checkOwnPost, postsCtrl.remove);
 post.patch('/', checkLoggedIn, postsCtrl.checkOwnPost, postsCtrl.update);
 
-//postsÀÇ /:id°æ·Î¿¡ post¶ó¿ìÆ® µî·Ï
+//postsï¿½ï¿½ /:idï¿½ï¿½Î¿ï¿½ postï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½
 posts.use('/:id', postsCtrl.getPostById, post.routes());
 
 export default posts;

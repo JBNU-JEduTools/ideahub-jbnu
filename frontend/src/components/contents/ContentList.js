@@ -12,15 +12,13 @@ import idea6 from '../../images/idea6.png';
 
 const ContentListBlock = styled(Responsive)`
   margin-top: 3rem;
-  display: block;
-  vertical-align: middle;
+  display: flex;
   justify-content: space-between;
+  align-content: center;
 `;
 
-//TODO: 가로 정렬, 박스 클릭시 이동하도록
-
 const ContentItemBlock = styled(Link)`
-  display: inline-block;
+  float: left;
   border: 0px solid ${palette.gray[4]};
   border-radius: 5px;
   margin-bottom: 2rem;
@@ -29,12 +27,27 @@ const ContentItemBlock = styled(Link)`
   color: black;
   margin: 0.5rem;
   box-shadow: -1px 1px 3px 0px rgba(0, 0, 0, 0.5);
+  min-height: 620px;
+
   p {
     margin-top: 2rem;
     margin-bottom: 2rem;
   }
+
   img {
     width: 100%;
+    max-height: 350px;
+  }
+
+  @media (max-width: 1152px) {
+    margin-left: 0rem;
+    margin-right: 1rem;
+    min-height: 520px;
+  }
+  @media (max-width: 768px) {
+    img {
+      max-height: 800px;
+    }
   }
 `;
 
@@ -43,10 +56,16 @@ const TitleInfoHolder = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+  width: 100%;
   h2 {
     margin-top: 2px;
     font-size: 2rem;
     font-weight: 200;
+  }
+  @media (max-width: 1152px) {
+    h2 {
+      font-size: 1.35rem;
+    }
   }
 `;
 
@@ -60,6 +79,9 @@ const StatusBox = styled.div`
   width: 5rem;
   font-size: 0.8rem;
   padding-top: 2px;
+  @media (max-width: 1152px) {
+    width: 4rem;
+  }
 `;
 
 const thumbnails = [idea1, idea2, idea3, idea4, idea5, idea6];
