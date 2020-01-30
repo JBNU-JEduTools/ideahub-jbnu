@@ -15,6 +15,31 @@ const ContentListBlock = styled(Responsive)`
   display: flex;
   justify-content: space-between;
   align-content: center;
+
+  margin-left: auto;
+  width: 1400px;
+  @media (max-width: 1400px) {
+    width: 1140px;
+    padding-left: auto;
+    .contentItemBlock {
+      width: 47%;
+    }
+  }
+  @media (max-width: 1152px) {
+    width: 768px;
+    .contentItemBlock {
+      width: 45%;
+    }
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+    .mainTitle {
+      font-size: 1.5rem;
+    }
+    .contentItemBlock {
+      width: 100%;
+    }
+  }
 `;
 
 const ContentItemBlock = styled(Link)`
@@ -27,7 +52,7 @@ const ContentItemBlock = styled(Link)`
   color: black;
   margin: 0.5rem;
   box-shadow: -1px 1px 3px 0px rgba(0, 0, 0, 0.5);
-  min-height: 620px;
+  min-height: 750px;
 
   p {
     margin-top: 2rem;
@@ -42,12 +67,13 @@ const ContentItemBlock = styled(Link)`
   @media (max-width: 1152px) {
     margin-left: 0rem;
     margin-right: 1rem;
-    min-height: 520px;
+    min-height: 700px;
   }
   @media (max-width: 768px) {
     img {
       max-height: 800px;
     }
+    min-height: 0px;
   }
 `;
 

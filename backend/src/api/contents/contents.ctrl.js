@@ -88,7 +88,7 @@ const removeHtmlAndShorten = body => {
     // },
     // allowedSchemes: ['data', 'http'],
   });
-  return filtered.length < 50 ? filtered : `${filtered.slice(0, 50)}...`;
+  return filtered.length < 200 ? filtered : `${filtered.slice(0, 200)}...`;
 };
 
 //포스트 목록 조회
