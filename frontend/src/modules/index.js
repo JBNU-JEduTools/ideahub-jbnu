@@ -7,7 +7,7 @@ import write, { writeSaga } from './write';
 import post, { postSaga } from './post';
 import posts, { postsSaga } from './posts';
 import contentWrite, { contentWriteSaga } from './contentWrite';
-import content, { contentSaga } from './content';
+import content, { contentSaga, contentCommentSaga } from './content';
 import contents, { contentsSaga } from './contents';
 
 const rootReducer = combineReducers({
@@ -32,6 +32,7 @@ export function* rootSaga() {
     contentWriteSaga(),
     contentSaga(),
     contentsSaga(),
+    contentCommentSaga(),
   ]);
 }
 

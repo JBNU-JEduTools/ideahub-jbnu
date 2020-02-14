@@ -13,7 +13,7 @@ contents.post('/', contentsCtrl.write);
 //id는 ctx.params에서 확인 가능
 contents.get('/:id', contentsCtrl.checkObjectId, contentsCtrl.read);
 contents.delete('/:id', contentsCtrl.checkObjectId, contentsCtrl.remove);
-contents.patch('/:id', contentsCtrl.checkObjectId, contentsCtrl.update);
+contents.patch('/:id', contentsCtrl.checkObjectId, contentsCtrl.updateComment);
 //contents.patch('/:id', contentsCtrl.checkObjectId, contentsCtrl.updateComment);
 
 export default contents;

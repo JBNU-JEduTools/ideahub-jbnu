@@ -1,0 +1,9 @@
+.article-container {
+  padding-top: 50px;
+  width: 100%;
+  margin: auto;
+}
+
+.article-body {
+  padding: 25px 0px 50px 0px;
+}

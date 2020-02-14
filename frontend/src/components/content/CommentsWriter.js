@@ -28,40 +28,14 @@ const StyledButton = styled.button`
   float: right;
 `;
 
-const CommentsWriter = () => {
-  const [input, setInput] = useState('');
-  //db에서 가져와야함
-  const [localComments, setLocalComments] = useState([]);
-
-  const insertComment = useCallback(
-    comment => {
-      if (!comment) return;
-      setLocalComments([...localComments, comment]);
-    },
-    [localComments],
-  );
-
-  const onSubmit = useCallback(
-    e => {
-      e.preventDefault();
-      insertComment(input.trim());
-      setInput('');
-    },
-    [input, insertComment],
-  );
-
-  const onChange = useCallback(e => {
-    setInput(e.target.value);
-  }, []);
-
+const CommentsWriter = ({ onChangeCommentBody, onAddComment }) => {
   return (
-    <form onSubmit={onSubmit}>
+    <form>
       <StyledTextarea
         placeholder="여기에 댓글 입력"
-        value={input}
-        onChange={onChange}
+        onChange={onChangeCommentBody}
       ></StyledTextarea>
-      <StyledButton type="submit">댓글 작성</StyledButton>
+      <StyledButton onClick={onAddComment}>댓글 작성</StyledButton>
     </form>
   );
 };

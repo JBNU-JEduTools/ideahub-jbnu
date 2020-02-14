@@ -155,21 +155,24 @@ export const remove = async ctx => {
 export const updateComment = async ctx => {
   const { id } = ctx.params;
   try {
-    const content = await Content.findById(id).exec();
+    const content = await Content.findByIdAndUpdate(id, ctx.request.body, {
+      new: true,
+    }).exec();
     if (!content) {
       ctx.status = 404;
       return;
     }
-    let comment = {};
-    comment.username = ctx.request.body.username;
-    comment.commentBody = ctx.request.body.commentBody;
+    ctx.body = content;
 
-    let comments = content.comments;
-    comments.push(comment);
-    content.comments = comments;
+    // let comment = {};
+    // comment.username = ctx.request.body.username;
+    // comment.commentBody = ctx.request.body.commentBody;
+
+    // let comments = content.comments;
+    // comments.push(comment);
+    // content.comments = comments;
 
     await content.save();
-    ctx.body = content;
   } catch (e) {
     ctx.throw(500, e);
   }

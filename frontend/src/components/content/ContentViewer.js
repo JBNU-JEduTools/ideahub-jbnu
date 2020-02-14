@@ -4,7 +4,23 @@ import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import ContentInfoSide from './ContentInfoSide';
 import Button from '../common/Button';
-import Comments from './Comments';
+import CommentsViewer from './CommentsViewer';
+import CommentsWriter from './CommentsWriter';
+import CommentsWriterContainer from '../../containers/content/CommentsWriterContainer';
+import Disqus from 'disqus-react';
+
+const CommentWrapper = styled.div`
+  width: 100%;
+  border-top: 1px solid ${palette.gray[5]};
+  margin-top: 3rem;
+  padding-top: 1rem;
+  align-items: center;
+  justify-content: space-between;
+
+  h2 {
+    font-size: 20px;
+  }
+`;
 
 const ContentViewerBlock = styled(Responsive)`
   width: 852px;
@@ -87,7 +103,7 @@ const StarBox = styled.div`
   }
 `;
 
-const ContentViewer = ({ content, error, loading }) => {
+const ContentViewer = ({ content, error, loading, onChangeComment }) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       return <ContentViewerBlock>404! Content not found</ContentViewerBlock>;
@@ -100,6 +116,7 @@ const ContentViewer = ({ content, error, loading }) => {
   }
 
   const {
+    _id,
     title,
     body,
     taggedContest,
@@ -109,6 +126,17 @@ const ContentViewer = ({ content, error, loading }) => {
     stars,
     comments,
   } = content;
+
+  const onChangeCommentBody = event => {
+    onChangeComment({ key: 'commentBody', value: event.target.value });
+  };
+
+  const disqusShortname = 'ideahub-test'; //found in your Disqus.com dashboard
+  const disqusConfig = {
+    url: `http://localhost:3000/${_id}`, //pageUrl
+    identifier: _id,
+    title: title,
+  };
 
   return (
     <ContentsHolder>
@@ -138,8 +166,7 @@ const ContentViewer = ({ content, error, loading }) => {
             __html: body,
           }}
         />
-
-        <Comments comments={comments}></Comments>
+        <Disqus.DiscussionEmbed shortname={disqusShortname} />
       </ContentViewerBlock>
       <ContentInfoSide
         className="sideInfo"
