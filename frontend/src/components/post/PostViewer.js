@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import PostInfoSide from './PostInfoSide';
+import ErrorNotifier from '../common/ErrorNotifier';
+import Disqus from 'disqus-react';
 
 const PostViewerBlock = styled(Responsive)`
   width: 852px;
 
-  @media (max-width: 852px) {
-    width: 468px;
+  @media (max-width: 1152px) {
+    width: 100%;
   }
   @media (max-width: 468px) {
     width: 100%;
@@ -51,14 +53,27 @@ const ContentsHolder = styled(Responsive)`
   display: flex;
   margin-top: 4rem;
   margin-bottom: 10rem;
+  @media (max-width: 1152px) {
+    flex-direction: column;
+  }
 `;
 
 const PostViewer = ({ post, user, error, loading, actionButtons }) => {
   if (error) {
     if (error.response && error.response.status === 404) {
-      return <PostViewerBlock>404! post not found</PostViewerBlock>;
+      return (
+        <ErrorNotifier
+          errorTitle="404 Not Found"
+          errorMessage="이런! 강아지가 페이지를 물고 도망갔나봐요"
+        />
+      );
     }
-    return <PostViewerBlock>error!</PostViewerBlock>;
+    return (
+      <ErrorNotifier
+        errorTitle="Cannot find page"
+        errorMessage="이런! 강아지가 페이지를 물고 도망갔나봐요"
+      />
+    );
   }
 
   if (loading || !post) {
@@ -67,16 +82,13 @@ const PostViewer = ({ post, user, error, loading, actionButtons }) => {
 
   const { title, category, status, date, place, description } = post;
 
-  //자신이 개최한 대회인지 검사
   const isOwnPost = () => {
-    // console.log('user: ', user);
-    // console.log('post: ', post);
-    // console.log('user.username: ', user.username);
-    // console.log('post.user._id: ', post.user._id);
     let ownPostResult = user && post && user._id === post.user._id;
     console.log('ownPostResult: ', ownPostResult);
     return ownPostResult;
   };
+
+  const disqusShortname = 'ideahub-test'; //found in your Disqus.com dashboard
 
   return (
     <ContentsHolder>
@@ -91,6 +103,7 @@ const PostViewer = ({ post, user, error, loading, actionButtons }) => {
             __html: description,
           }}
         />
+        <Disqus.DiscussionEmbed shortname={disqusShortname} />
       </PostViewerBlock>
       <PostInfoSide
         title={title}
@@ -98,6 +111,7 @@ const PostViewer = ({ post, user, error, loading, actionButtons }) => {
         status={status}
         date={date}
         place={place}
+        user={user}
       />
     </ContentsHolder>
   );

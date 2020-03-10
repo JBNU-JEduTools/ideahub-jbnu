@@ -9,6 +9,7 @@ import MainPage from './pages/MainPage';
 import ContentWritePage from './pages/ContentWritePage';
 import ContentPostPage from './pages/ContentPostPage';
 import ContentListPage from './pages/ContentListPage';
+import AdminPage from './pages/AdminPage';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
       <Route component={RegisterPage} path="/register" />
       <Route component={WritePage} path="/write" />
       <Route component={PostPage} path="/@:username/:postId" />
+      <Route component={AdminPage} path="/administer" />
     </div>
   );
 };

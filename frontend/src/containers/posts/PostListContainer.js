@@ -27,7 +27,9 @@ const PostListContainer = ({ location }) => {
       loading={loading}
       error={error}
       posts={posts}
-      showWriteButton={user}
+      showWriteButton={
+        user && (user.role === 'admin' || user.role === 'writer')
+      }
     />
   );
 };

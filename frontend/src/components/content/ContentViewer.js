@@ -4,23 +4,8 @@ import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import ContentInfoSide from './ContentInfoSide';
 import Button from '../common/Button';
-import CommentsViewer from './CommentsViewer';
-import CommentsWriter from './CommentsWriter';
-import CommentsWriterContainer from '../../containers/content/CommentsWriterContainer';
 import Disqus from 'disqus-react';
-
-const CommentWrapper = styled.div`
-  width: 100%;
-  border-top: 1px solid ${palette.gray[5]};
-  margin-top: 3rem;
-  padding-top: 1rem;
-  align-items: center;
-  justify-content: space-between;
-
-  h2 {
-    font-size: 20px;
-  }
-`;
+import ErrorNotifier from '../common/ErrorNotifier';
 
 const ContentViewerBlock = styled(Responsive)`
   width: 852px;
@@ -103,40 +88,38 @@ const StarBox = styled.div`
   }
 `;
 
-const ContentViewer = ({ content, error, loading, onChangeComment }) => {
+const ContentViewer = ({ content, error, loading, actionButtons, user }) => {
   if (error) {
     if (error.response && error.response.status === 404) {
-      return <ContentViewerBlock>404! Content not found</ContentViewerBlock>;
+      return (
+        <ErrorNotifier
+          errorTitle="404 Not Found"
+          errorMessage="이런! 강아지가 페이지를 물고 도망갔나봐요"
+        />
+      );
     }
-    return <ContentViewerBlock>error!</ContentViewerBlock>;
+    return (
+      <ErrorNotifier
+        errorTitle="Cannot find page"
+        errorMessage="이런! 강아지가 페이지를 물고 도망갔나봐요"
+      />
+    );
   }
 
   if (loading || !content) {
     return null;
   }
 
-  const {
-    _id,
-    title,
-    body,
-    taggedContest,
-    videoURL,
-    team,
-    status,
-    stars,
-    comments,
-  } = content;
+  const { title, body, taggedContest, videoURL, team, status, stars } = content;
 
-  const onChangeCommentBody = event => {
-    onChangeComment({ key: 'commentBody', value: event.target.value });
+  //자신이 content를 작성한 user인지 검사
+  const isOwnContent = () => {
+    let ownContentResult = user && content && user._id === content.user._id;
+    console.log('ownContentResult: ', ownContentResult);
+    return ownContentResult;
   };
 
   const disqusShortname = 'ideahub-test'; //found in your Disqus.com dashboard
-  const disqusConfig = {
-    url: `http://localhost:3000/${_id}`, //pageUrl
-    identifier: _id,
-    title: title,
-  };
 
   return (
     <ContentsHolder>
@@ -151,6 +134,9 @@ const ContentViewer = ({ content, error, loading, onChangeComment }) => {
             </StarBox>
           </TitleArea>
         </ContentHead>
+
+        {//자신이 작성한 작품이어야 버튼을 보여줌
+        isOwnContent() ? actionButtons : <div />}
 
         <iframe
           width="100%"

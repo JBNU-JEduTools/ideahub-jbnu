@@ -1,19 +1,21 @@
 import jwt from 'jsonwebtoken';
-import { decode } from 'punycode';
 import User from '../models/user';
 
 const jwtMiddleware = async (ctx, next) => {
   const token = ctx.cookies.get('access_token');
+  //ì¿ í‚¤ì— ì €ì¥ëœ í† í°ì´ ì—†ëŠ” ê²½ìš°
   if (!token) return next();
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    //ì¿ í‚¤ì— ì €ì¥ëœ ì‚¬ìš©ì ì •ë³´ë¥¼ ctx.state.userì— ì €ì¥.
     ctx.state.user = {
       _id: decoded._id,
       username: decoded.username,
+      role: decoded.role,
     };
-    //Date.now() : 1970/1/1 0:0:0ºÎÅÍ ÇöÀç±îÁö °æ°úµÈ ¹Ğ¸®ÃÊ
-    //ÅäÅ«ÀÇ iat : ÅäÅ«ÀÌ ¾ğÁ¦ ¸¸µé¾îÁ³´ÂÁö, exp : ¾ğÁ¦ ¸¸·áµÇ´ÂÁö.
-    //ÅäÅ«ÀÇ À¯È¿ ±â°£ÀÌ 3.5ÀÏ ¹Ì¸¸ÀÌ¸é ÅäÅ« Àç¹ß±Ş
+
+    //í•´ì„ëœ(decoded) í† í°ì˜ exp ê°’ì€ í† í°ì˜ ë§Œë£Œ ì •ë³´ë¥¼ ë‚˜íƒ€ëƒ„
+    //í† í°ì˜ ìœ íš¨ê¸°ê°„ì´ 3.5ì¼ ë¯¸ë§Œì¼ ê²½ìš° ìƒˆë¡œìš´ í† í°ì„ ì¬ë°œê¸‰.
     const now = Math.floor(Date.now() / 1000);
     if (decoded.exp - now < 60 * 60 * 24 * 3.5) {
       const user = await User.findById(decoded._id);

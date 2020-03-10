@@ -37,7 +37,14 @@ const Holder = styled.div`
   width: 40rem;
 `;
 
-const ContentEditor = ({ title, body, videoURL, team, onChangeField }) => {
+const ContentEditor = ({
+  title,
+  body,
+  videoURL,
+  team,
+  onChangeField,
+  taggedContest,
+}) => {
   const quillElement = useRef(null);
   const quillInstance = useRef(null);
 
@@ -63,6 +70,13 @@ const ContentEditor = ({ title, body, videoURL, team, onChangeField }) => {
     });
   }, [onChangeField]);
 
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (mounted.current) return;
+    mounted.current = true;
+    quillInstance.current.root.innerHTML = body;
+  }, [body]);
+
   const onChangeTitle = e => {
     onChangeField({ key: 'title', value: e.target.value });
   };
@@ -87,6 +101,19 @@ const ContentEditor = ({ title, body, videoURL, team, onChangeField }) => {
     <EditorBlock>
       <div></div>
       <Holder>
+        <div>참가 대회</div>
+        {/* <select
+          onChange={onChangetaggedContest}
+          style={{ padding: '0.5rem', width: '30rem' }}
+        >
+          <option value="garbageOption" disabled selected>
+            ==선택==
+          </option>
+          <option value="2019 작품경진대회">2019 작품경진대회</option>
+        </select> */}
+        <p style={{ width: '30rem', color: 'gray' }}>{taggedContest}</p>
+      </Holder>
+      <Holder>
         <div>작품 이름</div>
         <StyledInput
           placeholder="이름"
@@ -94,18 +121,7 @@ const ContentEditor = ({ title, body, videoURL, team, onChangeField }) => {
           value={title}
         />
       </Holder>
-      <Holder>
-        <div>참가 대회</div>
-        <select
-          onChange={onChangetaggedContest}
-          style={{ padding: '0.5rem', width: '30rem' }}
-        >
-          <option value="garbageOption" disabled selected>
-            ==선택==
-          </option>
-          <option value="2019">2019 작품경진대회</option>
-        </select>
-      </Holder>
+
       <Holder>
         <div>상태</div>
         <select

@@ -30,6 +30,7 @@ const buttonStyle = css`
       padding-bottom: 0.75rem;
       width: 100%;
       font-size: 1.125rem;
+      margin-bottom: 0.2rem;
     `}
   ${props =>
     props.fullHeight &&

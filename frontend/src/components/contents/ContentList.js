@@ -53,7 +53,6 @@ const ContentItemBlock = styled(Link)`
   margin: 0.5rem;
   box-shadow: -1px 1px 3px 0px rgba(0, 0, 0, 0.5);
   min-height: 750px;
-
   p {
     margin-top: 2rem;
     margin-bottom: 2rem;

@@ -4,7 +4,7 @@ import Joi from 'joi';
 import User from '../../models/user';
 
 export const register = async ctx => {
-  //request body ����
+  //request body 검증
   const schema = Joi.object().keys({
     username: Joi.string()
       .alphanum()
@@ -12,6 +12,7 @@ export const register = async ctx => {
       .max(20)
       .required(),
     password: Joi.string().required(),
+    role: Joi.string().required(),
   });
   const result = Joi.validate(ctx.request.body, schema);
   if (result.error) {
@@ -20,9 +21,9 @@ export const register = async ctx => {
     return;
   }
 
-  const { username, password } = ctx.request.body;
+  const { username, password, role } = ctx.request.body;
   try {
-    //������ ���̵� �����ϸ� register �������� ����
+    //username이 이미 존재하는지 검사
     const exitsts = await User.findByUsername(username);
     if (exitsts) {
       ctx.status = 409; //conflict
@@ -31,12 +32,13 @@ export const register = async ctx => {
 
     const user = new User({
       username,
+      role,
     });
     await user.setPassword(password); //set password
     await user.save(); //save in DB
 
     ctx.body = user.serialize();
-    //when a user sign-up, generate token
+    //when a user signs-up, generate token
     const token = user.generateToken();
     ctx.cookies.set('access_token', token, {
       maxAge: 1000 * 60 * 60 * 24 * 7, //7days
@@ -46,6 +48,7 @@ export const register = async ctx => {
     ctx.throw(500, e);
   }
 };
+
 export const login = async ctx => {
   const { username, password } = ctx.request.body;
 
@@ -63,7 +66,7 @@ export const login = async ctx => {
       return;
     }
 
-    //if inputted password is not same as one stored in DB
+    //if entered password is not same as one stored in DB
     const valid = await user.checkPassword(password);
     if (!valid) {
       ctx.status = 401;
@@ -71,7 +74,7 @@ export const login = async ctx => {
     }
     ctx.body = user.serialize();
 
-    //when a user sign-in, generate cookie.
+    //when a user signs-in, generate token.
     const token = user.generateToken();
     ctx.cookies.set('access_token', token, {
       maxAge: 1000 * 60 * 60 * 24 * 7, //7days
@@ -82,8 +85,8 @@ export const login = async ctx => {
   }
 };
 export const check = async ctx => {
-  //�α��� ���� Ȯ��
   const { user } = ctx.state;
+  //로그인 중이 아닐 때
   if (!user) {
     ctx.status = 401;
     return;
@@ -92,7 +95,7 @@ export const check = async ctx => {
   ctx.body = user;
 };
 export const logout = async ctx => {
-  //��Ű ��������
+  //쿠키를 지워주만한 하면 됨.
   ctx.cookies.set('access_token');
   ctx.status = 204;
 };

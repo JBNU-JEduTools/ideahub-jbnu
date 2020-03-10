@@ -8,6 +8,8 @@ const BottomInfoBlock = styled.div`
   height: 200px;
   background: #3e4149;
   margin-top: 5rem;
+  position: static;
+  bottom: 0;
 `;
 
 const InfoWrapper = styled(Responsive)`

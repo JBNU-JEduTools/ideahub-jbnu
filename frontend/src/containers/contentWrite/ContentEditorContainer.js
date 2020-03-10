@@ -1,26 +1,40 @@
 import React, { useEffect, useCallback } from 'react';
 import ContentEditor from '../../components/contentWrite/ContentEditor';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeField, initialize } from '../../modules/contentWrite';
+import {
+  changeField,
+  initialize,
+  setInitialState,
+} from '../../modules/contentWrite';
 
 const ContentEditorContainer = () => {
   const dispatch = useDispatch();
-  const { title, body, status, videoURL, team, taggedContest } = useSelector(
-    ({ contentWrite }) => ({
-      title: contentWrite.title,
-      body: contentWrite.body,
-      taggedContest: contentWrite.taggedContest,
-      videoURL: contentWrite.videoURL,
-      team: contentWrite.team,
-      status: contentWrite.status,
-    }),
-  );
+  const {
+    title,
+    body,
+    status,
+    videoURL,
+    team,
+    taggedContest,
+    contestName,
+  } = useSelector(({ contentWrite, contestName }) => ({
+    title: contentWrite.title,
+    body: contentWrite.body,
+    taggedContest: contentWrite.taggedContest,
+    videoURL: contentWrite.videoURL,
+    team: contentWrite.team,
+    status: contentWrite.status,
+    contestName: contestName.contestName,
+  }));
   const onChangeField = useCallback(payload => dispatch(changeField(payload)), [
     dispatch,
   ]);
-  //unmount시 contentWrite와 관련된 상태를 초기화 하는데 사용
+
   useEffect(() => {
+    //☆★☆★☆★☆★☆★수정 시에도 작동함..
+    dispatch(setInitialState(contestName));
     return () => {
+      //unmount시 contentWrite와 관련된 상태를 초기화 하는데 사용
       dispatch(initialize());
     };
   }, [dispatch]);
@@ -29,7 +43,7 @@ const ContentEditorContainer = () => {
       onChangeField={onChangeField}
       title={title}
       body={body}
-      taggedContest={taggedContest}
+      taggedContest={contestName}
       videoURL={videoURL}
       team={team}
       status={status}

@@ -28,6 +28,7 @@ export const getPostById = async (ctx, next) => {
 
 export const checkOwnPost = (ctx, next) => {
   const { user, post } = ctx.state;
+  //mongoDB에서 조회한 데이터의 id값을 문자열과 비교하기 위해 toString 사용
   if (post.user._id.toString() !== user._id) {
     ctx.status = 403;
     return;
@@ -35,10 +36,8 @@ export const checkOwnPost = (ctx, next) => {
   return next();
 };
 
-//����Ʈ �ۼ�
 export const write = async ctx => {
   const schema = Joi.object().keys({
-    //��ü�� ���� �ʵ带 ������ ������ ����
     title: Joi.string().required(),
     category: Joi.string().required(),
     status: Joi.string().required(),
@@ -47,7 +46,6 @@ export const write = async ctx => {
     description: Joi.string().required(),
   });
 
-  //���� ��, ������ ��� ����ó��
   const result = Joi.validate(ctx.request.body, schema);
   if (result.error) {
     ctx.status = 400;
@@ -63,6 +61,7 @@ export const write = async ctx => {
     place,
     description,
   } = ctx.request.body;
+
   const post = new Post({
     title,
     category,
@@ -70,7 +69,7 @@ export const write = async ctx => {
     date,
     place,
     description,
-    user: ctx.state.user, //����Ʈ �ۼ��� �α����� ���� ������ ����Ʈ ��ü�� ����
+    user: ctx.state.user,
   });
   try {
     await post.save();
@@ -127,18 +126,13 @@ export const list = async ctx => {
   };
 
   try {
-    //�ֽż� ����, �ѹ��� ã�� �����͸� 5���� ����, (�־��� page������ - 1) * 5���� �����ʹ� �ǳʶ�.
-    //posts�� ��ü�� �迭
     const posts = await Post.find(query)
       .sort({ _id: -1 })
       .limit(5)
       .skip((page - 1) * 5)
       .exec();
-    //postCount�� db ���� document(row)�� ����
     const postCount = await Post.countDocuments().exec();
-    //Last-Page��� Ŀ���� HTTP ������� document ����/5 + 1�� ����.
     ctx.set('Last-Page', Math.ceil(postCount / 5));
-    //three dotǥ�� ����, ������Ʈ�� ������Ƽ�� ������ �� �Ȱ��� ������Ƽ�� ������ �ڿ� ���ɷ� ������.
     ctx.body = posts
       .map(post => post.toJSON())
       .map(post => ({
@@ -149,10 +143,12 @@ export const list = async ctx => {
     ctx.throw(500, e);
   }
 };
-//Ư�� ������ ��ȸ
+
+//getPostById에서 ctx.state.post에 포스트 정보를 넣어주므로.
 export const read = ctx => {
   ctx.body = ctx.state.post;
 };
+
 export const remove = async ctx => {
   const { id } = ctx.params;
   try {
@@ -164,7 +160,6 @@ export const remove = async ctx => {
 };
 export const update = async ctx => {
   const schema = Joi.object().keys({
-    //��ü�� ���� �ʵ带 ������ ������ ����
     title: Joi.string(),
     category: Joi.string(),
     status: Joi.string(),
@@ -173,7 +168,6 @@ export const update = async ctx => {
     description: Joi.string(),
   });
 
-  //���� ��, ������ ��� ����ó��
   const result = Joi.validate(ctx.request.body, schema);
   if (result.error) {
     ctx.status = 400;

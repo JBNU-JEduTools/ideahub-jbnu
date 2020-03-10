@@ -11,7 +11,7 @@ const WriteActionButtonsBlock = styled.div`
   }
 `;
 
-const ContentWriteActionButtons = ({ onCancel, onPublish }) => {
+const ContentWriteActionButtons = ({ onCancel, onPublish, isEdit }) => {
   return (
     <WriteActionButtonsBlock>
       <Button
@@ -19,7 +19,7 @@ const ContentWriteActionButtons = ({ onCancel, onPublish }) => {
         toDefaultColor
         style={{ width: '10rem', height: '3rem' }}
       >
-        등록
+        {isEdit ? '수정' : '등록'}
       </Button>
       <Button onClick={onCancel} style={{ width: '10rem', height: '3rem' }}>
         취소

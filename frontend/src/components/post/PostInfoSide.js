@@ -9,6 +9,9 @@ const PostInfoSideBlock = styled.div`
   padding-top: 3rem;
   align-items: center;
   justify-content: space-between;
+  @media (max-width: 1152px) {
+    width: 100%;
+  }
 `;
 const StyledTextContainer = styled.div`
   color: ${palette.gray[7]}
@@ -30,13 +33,18 @@ const StyledTextContainer = styled.div`
 const Wraper = styled.div`
   width: 300px;
   margin-left: 5px;
+  @media (max-width: 1152px) {
+    width: 100%;
+    margin: 2rem 0rem;
+  }
 `;
 
 const StatusBox = styled.div`
   height: 1.6rem;
   color: #ff4e50;
-  margin: 1.5rem;
-  margin-left: 6.5rem;
+  margin: auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   border-radius: 20px;
   border: 1px solid #ff4e50;
   text-align: center;
@@ -45,7 +53,42 @@ const StatusBox = styled.div`
   padding-top: 2px;
 `;
 
-const PostInfoSide = ({ title, category, status, date, place }) => {
+//비활성화 된 버튼
+const FakeButton = styled.div`
+  width: 100%;
+  background: ${palette.gray[8]};
+  color: white;
+  border: none;
+  font-size: 1rem;
+  font-weigt: bold;
+  padding: 0.85rem 1rem;
+  text-align: center;
+  margin: 0.2rem 0;
+  margin-bottom: 0.2rem;
+`;
+
+const PostInfoSide = ({ title, category, status, date, place, user }) => {
+  //유저와 대회 상태에 따라 작품 등록 버튼을 활성화할지 결정.
+  //결과에 따라 활성/비활성화된 버튼을 리턴함.
+  const isAllowed = () => {
+    //로그인 된 상태
+    if (user) {
+      if (user.role === 'admin' || user.role === 'writer') {
+        return (
+          <Button toDefaultColor fullWidth to="/contentwrite">
+            작품 등록
+          </Button>
+        );
+      } else {
+        return <FakeButton>등록 권한이 없습니다</FakeButton>;
+      }
+    } else {
+      if (status === '접수중')
+        return <FakeButton>등록 시 로그인이 필요합니다</FakeButton>;
+      else return <FakeButton>접수가 마감되었습니다</FakeButton>;
+    }
+  };
+
   return (
     <Wraper>
       <StyledTextContainer summary>Summary</StyledTextContainer>
@@ -68,20 +111,8 @@ const PostInfoSide = ({ title, category, status, date, place }) => {
           <StyledTextContainer>장소 : {place}</StyledTextContainer>
         </div>
       </PostInfoSideBlock>
-      {status === '접수중' ? (
-        <Button
-          toDefaultColor
-          fullWidth
-          style={{ margin: '1.5rem' }}
-          to="/contentwrite"
-        >
-          작품 등록
-        </Button>
-      ) : (
-        <Button fullWidth style={{ marginTop: '1.5rem' }} disable={true}>
-          접수가 마감되었습니다
-        </Button>
-      )}
+
+      {isAllowed()}
       <Button
         to={`/contentlist?taggedContest=${title}`}
         toDefaultColor

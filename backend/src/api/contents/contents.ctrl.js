@@ -5,11 +5,30 @@ import Joi from 'joi';
 import sanitizeHtml from 'sanitize-html';
 
 const { ObjectId } = mongoose.Types;
-//params로 들어오는 id가 유효한 ObjectId인지 검사하는 미들웨어
-export const checkObjectId = (ctx, next) => {
+
+export const getContentById = async (ctx, next) => {
   const { id } = ctx.params;
   if (!ObjectId.isValid(id)) {
     ctx.status = 400;
+    return;
+  }
+  try {
+    const content = await Content.findById(id);
+    if (!content) {
+      ctx.status = 404;
+      return;
+    }
+    ctx.state.content = content;
+    return next();
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+export const checkOwnContent = (ctx, next) => {
+  const { user, content } = ctx.state;
+  if (content.user._id.toString() !== user._id) {
+    ctx.status = 403;
     return;
   }
   return next();
@@ -21,12 +40,11 @@ export const write = async ctx => {
   const schema = Joi.object().keys({
     title: Joi.string().required(),
     body: Joi.string().required(),
-    taggedContest: Joi.string().required(),
+    taggedContest: Joi.string(),
     videoURL: Joi.string(),
     team: Joi.string().required(),
     status: Joi.string().required(),
     stars: Joi.number(),
-    comments: Joi.array().items(Joi.object()),
   });
 
   //객체 필드 검증 결과가 result에 저장.
@@ -53,7 +71,7 @@ export const write = async ctx => {
     team,
     status,
     stars: 0,
-    comments: [],
+    user: ctx.state.user,
   });
   try {
     await content.save();
@@ -151,45 +169,15 @@ export const remove = async ctx => {
   }
 };
 
-//댓글이 달렸을 때 업데이트 할 수 있도록.
-export const updateComment = async ctx => {
-  const { id } = ctx.params;
-  try {
-    const content = await Content.findByIdAndUpdate(id, ctx.request.body, {
-      new: true,
-    }).exec();
-    if (!content) {
-      ctx.status = 404;
-      return;
-    }
-    ctx.body = content;
-
-    // let comment = {};
-    // comment.username = ctx.request.body.username;
-    // comment.commentBody = ctx.request.body.commentBody;
-
-    // let comments = content.comments;
-    // comments.push(comment);
-    // content.comments = comments;
-
-    await content.save();
-  } catch (e) {
-    ctx.throw(500, e);
-  }
-};
-
-//현재 사용 불가
 export const update = async ctx => {
   //객체의 필드를 검증하기 위함
   const schema = Joi.object().keys({
     title: Joi.string(),
     body: Joi.string(),
     taggedContest: Joi.string(),
-    videoURL: Joi.string(),
     team: Joi.string(),
     status: Joi.string(),
     stars: Joi.number(),
-    comments: Joi.array().items(Joi.object()),
   });
 
   //객체 필드 검증 결과가 result에 저장.
@@ -202,7 +190,7 @@ export const update = async ctx => {
 
   const { id } = ctx.params;
   try {
-    const content = await Content.findByIdAndUpdate(id, ctx.request.body, {
+    const content = Content.findByIdAndUpdate(id, ctx.request.body, {
       new: true,
     }).exec();
     if (!content) {

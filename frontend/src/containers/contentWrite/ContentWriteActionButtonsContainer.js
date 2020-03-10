@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import ContentWriteActionButtons from '../../components/contentWrite/ContentWriteActionButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { contentWritePost } from '../../modules/contentWrite';
+import { contentWritePost, updateContent } from '../../modules/contentWrite';
 
 const ContentWriteActionButtonsContainer = ({ history }) => {
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ const ContentWriteActionButtonsContainer = ({ history }) => {
     status,
     content,
     contentError,
+    originalContentId,
   } = useSelector(({ contentWrite }) => ({
     title: contentWrite.title,
     body: contentWrite.body,
@@ -24,9 +25,24 @@ const ContentWriteActionButtonsContainer = ({ history }) => {
     status: contentWrite.status,
     content: contentWrite.content,
     contentError: contentWrite.contentError,
+    originalContentId: contentWrite.originalContentId,
   }));
 
   const onPublish = () => {
+    if (originalContentId) {
+      dispatch(
+        updateContent({
+          title,
+          body,
+          taggedContest,
+          videoURL,
+          team,
+          status,
+          id: originalContentId,
+        }),
+      );
+      return;
+    }
     dispatch(
       contentWritePost({
         title,
@@ -53,7 +69,11 @@ const ContentWriteActionButtonsContainer = ({ history }) => {
     }
   }, [history, content, contentError]);
   return (
-    <ContentWriteActionButtons onPublish={onPublish} onCancel={onCancel} />
+    <ContentWriteActionButtons
+      onPublish={onPublish}
+      onCancel={onCancel}
+      isEdit={!!originalContentId}
+    />
   );
 };
 
