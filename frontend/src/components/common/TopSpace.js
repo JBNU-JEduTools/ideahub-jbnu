@@ -23,6 +23,20 @@ const Wrapper = styled(Responsive)`
     display: flex;
     color: white;
   }
+  @media (max-width: 1152px) {
+    .menuTitle {
+      font-size: 1.5rem;
+    }
+    .menuDiscription {
+      font-size: 0.5rem;
+    }
+  }
+  @media (max-width: 468px) {
+    .menuTitle {
+      font-size: 1.2rem;
+    }
+  }
+
   div {
     font-weight: 200;
   }
