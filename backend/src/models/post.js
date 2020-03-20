@@ -14,7 +14,10 @@ const ContentSchema = new Schema({
   stars: Number,
   publishDate: {
     type: Date,
-    default: Date.now,
+  },
+  prizedPlace: {
+    type: String,
+    default: '-',
   },
   user: {
     _id: mongoose.Types.ObjectId,

@@ -65,43 +65,68 @@ const TitleArea = styled.div`
   h1 {
     font-size: 2rem;
     margin: 0;
+    font-weight: 400;
   }
 `;
 
 const StarBox = styled.div`
-  display: flex;
-  border: solid 1px;
+  width: 10rem;
+  margin: auto;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  border: 1px solid ${palette.gray[5]};
   border-radius: 5px;
-  height: 2rem;
-  border-color: ${palette.gray[5]};
-  button {
-    background: ${palette.gray[2]};
-    fontsize: 16px;
-    color: black;
-    &:hover {
-      background: ${palette.gray[3]};
-    }
+`;
+
+const StarButton = styled.button`
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  color: ${palette.mainColor};
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.5rem;
+  background: none;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  h1 {
+    color: ${palette.gray[7]};
+    font-size: 1rem;
+    margin: 0;
   }
-  div {
-    font-size: 16px;
-    padding: 0.2rem 0.5rem;
+  h2 {
+    font-weight: 100;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+  &:hover {
+    background: ${palette.gray[1]};
   }
 `;
 
-const ContentViewer = ({ content, error, loading, actionButtons, user }) => {
+const ContentViewer = ({
+  content,
+  error,
+  loading,
+  actionButtons,
+  user,
+  onStar,
+}) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       return (
         <ErrorNotifier
           errorTitle="404 Not Found"
-          errorMessage="이런! 강아지가 페이지를 물고 도망갔나봐요"
+          errorMessage="이런! 페이지를 찾을 수 없습니다."
         />
       );
     }
     return (
       <ErrorNotifier
         errorTitle="Cannot find page"
-        errorMessage="이런! 강아지가 페이지를 물고 도망갔나봐요"
+        errorMessage="이런! 페이지를 찾을 수 없습니다."
       />
     );
   }
@@ -110,7 +135,29 @@ const ContentViewer = ({ content, error, loading, actionButtons, user }) => {
     return null;
   }
 
-  const { title, body, taggedContest, videoURL, team, status, stars } = content;
+  const {
+    title,
+    body,
+    taggedContest,
+    videoURL,
+    team,
+    status,
+    stars,
+    star_edUser,
+  } = content;
+
+  //현재 유저가 star를 눌렀는지 안눌렀는지.
+  const isUnstarButton = () => {
+    if (user) {
+      //star_edUser에 현재 유저가 존재하면, star 버튼이 unStar 버튼으로 대체되어야 함을 의미.
+      const isUnstar = star_edUser.find(item => item === user._id);
+      if (isUnstar) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
 
   //자신이 content를 작성한 user인지 검사
   const isOwnContent = () => {
@@ -128,10 +175,6 @@ const ContentViewer = ({ content, error, loading, actionButtons, user }) => {
           <SubContents>#{taggedContest}</SubContents>
           <TitleArea>
             <h1>{title}</h1>
-            <StarBox>
-              <Button>star</Button>
-              <div>{stars}</div>
-            </StarBox>
           </TitleArea>
         </ContentHead>
 
@@ -152,6 +195,14 @@ const ContentViewer = ({ content, error, loading, actionButtons, user }) => {
             __html: body,
           }}
         />
+
+        <StarBox>
+          <StarButton onClick={onStar}>
+            <h1>{isUnstarButton() ? 'UNSTAR' : 'STAR'}</h1>
+            <h2>{stars}</h2>
+          </StarButton>
+        </StarBox>
+
         <Disqus.DiscussionEmbed shortname={disqusShortname} />
       </ContentViewerBlock>
       <ContentInfoSide

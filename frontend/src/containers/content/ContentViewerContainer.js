@@ -5,7 +5,7 @@ import { readContent, unloadContent } from '../../modules/content';
 import ContentViewer from '../../components/content/ContentViewer';
 import ContentActionButtons from '../../components/content/ContentActionButtons';
 import { setOriginalContent } from '../../modules/contentWrite';
-import { removeContent } from '../../lib/api/contentPosts';
+import { removeContent, giveStar, unStar } from '../../lib/api/contentPosts';
 
 const ContentViewerContainer = ({ match, history }) => {
   const { contentId } = match.params;
@@ -41,6 +41,30 @@ const ContentViewerContainer = ({ match, history }) => {
     }
   };
 
+  /*
+  ☆★☆★☆★☆★☆★☆ TODO ★☆★☆★☆★☆★☆★
+  새로고침 말고 새로운 방법 찾아보기. 부드럽지가 않다.
+  현재 유저가 star를 눌렀는지 스스로 확인할 수 있도록 (이미지로)구분 하자.
+  ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
+  */
+  //작품에 star(like, unlike)를 눌렀을 때 동작
+  const onStar = () => {
+    if (!user) {
+      alert('로그인 후에 이용 가능한 서비스 입니다.');
+      history.push('/login');
+    }
+    const { star_edUser } = content;
+    const isInList = star_edUser.find(item => item === user._id);
+    //star누른 유저 목록에 현재 유저가 있으면
+    if (isInList) {
+      unStar({ content, user });
+      window.location.reload();
+    } else {
+      giveStar({ content, user });
+      window.location.reload();
+    }
+  };
+
   return (
     <ContentViewer
       content={content}
@@ -50,6 +74,7 @@ const ContentViewerContainer = ({ match, history }) => {
       actionButtons={
         <ContentActionButtons onEdit={onEdit} onRemove={onRemove} />
       }
+      onStar={onStar}
     />
   );
 };

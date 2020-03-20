@@ -6,7 +6,8 @@ import PostInfoSide from './PostInfoSide';
 import ErrorNotifier from '../common/ErrorNotifier';
 import Disqus from 'disqus-react';
 import SubMenuBar from './SubMenuBar';
-import NoPrizedAlerter from './NoPrizedAlerter';
+import PrizedList from './PrizedList';
+import NoPrizedAlerterContainer from '../../containers/post/NoPrizedAlerterContainer';
 
 //대회 정보와 수상 작품 목록을 보여주기 위한 responsive 블록
 const PostViewerBlock = styled(Responsive)`
@@ -69,14 +70,14 @@ const PostViewer = ({ post, user, error, loading, actionButtons }) => {
       return (
         <ErrorNotifier
           errorTitle="404 Not Found"
-          errorMessage="이런! 강아지가 페이지를 물고 도망갔나봐요"
+          errorMessage="이런! 페이지를 찾을 수 없습니다."
         />
       );
     }
     return (
       <ErrorNotifier
         errorTitle="Cannot find page"
-        errorMessage="이런! 강아지가 페이지를 물고 도망갔나봐요"
+        errorMessage="이런! 페이지를 찾을 수 없습니다."
       />
     );
   }
@@ -112,12 +113,12 @@ const PostViewer = ({ post, user, error, loading, actionButtons }) => {
         <div>
           {isPrizeEmpty ? (
             <PrizeListBlock>
-              <NoPrizedAlerter />
+              <NoPrizedAlerterContainer />
             </PrizeListBlock>
           ) : (
-            <PostViewerBlock>
-              <p>수상 작품이 등록되어있습니다.</p>
-            </PostViewerBlock>
+            <PrizeListBlock>
+              <PrizedList prized={prized} />
+            </PrizeListBlock>
           )}
         </div>
       ) : (

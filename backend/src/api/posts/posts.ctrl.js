@@ -166,6 +166,7 @@ export const update = async ctx => {
     date: Joi.string(),
     place: Joi.string(),
     description: Joi.string(),
+    prized: Joi.array(),
   });
 
   const result = Joi.validate(ctx.request.body, schema);

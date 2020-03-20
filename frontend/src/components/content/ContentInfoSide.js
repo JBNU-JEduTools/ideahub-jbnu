@@ -17,6 +17,7 @@ const ContentInfoSideBlock = styled.div`
 const StyledTextContainer = styled.div`
   color: ${palette.gray[7]}
   margin-bottom: 1rem;
+  padding: 0 0.5rem;
   text-align: center;
   ${props =>
     props.summary &&

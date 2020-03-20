@@ -45,6 +45,7 @@ export const write = async ctx => {
     team: Joi.string().required(),
     status: Joi.string().required(),
     stars: Joi.number(),
+    star_edUser: Joi.array(),
   });
 
   //객체 필드 검증 결과가 result에 저장.
@@ -71,6 +72,7 @@ export const write = async ctx => {
     team,
     status,
     stars: 0,
+    star_edUser: [], //star를 누른 유저들의 id를 저장하는 array
     user: ctx.state.user,
   });
   try {
@@ -178,6 +180,7 @@ export const update = async ctx => {
     team: Joi.string(),
     status: Joi.string(),
     stars: Joi.number(),
+    star_edUser: Joi.array(),
   });
 
   //객체 필드 검증 결과가 result에 저장.

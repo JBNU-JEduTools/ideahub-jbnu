@@ -1,8 +1,9 @@
 //등록된 수상 작품이 없다고 알려주는 컴포넌트
 
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
+import PrizeModal from './PrizeModal';
 
 const AlerterHolder = styled.div`
   width: 100%;
@@ -41,18 +42,39 @@ const EmptySpace = styled.div`
   height: 4rem;
 `;
 
-const NoPrizedAlerter = () => {
+//parameter onModal: 실질적인 등록 작업 수행. 아직 미구현
+const NoPrizedAlerter = ({ contents, onPrizeSave }) => {
+  //PrizeModal을 보여줄지 여부를 저장.
+  const [modal, setModal] = useState(false);
+  //수상작 등록 클릭 시
+  const onModalClick = () => {
+    setModal(true);
+  };
+  const onConfirm = () => {
+    setModal(false);
+    onPrizeSave();
+  };
+  const onCancel = () => {
+    setModal(false);
+  };
+
   return (
     <div>
       <EmptySpace />
       <AlerterHolder>
         <h1>아직 등록된 수상 작품이 없습니다.</h1>
         <p>개최자가 아직 수상 작품을 등록하지 않았습니다.</p>
-        <UpdateButton>수상 작품 등록</UpdateButton>
+        <UpdateButton onClick={onModalClick}> 수상 작품 등록</UpdateButton>
       </AlerterHolder>
       <EmptySpace />
       <EmptySpace />
       <EmptySpace />
+      <PrizeModal
+        contents={contents}
+        visible={modal}
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+      />
     </div>
   );
 };
