@@ -67,7 +67,15 @@ const FakeButton = styled.div`
   margin-bottom: 0.2rem;
 `;
 
-const PostInfoSide = ({ title, category, status, date, place, user }) => {
+const PostInfoSide = ({
+  title,
+  category,
+  status,
+  date,
+  place,
+  user,
+  onWrite,
+}) => {
   //유저와 대회 상태에 따라 작품 등록 버튼을 활성화할지 결정.
   //결과에 따라 활성/비활성화된 버튼을 리턴함.
   const isAllowed = () => {
@@ -75,7 +83,7 @@ const PostInfoSide = ({ title, category, status, date, place, user }) => {
     if (user) {
       if (user.role === 'admin' || user.role === 'writer') {
         return (
-          <Button toDefaultColor fullWidth to="/contentwrite">
+          <Button toDefaultColor fullWidth onClick={onWrite}>
             작품 등록
           </Button>
         );

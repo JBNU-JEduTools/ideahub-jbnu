@@ -64,7 +64,7 @@ const ContentsHolder = styled(Responsive)`
   }
 `;
 
-const PostViewer = ({ post, user, error, loading, actionButtons }) => {
+const PostViewer = ({ post, user, error, loading, actionButtons, onWrite }) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       return (
@@ -144,6 +144,7 @@ const PostViewer = ({ post, user, error, loading, actionButtons }) => {
               date={date}
               place={place}
               user={user}
+              onWrite={onWrite}
             />
           </ContentsHolder>
         </div>

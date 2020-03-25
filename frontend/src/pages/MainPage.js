@@ -6,13 +6,15 @@ import BottomInfo from '../components/common/BottomInfo';
 import SideDrawer from '../components/common/SideDrawer';
 import BackgroundBlinder from '../components/common/BackgroundBlinder';
 import HeaderWithHamburger from '../components/common/HeaderWithHamburger';
+import MainSlideShow from '../components/main/MainSlideShow';
+import MainViewerContainer from '../containers/main/MainViewerContainer';
 
 const MainPage = () => {
   return (
     <div>
       <HeaderWithHamburger />
       <MainTitle />
-      <MainViewer />
+      <MainViewerContainer />
       <BottomInfo />
     </div>
   );

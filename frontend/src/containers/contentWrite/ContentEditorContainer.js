@@ -31,19 +31,18 @@ const ContentEditorContainer = () => {
   ]);
 
   useEffect(() => {
-    //☆★☆★☆★☆★☆★수정 시에도 작동함..
-    dispatch(setInitialState(contestName));
     return () => {
       //unmount시 contentWrite와 관련된 상태를 초기화 하는데 사용
       dispatch(initialize());
     };
   }, [dispatch]);
+
   return (
     <ContentEditor
       onChangeField={onChangeField}
       title={title}
       body={body}
-      taggedContest={contestName}
+      taggedContest={taggedContest}
       videoURL={videoURL}
       team={team}
       status={status}

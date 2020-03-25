@@ -4,86 +4,59 @@ import Responsive from '../common/Responsive';
 import Button from '../common/Button';
 import palette from '../../lib/styles/palette';
 import { Link } from 'react-router-dom';
+import FeaturedWorks from './FeaturedWorks';
+import ErrorNotifier from '../common/ErrorNotifier';
 
 const MainViewerBlock = styled(Responsive)`
   margin-top: 3rem;
   text-align: center;
 `;
 
-const StaredWorks = styled.div`
-  margin-top: 5rem;
-  margin-bottom: 5rem;
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-`;
-
-const StaredWorksWrapper = styled.div`
-  display: flex;
-`;
-
-const StaredWorkItem = styled.div`
-  padding: 2rem;
-  margin: 0.5rem;
-  border: 1px solid ${palette.gray[5]};
-  width: 300px;
-  height: 400px;
-  h1 {
-    font-size: 30px;
-    border-bottom: 1px solid ${palette.gray[5]};
-    padding-bottom: 1rem;
-  }
-  h2 {
-    font-size: 25px;
-    padding-bottom: 1rem;
-    color: #ff4e50;
-  }
-`;
-
-const StyledH1 = styled.h1`
-  font-size: 35px;
-  font-weight: lighter;
-  border-bottom: 1px solid ${palette.gray[5]};
-  padding-bottom: 1rem;
-`;
-
 const Spacer = styled.div`
   height: 16rem;
 `;
 
-const FeatureBox = styled.div`
-  width: '100%',
-  height: '300px',
-  background: '#ff9698',
-  display: 'flex'
-`;
+const MainViewer = ({ contents, loading, error }) => {
+  if (error) {
+    return (
+      <ErrorNotifier
+        errorTitle="ERROR!"
+        errorMessage="페이지를 로드할 수 없습니다."
+      />
+    );
+  }
 
-const MainViewer = () => {
+  if (!loading && contents) {
+    contents.sort(
+      //sort의 파라미터로 순서를 정해주는 함수를 넣어줌
+      (content1, content2) => {
+        return content1.stars <= content2.stars ? 1 : -1;
+      },
+    );
+
+    //현재 브라우저의 해상도를 저장하는 객체
+    let mediaSize = {
+      width: window.innerWidth || document.body.clientWidth,
+      height: window.innerHeight || document.body.clientHeight,
+    };
+
+    //가로 해상도가 1152px 이상일 경우, 768이상일 경우, 그 미만일 경우에 따라 보여지는 featured works 개수 조정.
+    //모바일, 태블릿 환경에서 접속 시 featured works로 인해 화면이 뒤덮이는 현상을 방지하기 위함.
+    //다만, 데스크탑 브라우저로 접속 후에 해상도를 변경했을 경우, 이미 로드된 featured works 개수가 실시간으로 변하지는 않으므로, 차후 수정이 필요할 수 있음
+    if (mediaSize.width > 1152) {
+      contents.length = 8;
+    } else if (mediaSize.width > 768) {
+      contents.length = 6;
+    } else {
+      contents.length = 4;
+    }
+  }
+
   return (
     <>
       <MainViewerBlock>
-        <StaredWorks>
-          <StyledH1>Stared Works</StyledH1>
-          <StaredWorksWrapper>
-            <StaredWorkItem>
-              <h1>SAMPLE1</h1>
-              <h2>27 STARS</h2>
-            </StaredWorkItem>
-            <StaredWorkItem>
-              <h1>SAMPLE2</h1>
-              <h2>225 STARS</h2>
-            </StaredWorkItem>
-            <StaredWorkItem>
-              <h1>SAMPLE3</h1>
-              <h2>67 STARS</h2>
-            </StaredWorkItem>
-            <StaredWorkItem>
-              <h1>SAMPLE4</h1>
-              <h2>45 STARS</h2>
-            </StaredWorkItem>
-          </StaredWorksWrapper>
-        </StaredWorks>
+        {!loading && contents && <FeaturedWorks featuredWorks={contents} />}
       </MainViewerBlock>
-
       <Spacer />
     </>
   );

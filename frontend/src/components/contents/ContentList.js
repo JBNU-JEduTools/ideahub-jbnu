@@ -88,16 +88,18 @@ const TitleInfoHolder = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
+  margin: 1.5rem 0;
+  margin-top: 0.5rem;
   width: 100%;
   h2 {
-    margin-top: 2px;
     font-size: 1.7rem;
     font-weight: 200;
+    margin: 0;
   }
   h4 {
     margin: 0;
     font-weight: 100;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
   @media (max-width: 1152px) {
     h2 {
@@ -109,7 +111,6 @@ const TitleInfoHolder = styled.div`
 const StatusBox = styled.div`
   height: 1.6rem;
   color: #ff4e50;
-  margin-bottom: 2rem;
   border-radius: 20px;
   border: 1px solid #ff4e50;
   text-align: center;
@@ -152,7 +153,6 @@ const ContentItem = ({ content }) => {
       </div>
       <TitleInfoHolder>
         {title.length > 10 ? <h4>{title}</h4> : <h2>{title}</h2>}
-
         <StatusBox>{status}</StatusBox>
       </TitleInfoHolder>
 
