@@ -9,6 +9,7 @@ import idea3 from '../../images/idea3.png';
 import idea4 from '../../images/idea4.png';
 import idea5 from '../../images/idea5.png';
 import idea6 from '../../images/idea6.png';
+import Ribbon from '../common/Ribbon';
 
 const ContentListBlock = styled(Responsive)`
   margin-top: 3rem;
@@ -91,6 +92,7 @@ const TitleInfoHolder = styled.div`
   margin: 1.5rem 0;
   margin-top: 0.5rem;
   width: 100%;
+  z-index: 2;
   h2 {
     font-size: 1.7rem;
     font-weight: 200;
@@ -104,6 +106,11 @@ const TitleInfoHolder = styled.div`
   @media (max-width: 1152px) {
     h2 {
       font-size: 1.35rem;
+    }
+    h4 {
+      margin: 0;
+      font-weight: 100;
+      font-size: 0.95rem;
     }
   }
 `;
@@ -127,6 +134,21 @@ const StarBox = styled.div`
   border-bottom: 1px solid ${palette.gray[2]};
   margin: auto;
   padding: 0.5rem 0;
+  display: flex;
+  justify-content: space-between;
+`;
+
+//taggedContest, 수상 여부 정보를 보여주는 공간
+const TopInfoHolder = styled.div`
+  display: flex;
+  justify-content: space-between;
+  h1 {
+    margin: 1rem;
+    margin-bottom: 0rem;
+    font-size: 0.9rem;
+    color: ${palette.gray[6]};
+    font-weight: 100;
+  }
 `;
 
 const thumbnails = [idea1, idea2, idea3, idea4, idea5, idea6];
@@ -139,26 +161,35 @@ const thumbnailGenerator = () => {
 };
 
 const ContentItem = ({ content }) => {
-  const { title, taggedContest, status, body, _id, stars } = content;
+  const {
+    title,
+    taggedContest,
+    status,
+    body,
+    _id,
+    stars,
+    prizedPlace,
+  } = content;
   return (
     <ContentItemBlock className="contentItemBlock" to={`/content/${_id}`}>
-      <div
-        style={{
-          padding: '1rem',
-          paddingBottom: '0rem',
-          color: palette.gray[6],
-        }}
-      >
-        #{taggedContest}
-      </div>
-      <TitleInfoHolder>
-        {title.length > 10 ? <h4>{title}</h4> : <h2>{title}</h2>}
-        <StatusBox>{status}</StatusBox>
-      </TitleInfoHolder>
+      <TopInfoHolder>
+        <div>
+          <h1>#{taggedContest}</h1>
+          <TitleInfoHolder>
+            {title.length > 12 ? (
+              <h4>{`${title.substring(0, 12)}...`}</h4>
+            ) : (
+              <h2>{title}</h2>
+            )}
+          </TitleInfoHolder>
+        </div>
+        {!isNaN(prizedPlace) ? <Ribbon /> : null}
+      </TopInfoHolder>
 
       <img src={thumbnailGenerator()} alt="Thubnail Image" />
       <StarBox>
         <h3>⭐ {stars}</h3>
+        <StatusBox>{status}</StatusBox>
       </StarBox>
       <p style={{ padding: '1rem', paddingBottom: '0rem', paddingTop: '0rem' }}>
         {body}

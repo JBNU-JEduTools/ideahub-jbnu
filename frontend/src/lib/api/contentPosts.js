@@ -89,3 +89,11 @@ export const unStar = ({ content, user }) => {
     }
   }
 };
+
+//수상 정보를 업데이트(디폴트: '-')
+export const updatePrize = ({ content, priority }) => {
+  const { _id } = content;
+  return client.patch(`/api/contents/${_id}`, {
+    prizedPlace: priority,
+  });
+};

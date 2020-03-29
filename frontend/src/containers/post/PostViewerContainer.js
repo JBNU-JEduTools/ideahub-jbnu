@@ -16,14 +16,15 @@ const PostViewerContainer = ({ match, history }) => {
   const { postId } = match.params;
   const dispatch = useDispatch();
   //post === state.post.post, error === state.post.error, ...
-  const { post, error, loading, user, contestName } = useSelector(
-    ({ post, loading, user, contestName }) => ({
+  const { post, error, loading, user, contestName, contentsList } = useSelector(
+    ({ post, loading, user, contestName, contentsList }) => ({
       //state.post, state.loading, state.user
       post: post.post,
       error: post.error,
       loading: loading['post/READ_POST'],
       user: user.user,
       contestName: contestName.contestName,
+      contentsList: post.contentsList,
     }),
   );
 
@@ -70,6 +71,7 @@ const PostViewerContainer = ({ match, history }) => {
       actionButtons={<PostActionButtons onEdit={onEdit} onRemove={onRemove} />}
       contestName={contestName}
       onWrite={onWrite}
+      contentsList={contentsList}
     />
   );
 };

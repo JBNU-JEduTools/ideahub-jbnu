@@ -12,7 +12,7 @@ export const register = async ctx => {
       .max(20)
       .required(),
     password: Joi.string().required(),
-    role: Joi.string().required(),
+    role: Joi.string(),
   });
   const result = Joi.validate(ctx.request.body, schema);
   if (result.error) {

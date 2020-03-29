@@ -26,10 +26,11 @@ export const getPostById = async (ctx, next) => {
   }
 };
 
+//자신이 개최한 대회인지 결정. 관리자일 경우에도 true
 export const checkOwnPost = (ctx, next) => {
   const { user, post } = ctx.state;
   //mongoDB에서 조회한 데이터의 id값을 문자열과 비교하기 위해 toString 사용
-  if (post.user._id.toString() !== user._id) {
+  if (user.role !== 'admin' && post.user._id.toString() !== user._id) {
     ctx.status = 403;
     return;
   }

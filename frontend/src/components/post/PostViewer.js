@@ -7,7 +7,7 @@ import ErrorNotifier from '../common/ErrorNotifier';
 import Disqus from 'disqus-react';
 import SubMenuBar from './SubMenuBar';
 import PrizedList from './PrizedList';
-import NoPrizedAlerterContainer from '../../containers/post/NoPrizedAlerterContainer';
+import PrizedUpdaterContainer from '../../containers/post/PrizedUpdaterContainer';
 
 //대회 정보와 수상 작품 목록을 보여주기 위한 responsive 블록
 const PostViewerBlock = styled(Responsive)`
@@ -30,6 +30,7 @@ const PostHead = styled.div`
   h1 {
     font-size: 2rem;
     margin: 0;
+    font-weight: 500;
   }
 `;
 
@@ -64,7 +65,15 @@ const ContentsHolder = styled(Responsive)`
   }
 `;
 
-const PostViewer = ({ post, user, error, loading, actionButtons, onWrite }) => {
+const PostViewer = ({
+  post,
+  user,
+  error,
+  loading,
+  actionButtons,
+  onWrite,
+  contentsList,
+}) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       return (
@@ -86,7 +95,17 @@ const PostViewer = ({ post, user, error, loading, actionButtons, onWrite }) => {
     return null;
   }
 
-  const { title, category, status, date, place, description, prized } = post;
+  //contentsList는 현재 대회에 등록된 작품 목록.
+  //이 목록에서, prizedPlace (수상 순위)가 숫자로 등록되어있는 경우에만 수상 작품 페이지에 보이도록.
+  let prized = null;
+  if (contentsList) {
+    prized = contentsList.filter(
+      contentItem => !isNaN(contentItem.prizedPlace),
+    );
+  }
+
+  //contentsList는 현재 대회에 등록된 작품 목록.
+  const { title, category, status, date, place, description } = post;
 
   const isOwnPost = () => {
     let ownPostResult = user && post && user._id === post.user._id;
@@ -103,7 +122,7 @@ const PostViewer = ({ post, user, error, loading, actionButtons, onWrite }) => {
   //현재 URL의 마지막에 'prized'가 붙어있으면 true, 아니면 false
   const isPrizePage = splitedURL[splitedURL.length - 1] === 'prized';
   //현재 대회에 수상 작품 목록이 등록되어있지 않으면 true
-  const isPrizeEmpty = prized.length === 0;
+  const isPrizeEmpty = !prized || prized.length === 0;
 
   return (
     <div>
@@ -111,15 +130,12 @@ const PostViewer = ({ post, user, error, loading, actionButtons, onWrite }) => {
       {//현재 URL의 끝에 prized가 붙어있으면 수상 목록 페이지를 보여주고, 아니면 대회 정보 페이지 보여주기
       isPrizePage ? (
         <div>
-          {isPrizeEmpty ? (
-            <PrizeListBlock>
-              <NoPrizedAlerterContainer />
-            </PrizeListBlock>
-          ) : (
-            <PrizeListBlock>
-              <PrizedList prized={prized} />
-            </PrizeListBlock>
-          )}
+          <PrizeListBlock>
+            <PrizedUpdaterContainer
+              isPrizeEmpty={isPrizeEmpty}
+              prized={prized}
+            />
+          </PrizeListBlock>
         </div>
       ) : (
         <div>

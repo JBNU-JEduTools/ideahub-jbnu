@@ -40,6 +40,8 @@ const PrizedItem = ({ prizedItem }) => {
 };
 
 //prized는 post 객체 내의 배열 prized. prizedItem 객체의 배열임.
+//수정: 해당 대회에 속한 작품들의 리스트인 'contentList' 에서, 우선순위가 정해진 작품들만 로드
+
 const PrizedList = ({ prized }) => {
   return (
     <PrizedListHolder>

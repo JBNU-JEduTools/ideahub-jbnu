@@ -31,7 +31,11 @@ const PrizeModalHolder = styled.div`
     font-weight: 100;
   }
   p {
+    margin-bottom: 0;
+  }
+  .redP {
     color: red;
+    margin: 0;
   }
   @media (max-width: 1152px) {
     width: 700px;
@@ -98,8 +102,11 @@ const InfoHolder = styled.div`
   }
 `;
 
-const PrizedContentItem = ({ contentItem }) => {
-  const { title, team } = contentItem;
+const PrizedContentItem = ({
+  contentItem,
+  onChangePriority = { onChangePriority },
+}) => {
+  const { title, team, prizedPlace } = contentItem;
   return (
     <ItemHolder>
       <InfoHolder>
@@ -108,37 +115,72 @@ const PrizedContentItem = ({ contentItem }) => {
       </InfoHolder>
       <InfoHolder>
         <h2 className="priorityH2">우선순위</h2>
-        <input />
+        <select
+          name="priority"
+          onChange={e => {
+            onChangePriority({
+              content: contentItem,
+              priority: e.target.value,
+            });
+          }}
+        >
+          <option selected={prizedPlace} disabled hidden>
+            {prizedPlace !== '-' ? `${prizedPlace}위` : '수상 외'}
+          </option>
+          <option value="-">수상 외</option>
+          <option value="1">1위</option>
+          <option value="2">2위</option>
+          <option value="3">3위</option>
+          <option value="4">4위</option>
+          <option value="5">5위</option>
+          <option value="6">6위</option>
+          <option value="7">7위</option>
+          <option value="8">8위</option>
+          <option value="9">9위</option>
+        </select>
       </InfoHolder>
     </ItemHolder>
   );
 };
 
 //수상 작품 등록을 수행하는 컴포넌트
-//부모!!!!! NoPrizedAlerter 컴포넌트 (./NoPrizedAlerter.js)
+//부모!!!!! PrizedUpdater 컴포넌트 (./PrizedUpdater.js)
 //contents는 대회에 등록된 전체 작품 목록.
-const PrizeModal = ({ contents, visible, onConfirm, onCancel }) => {
+const PrizeModal = ({ contents, visible, onChangePriority }) => {
+  const onSave = () => {
+    window.location.reload();
+  };
   if (!visible) return null;
   return (
     <TranslucentBackground>
       <PrizeModalHolder>
         <h1>수상 작품 등록</h1>
-        <p>
-          대회에 등록된 작품 목록을 보여줍니다.
+        <p>대회에 등록된 작품 목록을 보여줍니다. </p>
+        <p className="redP">
+          이때 공동 수상작의 경우에는, 두 작품 모두 같은 우선순위를
+          선택해주세요.
           <br />
-          수상작의 우선순위(등수)를 작성하고, 비수상작의 우선순위란은 공백 또는
-          문자 '-'를 입력해주세요.
+          (예: 공동 2위 수상작의 우선순위는 모두 2위로 선택.)
         </p>
         <WholeItemHoler>
-          {contents.map(contentItem => {
-            return <PrizedContentItem contentItem={contentItem} />;
-          })}
+          {contents.length !== 0 ? (
+            contents.map(contentItem => {
+              return (
+                <PrizedContentItem
+                  contentItem={contentItem}
+                  onChangePriority={onChangePriority}
+                />
+              );
+            })
+          ) : (
+            <p>해당 대회에 등록된 작품이 없습니다.</p>
+          )}
         </WholeItemHoler>
         <ButtonHolder>
-          <ModalButton onClick={onConfirm} toDefaultColor>
-            등록
+          {/*select 옵션 변경시 바로 쿼리를 보내도록 설정하였으므로, 저장 버튼은 실질적으로 아무것도 안해도 됨.*/}
+          <ModalButton onClick={onSave} toDefaultColor>
+            저장
           </ModalButton>
-          <ModalButton onClick={onCancel}>취소</ModalButton>
         </ButtonHolder>
       </PrizeModalHolder>
     </TranslucentBackground>

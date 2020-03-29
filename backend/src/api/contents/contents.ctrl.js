@@ -25,9 +25,10 @@ export const getContentById = async (ctx, next) => {
   }
 };
 
+//자신이 작성한 작품인지 결정. 관리자일 경우에도 true
 export const checkOwnContent = (ctx, next) => {
   const { user, content } = ctx.state;
-  if (content.user._id.toString() !== user._id) {
+  if (user.role !== 'admin' && content.user._id.toString() !== user._id) {
     ctx.status = 403;
     return;
   }
@@ -177,10 +178,12 @@ export const update = async ctx => {
     title: Joi.string(),
     body: Joi.string(),
     taggedContest: Joi.string(),
+    videoURL: Joi.string(),
     team: Joi.string(),
     status: Joi.string(),
     stars: Joi.number(),
     star_edUser: Joi.array(),
+    prizedPlace: Joi.string(),
   });
 
   //객체 필드 검증 결과가 result에 저장.
