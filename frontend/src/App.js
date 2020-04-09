@@ -10,6 +10,7 @@ import ContentWritePage from './pages/ContentWritePage';
 import ContentPostPage from './pages/ContentPostPage';
 import ContentListPage from './pages/ContentListPage';
 import AdminPage from './pages/AdminPage';
+import AboutPage from './pages/AboutPage';
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
       <Route component={WritePage} path="/write" />
       <Route component={PostPage} path="/@:username/:postId" />
       <Route component={AdminPage} path="/administer" />
+      <Route component={AboutPage} path="/about" />
     </div>
   );
 };

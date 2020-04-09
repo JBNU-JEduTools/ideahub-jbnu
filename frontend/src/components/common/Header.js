@@ -11,6 +11,7 @@ const HeaderBlock = styled.div`
   position: fixed;
   width: 100%;
   background: ${palette.mainColor};
+  z-index: 100;
 `;
 
 const Wrapper = styled(Responsive)`

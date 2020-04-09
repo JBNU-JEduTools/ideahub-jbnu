@@ -6,6 +6,8 @@ import palette from '../../lib/styles/palette';
 import { Link } from 'react-router-dom';
 import FeaturedWorks from './FeaturedWorks';
 import ErrorNotifier from '../common/ErrorNotifier';
+import PrizedWorks from './PrizedWorks';
+import MainSubMenuBar from './MainSubMenuBar';
 
 const MainViewerBlock = styled(Responsive)`
   margin-top: 3rem;
@@ -26,13 +28,30 @@ const MainViewer = ({ contents, loading, error }) => {
     );
   }
 
+  let featuredWorks = null;
+  let prizedWorks = null;
+
   if (!loading && contents) {
-    contents.sort(
+    //star 개수 순으로 작품들을 정렬.
+    featuredWorks = contents.sort(
       //sort의 파라미터로 순서를 정해주는 함수를 넣어줌
       (content1, content2) => {
         return content1.stars <= content2.stars ? 1 : -1;
       },
     );
+    //수상 우선순위 순으로 작품들을 정렬
+    prizedWorks = contents
+      //수상 우선순위가 숫자인(수상 목록 안에 있는) 작품들을 filter한 뒤,
+      .filter((item) => {
+        return !isNaN(item.prizedPlace);
+      })
+      .sort(
+        //우선순위가 높은(숫자 크기가 작은) 작품들을 앞에 보여줌.
+        //sort의 파라미터로 순서를 정해주는 함수를 넣어줌
+        (content1, content2) => {
+          return content1.prizedPlace <= content2.prizedPlace ? -1 : 1;
+        },
+      );
 
     //현재 브라우저의 해상도를 저장하는 객체
     let mediaSize = {
@@ -44,20 +63,26 @@ const MainViewer = ({ contents, loading, error }) => {
     //모바일, 태블릿 환경에서 접속 시 featured works로 인해 화면이 뒤덮이는 현상을 방지하기 위함.
     //다만, 데스크탑 브라우저로 접속 후에 해상도를 변경했을 경우, 이미 로드된 featured works 개수가 실시간으로 변하지는 않으므로, 차후 수정이 필요할 수 있음
     if (mediaSize.width > 1152) {
-      contents.length = 8;
+      featuredWorks.length = 8;
+      prizedWorks.length = 8;
     } else if (mediaSize.width > 768) {
-      contents.length = 6;
+      featuredWorks.length = 6;
+      prizedWorks.length = 6;
     } else {
-      contents.length = 4;
+      featuredWorks.length = 4;
+      prizedWorks.length = 4;
     }
   }
 
   return (
     <>
-      <MainViewerBlock>
-        {!loading && contents && <FeaturedWorks featuredWorks={contents} />}
-      </MainViewerBlock>
-      <Spacer />
+      {!loading && contents && (
+        <div>
+          <FeaturedWorks featuredWorks={featuredWorks} />
+          <MainSubMenuBar />
+          <PrizedWorks prizedWorks={prizedWorks} />
+        </div>
+      )}
     </>
   );
 };

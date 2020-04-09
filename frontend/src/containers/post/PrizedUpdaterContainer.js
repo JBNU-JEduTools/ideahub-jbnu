@@ -43,6 +43,8 @@ const PrizedUpdaterContainer = ({
       prized={prized}
       post={post}
       user={user}
+      error={listError}
+      loading={loading}
     />
   );
 };

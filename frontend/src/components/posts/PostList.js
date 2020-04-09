@@ -24,6 +24,9 @@ const PostItemBlock = styled.div`
   p {
     margin-top: 2em;
   }
+  h2 {
+    font-weight: 500;
+  }
 `;
 
 const TitleInfoHolder = styled.div`

@@ -21,7 +21,7 @@ const PostViewerBlock = styled(Responsive)`
   }
 `;
 
-const PrizeListBlock = styled(Responsive)``;
+const PrizeListBlock = styled.div``;
 
 const PostHead = styled.div`
   border-bottom: 1px solid ${palette.gray[2]};

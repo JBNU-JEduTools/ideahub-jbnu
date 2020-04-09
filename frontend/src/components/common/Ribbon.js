@@ -9,7 +9,6 @@ const RibbonHolder = styled.div`
   top: -5px;
   right: -5px;
   overflow: hidden;
-  z-index: 1;
 `;
 
 const RibbonBody = styled.span`

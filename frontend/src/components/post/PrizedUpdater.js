@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import PrizeModal from './PrizeModal';
 import PrizedList from './PrizedList';
+import ErrorNotifier from '../common/ErrorNotifier';
+import Responsive from '../common/Responsive';
 
 const AlerterHolder = styled.div`
   width: 100%;
@@ -22,6 +24,8 @@ const AlerterHolder = styled.div`
     margin-bottom: 2rem;
   }
 `;
+
+const ResponsiveHolder = styled(Responsive)``;
 
 //수상 작품 등록 버튼
 const UpdateButton = styled.button`
@@ -41,6 +45,8 @@ const UpdateButton = styled.button`
 //수상 작품 리스트가 존재할 때 등록 버튼을 감싸는 div.
 const ListExistButtonHolder = styled.div`
   margin: 1rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid ${palette.gray[3]};
   text-align: right;
 `;
 
@@ -58,6 +64,8 @@ const PrizedUpdater = ({
   prized,
   post,
   user,
+  error,
+  loading,
 }) => {
   //PrizeModal을 보여줄지 여부를 저장.
   const [modal, setModal] = useState(false);
@@ -74,36 +82,52 @@ const PrizedUpdater = ({
     return ownPostResult;
   };
 
+  if (error) {
+    return (
+      <ErrorNotifier
+        errorTitle="ERROR!"
+        errorMessage="오류가 발생했습니다. 다시 시도해주세요"
+      />
+    );
+  }
+
   return (
     <div>
       <EmptySpace />
-      {isPrizeEmpty ? (
-        <div>
-          {/* 수상 작품 목록이 등록되어있지 않은 경우 */}
-          <AlerterHolder>
-            <h1>아직 등록된 수상 작품이 없습니다.</h1>
-            <p>개최자가 아직 수상 작품을 등록하지 않았습니다.</p>
+      {!loading &&
+        (isPrizeEmpty ? (
+          <ResponsiveHolder>
+            {/* 수상 작품 목록이 등록되어있지 않은 경우 */}
+            <AlerterHolder>
+              <h1>아직 등록된 수상 작품이 없습니다.</h1>
+              <p>개최자가 아직 수상 작품을 등록하지 않았습니다.</p>
+              {isOwnPost() ? (
+                <UpdateButton onClick={onModalClick}>
+                  수상 작품 등록
+                </UpdateButton>
+              ) : null}
+            </AlerterHolder>
+            <EmptySpace />
+            <EmptySpace />
+            <EmptySpace />
+          </ResponsiveHolder>
+        ) : (
+          <div>
+            {/* 수상 작품 목록이 존재하는 경우 */}
             {isOwnPost() ? (
-              <UpdateButton onClick={onModalClick}>수상 작품 등록</UpdateButton>
+              <ResponsiveHolder>
+                <ListExistButtonHolder>
+                  <UpdateButton onClick={onModalClick}>
+                    수상 목록 수정
+                  </UpdateButton>
+                </ListExistButtonHolder>
+              </ResponsiveHolder>
             ) : null}
-          </AlerterHolder>
-          <EmptySpace />
-          <EmptySpace />
-          <EmptySpace />
-        </div>
-      ) : (
-        <div>
-          {/* 수상 작품 목록이 존재하는 경우 */}
-          {isOwnPost() ? (
-            <ListExistButtonHolder>
-              <UpdateButton onClick={onModalClick}>수상 목록 수정</UpdateButton>
-            </ListExistButtonHolder>
-          ) : null}
-          <PrizedList prized={prized} />
-          <EmptySpace />
-          <EmptySpace />
-        </div>
-      )}
+            <PrizedList prized={prized} post={post} loading={loading} />
+            <EmptySpace />
+            <EmptySpace />
+          </div>
+        ))}
       <PrizeModal
         contents={contents}
         visible={modal}
