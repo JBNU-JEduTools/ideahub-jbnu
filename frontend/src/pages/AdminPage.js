@@ -5,6 +5,7 @@ import palette from '../lib/styles/palette';
 import BottomInfo from '../components/common/BottomInfo';
 import HeaderWithHamburger from '../components/common/HeaderWithHamburger';
 import AdminContainer from '../containers/administer/AdminContainer';
+import ToTopButton from '../components/common/ToTopButton';
 
 const Spacer = styled.div`
   height: 2rem;
@@ -17,6 +18,7 @@ const AdminPage = () => {
       <Spacer />
       <TopSpace title="Administer" description="관리자 페이지" />
       <AdminContainer />
+      <ToTopButton />
       <BottomInfo />
     </div>
   );

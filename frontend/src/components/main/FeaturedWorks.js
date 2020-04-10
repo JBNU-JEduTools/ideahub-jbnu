@@ -15,7 +15,7 @@ const BackgroundHolder = styled.div`
   padding: 3rem 0;
   padding-bottom: 5rem;
   width: 100%;
-  background: #f8ece0;
+  background: #fbf5f0;
 `;
 const FeaturedWorksListHolder = styled(Responsive)`
   text-align: center;

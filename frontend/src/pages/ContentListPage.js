@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import palette from '../lib/styles/palette';
 import BottomInfo from '../components/common/BottomInfo';
 import HeaderWithHamburger from '../components/common/HeaderWithHamburger';
+import ToTopButton from '../components/common/ToTopButton';
 
 const Spacer = styled.div`
   height: 2rem;
@@ -17,6 +18,7 @@ const ContentListPage = () => {
       <Spacer />
       <TopSpace title="작품 정보" description="작품 정보 및 소개" />
       <ContentListContainer />
+      <ToTopButton />
       <BottomInfo />
     </div>
   );

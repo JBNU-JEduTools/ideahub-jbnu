@@ -4,6 +4,7 @@ import HeaderWithHamburger from '../components/common/HeaderWithHamburger';
 import MainSlideShow from '../components/main/MainSlideShow';
 import MainViewerContainer from '../containers/main/MainViewerContainer';
 import MainSubMenu from '../components/main/MainSubMenu';
+import ToTopButton from '../components/common/ToTopButton';
 
 const MainPage = () => {
   return (
@@ -12,6 +13,7 @@ const MainPage = () => {
       <MainSlideShow />
       <MainSubMenu />
       <MainViewerContainer />
+      <ToTopButton />
       <BottomInfo />
     </div>
   );
