@@ -36,7 +36,7 @@ export const checkOwnContent = (ctx, next) => {
 };
 
 //포스트 작성, async로 비동기 처리.
-export const write = async ctx => {
+export const write = async (ctx) => {
   //객체의 필드를 검증하기 위함
   const schema = Joi.object().keys({
     title: Joi.string().required(),
@@ -85,7 +85,7 @@ export const write = async ctx => {
 };
 
 //removes html tags, slices paragraph.
-const removeHtmlAndShorten = body => {
+const removeHtmlAndShorten = (body) => {
   const filtered = sanitizeHtml(body, {
     allowedTags: [],
     //   'h1',
@@ -113,7 +113,7 @@ const removeHtmlAndShorten = body => {
 };
 
 //포스트 목록 조회
-export const list = async ctx => {
+export const list = async (ctx) => {
   //current page number
   const page = parseInt(ctx.query.page || '1', 10);
 
@@ -136,7 +136,7 @@ export const list = async ctx => {
       .exec();
     const contentCount = await Content.countDocuments(query).exec();
     ctx.set('Last-Page', Math.ceil(contentCount / 10));
-    ctx.body = contents.map(content => ({
+    ctx.body = contents.map((content) => ({
       ...content,
       body: removeHtmlAndShorten(content.body),
     }));
@@ -146,7 +146,7 @@ export const list = async ctx => {
 };
 
 //특정 id를 갖는 포스트 조회
-export const read = async ctx => {
+export const read = async (ctx) => {
   const { id } = ctx.params;
   try {
     const content = await Content.findById(id).exec();
@@ -162,7 +162,7 @@ export const read = async ctx => {
 };
 
 //특정 id를 갖는 content 삭제
-export const remove = async ctx => {
+export const remove = async (ctx) => {
   const { id } = ctx.params;
   try {
     await Content.findByIdAndRemove(id).exec();
@@ -172,7 +172,7 @@ export const remove = async ctx => {
   }
 };
 
-export const update = async ctx => {
+export const update = async (ctx) => {
   //객체의 필드를 검증하기 위함
   const schema = Joi.object().keys({
     title: Joi.string(),
@@ -190,6 +190,7 @@ export const update = async ctx => {
   const result = Joi.validate(ctx.request.body, schema);
   if (result.error) {
     ctx.status = 400; //bad request
+    console.log('the result of Joi test was false.');
     ctx.body = result.error;
     return;
   }

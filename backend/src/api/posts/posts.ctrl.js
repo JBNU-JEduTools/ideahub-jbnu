@@ -37,7 +37,7 @@ export const checkOwnPost = (ctx, next) => {
   return next();
 };
 
-export const write = async ctx => {
+export const write = async (ctx) => {
   const schema = Joi.object().keys({
     title: Joi.string().required(),
     category: Joi.string().required(),
@@ -81,7 +81,7 @@ export const write = async ctx => {
 };
 
 //removes html tags, slices paragraph.
-const removeHtmlAndShorten = body => {
+const removeHtmlAndShorten = (body) => {
   const filtered = sanitizeHtml(body, {
     allowedTags: [],
     //   'h1',
@@ -109,7 +109,7 @@ const removeHtmlAndShorten = body => {
 };
 
 //������ ��ȸ
-export const list = async ctx => {
+export const list = async (ctx) => {
   //http://localhost:4000/api/posts?page=2 �� �������� �����Ͽ� ��ȸ
   //page �������� ������ �� ���� int�� �Ľ��ϰ�, ������ 1�� �Ľ�
   const page = parseInt(ctx.query.page || '1', 5);
@@ -135,8 +135,8 @@ export const list = async ctx => {
     const postCount = await Post.countDocuments().exec();
     ctx.set('Last-Page', Math.ceil(postCount / 5));
     ctx.body = posts
-      .map(post => post.toJSON())
-      .map(post => ({
+      .map((post) => post.toJSON())
+      .map((post) => ({
         ...post,
         description: removeHtmlAndShorten(post.description),
       }));
@@ -146,11 +146,11 @@ export const list = async ctx => {
 };
 
 //getPostById에서 ctx.state.post에 포스트 정보를 넣어주므로.
-export const read = ctx => {
+export const read = (ctx) => {
   ctx.body = ctx.state.post;
 };
 
-export const remove = async ctx => {
+export const remove = async (ctx) => {
   const { id } = ctx.params;
   try {
     await Post.findByIdAndRemove(id).exec();
@@ -159,7 +159,7 @@ export const remove = async ctx => {
     ctx.throw(500, e);
   }
 };
-export const update = async ctx => {
+export const update = async (ctx) => {
   const schema = Joi.object().keys({
     title: Joi.string(),
     category: Joi.string(),
@@ -179,7 +179,9 @@ export const update = async ctx => {
 
   const { id } = ctx.params;
   try {
-    const post = Post.findByIdAndUpdate(id, ctx.request.body, {
+    //await 구문을 넣지 않았을 때에는, post에 프로미스가 할당되었으나, await구문을 넣어 해결.
+    //https://github.com/koajs/koa/issues/881
+    const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
       new: true,
     }).exec();
     if (!post) {

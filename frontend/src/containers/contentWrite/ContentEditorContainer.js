@@ -9,26 +9,20 @@ import {
 
 const ContentEditorContainer = () => {
   const dispatch = useDispatch();
-  const {
-    title,
-    body,
-    status,
-    videoURL,
-    team,
-    taggedContest,
-    contestName,
-  } = useSelector(({ contentWrite, contestName }) => ({
-    title: contentWrite.title,
-    body: contentWrite.body,
-    taggedContest: contentWrite.taggedContest,
-    videoURL: contentWrite.videoURL,
-    team: contentWrite.team,
-    status: contentWrite.status,
-    contestName: contestName.contestName,
-  }));
-  const onChangeField = useCallback(payload => dispatch(changeField(payload)), [
-    dispatch,
-  ]);
+  const { title, body, status, videoURL, team, taggedContest } = useSelector(
+    ({ contentWrite }) => ({
+      title: contentWrite.title,
+      body: contentWrite.body,
+      taggedContest: contentWrite.taggedContest,
+      videoURL: contentWrite.videoURL,
+      team: contentWrite.team,
+      status: contentWrite.status,
+    }),
+  );
+  const onChangeField = useCallback(
+    (payload) => dispatch(changeField(payload)),
+    [dispatch],
+  );
 
   useEffect(() => {
     return () => {
