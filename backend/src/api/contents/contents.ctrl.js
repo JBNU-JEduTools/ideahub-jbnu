@@ -189,15 +189,15 @@ export const update = async (ctx) => {
   //객체 필드 검증 결과가 result에 저장.
   const result = Joi.validate(ctx.request.body, schema);
   if (result.error) {
+    console.log(result.error);
     ctx.status = 400; //bad request
-    console.log('the result of Joi test was false.');
     ctx.body = result.error;
     return;
   }
 
   const { id } = ctx.params;
   try {
-    const content = Content.findByIdAndUpdate(id, ctx.request.body, {
+    const content = await Content.findByIdAndUpdate(id, ctx.request.body, {
       new: true,
     }).exec();
     if (!content) {

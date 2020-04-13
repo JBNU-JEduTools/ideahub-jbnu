@@ -181,6 +181,7 @@ export const update = async (ctx) => {
   try {
     //await 구문을 넣지 않았을 때에는, post에 프로미스가 할당되었으나, await구문을 넣어 해결.
     //https://github.com/koajs/koa/issues/881
+    //https://joshua1988.github.io/web-development/javascript/js-async-await/
     const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
       new: true,
     }).exec();

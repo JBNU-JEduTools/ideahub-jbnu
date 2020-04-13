@@ -150,7 +150,7 @@ const ContentViewer = ({
   const isUnstarButton = () => {
     if (user) {
       //star_edUser에 현재 유저가 존재하면, star 버튼이 unStar 버튼으로 대체되어야 함을 의미.
-      const isUnstar = star_edUser.find(item => item === user._id);
+      const isUnstar = star_edUser.find((item) => item === user._id);
       if (isUnstar) {
         return true;
       } else {
@@ -161,7 +161,10 @@ const ContentViewer = ({
 
   //자신이 content를 작성한 user인지 검사
   const isOwnContent = () => {
-    let ownContentResult = user && content && user._id === content.user._id;
+    const ownContentResult =
+      user &&
+      content &&
+      (user._id === content.user._id || user.role == 'admin');
     console.log('ownContentResult: ', ownContentResult);
     return ownContentResult;
   };
@@ -178,8 +181,10 @@ const ContentViewer = ({
           </TitleArea>
         </ContentHead>
 
-        {//자신이 작성한 작품이어야 버튼을 보여줌
-        isOwnContent() ? actionButtons : <div />}
+        {
+          //자신이 작성한 작품이어야 버튼을 보여줌
+          isOwnContent() ? actionButtons : <div />
+        }
 
         <iframe
           width="100%"

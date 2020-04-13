@@ -100,7 +100,7 @@ const PostViewer = ({
   let prized = null;
   if (contentsList) {
     prized = contentsList.filter(
-      contentItem => !isNaN(contentItem.prizedPlace),
+      (contentItem) => !isNaN(contentItem.prizedPlace),
     );
   }
 
@@ -108,7 +108,8 @@ const PostViewer = ({
   const { title, category, status, date, place, description } = post;
 
   const isOwnPost = () => {
-    let ownPostResult = user && post && user._id === post.user._id;
+    const ownPostResult =
+      user && post && (user._id === post.user._id || user.role == 'admin');
     console.log('ownPostResult: ', ownPostResult);
     return ownPostResult;
   };
@@ -127,44 +128,46 @@ const PostViewer = ({
   return (
     <div>
       <SubMenuBar post={post} />
-      {//현재 URL의 끝에 prized가 붙어있으면 수상 목록 페이지를 보여주고, 아니면 대회 정보 페이지 보여주기
-      isPrizePage ? (
-        <div>
-          <PrizeListBlock>
-            <PrizedUpdaterContainer
-              isPrizeEmpty={isPrizeEmpty}
-              prized={prized}
-            />
-          </PrizeListBlock>
-        </div>
-      ) : (
-        <div>
-          <ContentsHolder>
-            <PostViewerBlock>
-              <PostHead>
-                <SubContents>카테고리 #{category}</SubContents>
-                <h1>{title}</h1>
-              </PostHead>
-              {isOwnPost() ? actionButtons : <div />}
-              <PostContent
-                dangerouslySetInnerHTML={{
-                  __html: description,
-                }}
+      {
+        //현재 URL의 끝에 prized가 붙어있으면 수상 목록 페이지를 보여주고, 아니면 대회 정보 페이지 보여주기
+        isPrizePage ? (
+          <div>
+            <PrizeListBlock>
+              <PrizedUpdaterContainer
+                isPrizeEmpty={isPrizeEmpty}
+                prized={prized}
               />
-              <Disqus.DiscussionEmbed shortname={disqusShortname} />
-            </PostViewerBlock>
-            <PostInfoSide
-              title={title}
-              category={category}
-              status={status}
-              date={date}
-              place={place}
-              user={user}
-              onWrite={onWrite}
-            />
-          </ContentsHolder>
-        </div>
-      )}
+            </PrizeListBlock>
+          </div>
+        ) : (
+          <div>
+            <ContentsHolder>
+              <PostViewerBlock>
+                <PostHead>
+                  <SubContents>카테고리 #{category}</SubContents>
+                  <h1>{title}</h1>
+                </PostHead>
+                {isOwnPost() ? actionButtons : <div />}
+                <PostContent
+                  dangerouslySetInnerHTML={{
+                    __html: description,
+                  }}
+                />
+                <Disqus.DiscussionEmbed shortname={disqusShortname} />
+              </PostViewerBlock>
+              <PostInfoSide
+                title={title}
+                category={category}
+                status={status}
+                date={date}
+                place={place}
+                user={user}
+                onWrite={onWrite}
+              />
+            </ContentsHolder>
+          </div>
+        )
+      }
     </div>
   );
 };
