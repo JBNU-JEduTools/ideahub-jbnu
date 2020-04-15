@@ -77,23 +77,23 @@ const ContentEditor = ({
     quillInstance.current.root.innerHTML = body;
   }, [body]);
 
-  const onChangeTitle = e => {
+  const onChangeTitle = (e) => {
     onChangeField({ key: 'title', value: e.target.value });
   };
 
-  const onChangetaggedContest = e => {
+  const onChangetaggedContest = (e) => {
     onChangeField({ key: 'taggedContest', value: e.target.value });
   };
 
-  const onChangevideoURL = e => {
+  const onChangevideoURL = (e) => {
     onChangeField({ key: 'videoURL', value: e.target.value });
   };
 
-  const onChangeTeam = e => {
+  const onChangeTeam = (e) => {
     onChangeField({ key: 'team', value: e.target.value });
   };
 
-  const onChangeStatus = e => {
+  const onChangeStatus = (e) => {
     onChangeField({ key: 'status', value: e.target.value });
   };
 
@@ -145,9 +145,9 @@ const ContentEditor = ({
         />
       </Holder>
       <Holder>
-        <div>유튜브 URL</div>
+        <div>유튜브 동영상 ID</div>
         <StyledInput
-          placeholder="유튜브 영상 URL"
+          placeholder="유튜브 동영상 ID"
           onChange={onChangevideoURL}
           value={videoURL}
         />
