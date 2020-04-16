@@ -9,16 +9,23 @@ import {
 
 const ContentEditorContainer = () => {
   const dispatch = useDispatch();
-  const { title, body, status, videoURL, team, taggedContest } = useSelector(
-    ({ contentWrite }) => ({
-      title: contentWrite.title,
-      body: contentWrite.body,
-      taggedContest: contentWrite.taggedContest,
-      videoURL: contentWrite.videoURL,
-      team: contentWrite.team,
-      status: contentWrite.status,
-    }),
-  );
+  const {
+    title,
+    body,
+    status,
+    videoURL,
+    team,
+    taggedContest,
+    github,
+  } = useSelector(({ contentWrite }) => ({
+    title: contentWrite.title,
+    body: contentWrite.body,
+    taggedContest: contentWrite.taggedContest,
+    videoURL: contentWrite.videoURL,
+    team: contentWrite.team,
+    status: contentWrite.status,
+    github: contentWrite.github,
+  }));
   const onChangeField = useCallback(
     (payload) => dispatch(changeField(payload)),
     [dispatch],
@@ -40,6 +47,7 @@ const ContentEditorContainer = () => {
       videoURL={videoURL}
       team={team}
       status={status}
+      github={github}
     />
   );
 };

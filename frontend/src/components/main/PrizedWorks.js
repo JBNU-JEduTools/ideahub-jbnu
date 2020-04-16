@@ -92,7 +92,10 @@ const PrizedWorks = ({ prizedWorks }) => {
       <PrizedWorksWrapper>
         {prizedWorks.map((prizedItem) => {
           return (
-            <PrizedWorkItem to={`/content/${prizedItem._id}`}>
+            <PrizedWorkItem
+              key={prizedItem._id}
+              to={`/content/${prizedItem._id}`}
+            >
               <img
                 src={thumbnails[getRandomNum(0, 6)]}
                 alt="prized work thumbnail"

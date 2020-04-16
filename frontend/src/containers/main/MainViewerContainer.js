@@ -2,21 +2,21 @@ import React, { useEffect } from 'react';
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { listContents } from '../../modules/contents';
+import { listAllContents } from '../../modules/main';
 import MainViewer from '../../components/main/MainViewer';
 
 const MainViewerContainer = ({ location }) => {
   const dispatch = useDispatch();
-  const { contents, error, loading } = useSelector(({ contents, loading }) => ({
-    contents: contents.contents,
-    error: contents.error,
-    loading: loading['contents/LIST_CONTENTS'],
+  const { contents, error, loading } = useSelector(({ main, loading }) => ({
+    contents: main.allContents,
+    error: main.error,
+    loading: loading['main/LIST_ALL_CONTENTS'],
   }));
   useEffect(() => {
-    const { taggedContest, page } = qs.parse(location.search, {
-      ignoreQueryPrefix: true,
-    });
-    dispatch(listContents({ taggedContest, page }));
+    // const { taggedContest, page } = qs.parse(location.search, {
+    //   ignoreQueryPrefix: true,
+    // });
+    dispatch(listAllContents());
   }, [dispatch, location.search]);
 
   console.log(contents);

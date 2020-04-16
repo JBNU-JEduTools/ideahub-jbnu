@@ -12,6 +12,7 @@ const ContentSchema = new Schema({
   team: String,
   status: String,
   stars: Number,
+  github: String,
   publishDate: {
     type: Date,
   },

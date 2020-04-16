@@ -24,7 +24,7 @@ const [
 //action creating functions
 export const setInitialState = createAction(
   SET_INITIAL_STATE,
-  contestName => contestName,
+  (contestName) => contestName,
 );
 export const initialize = createAction(INITIALIZE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
@@ -33,28 +33,30 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
 }));
 export const contentWritePost = createAction(
   CONTENT_WRITE_POST,
-  ({ title, body, taggedContest, videoURL, team, status }) => ({
+  ({ title, body, taggedContest, videoURL, team, status, github }) => ({
     title,
     body,
     taggedContest,
     videoURL,
     team,
     status,
+    github,
   }),
 );
 export const setOriginalContent = createAction(
   SET_ORIGINAL_CONTENT,
-  content => content,
+  (content) => content,
 );
 export const updateContent = createAction(
   UPDATE_CONTENT,
-  ({ title, body, taggedContest, videoURL, team, status }) => ({
+  ({ title, body, taggedContest, videoURL, team, status, github }) => ({
     title,
     body,
     taggedContest,
     videoURL,
     team,
     status,
+    github,
   }),
 );
 
@@ -80,6 +82,7 @@ const initialState = {
   videoURL: '',
   team: '',
   status: '',
+  github: '',
   content: null,
   contentError: null,
   originalContentId: null,
@@ -92,12 +95,12 @@ const contentWrite = handleActions(
       ...initialState,
       taggedContest: contestName,
     }),
-    [INITIALIZE]: state => initialState,
+    [INITIALIZE]: (state) => initialState,
     [CHANGE_FIELD]: (state, { payload: { key, value } }) => ({
       ...state,
       [key]: value,
     }),
-    [CONTENT_WRITE_POST]: state => ({
+    [CONTENT_WRITE_POST]: (state) => ({
       ...state,
       content: null,
       contentError: null,
@@ -118,6 +121,7 @@ const contentWrite = handleActions(
       videoURL: content.videoURL,
       team: content.team,
       status: content.status,
+      github: content.github,
       stars: content.stars,
       originalContentId: content._id,
     }),

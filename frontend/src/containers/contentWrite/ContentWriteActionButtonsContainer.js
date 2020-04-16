@@ -13,6 +13,7 @@ const ContentWriteActionButtonsContainer = ({ history }) => {
     videoURL,
     team,
     status,
+    github,
     content,
     contentError,
     originalContentId,
@@ -23,6 +24,7 @@ const ContentWriteActionButtonsContainer = ({ history }) => {
     videoURL: contentWrite.videoURL,
     team: contentWrite.team,
     status: contentWrite.status,
+    github: contentWrite.github,
     content: contentWrite.content,
     contentError: contentWrite.contentError,
     originalContentId: contentWrite.originalContentId,
@@ -38,6 +40,7 @@ const ContentWriteActionButtonsContainer = ({ history }) => {
           videoURL,
           team,
           status,
+          github,
           id: originalContentId,
         }),
       );
@@ -51,6 +54,7 @@ const ContentWriteActionButtonsContainer = ({ history }) => {
         videoURL,
         team,
         status,
+        github,
       }),
     );
   };

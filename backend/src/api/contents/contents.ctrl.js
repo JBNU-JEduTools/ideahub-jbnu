@@ -49,7 +49,7 @@ export const write = async (ctx) => {
       stars: Joi.number(),
       star_edUser: Joi.array(),
     })
-    .unknown(); //videoURL이 비어있어도 등록 가능하도록.
+    .unknown(); //videoURL, github가 비어있어도 등록 가능하도록.
 
   //객체 필드 검증 결과가 result에 저장.
   const result = Joi.validate(ctx.request.body, schema);
@@ -67,6 +67,7 @@ export const write = async (ctx) => {
     videoURL,
     team,
     status,
+    github,
   } = ctx.request.body;
   const content = new Content({
     title,
@@ -75,6 +76,7 @@ export const write = async (ctx) => {
     videoURL,
     team,
     status,
+    github,
     stars: 0,
     star_edUser: [], //star를 누른 유저들의 id를 저장하는 array
     user: ctx.state.user,
@@ -118,7 +120,7 @@ const removeHtmlAndShorten = (body) => {
 //포스트 목록 조회
 export const list = async (ctx) => {
   //current page number
-  const page = parseInt(ctx.query.page || '1', 10);
+  const page = parseInt(ctx.query.page || '1', 12);
 
   if (page < 1) {
     ctx.status = 400;
@@ -133,12 +135,29 @@ export const list = async (ctx) => {
     //Content는 content 모델
     const contents = await Content.find(query)
       .sort({ _id: -1 })
-      .limit(10)
-      .skip((page - 1) * 10)
+      .limit(12)
+      .skip((page - 1) * 12)
       .lean()
       .exec();
     const contentCount = await Content.countDocuments(query).exec();
-    ctx.set('Last-Page', Math.ceil(contentCount / 10));
+    ctx.set('Last-Page', Math.ceil(contentCount / 12));
+    ctx.body = contents.map((content) => ({
+      ...content,
+      body: removeHtmlAndShorten(content.body),
+    }));
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+//전체 contents를 불러옴
+export const fullList = async (ctx) => {
+  const contest = ctx.query.taggedContest;
+  const query = contest ? { taggedContest: contest } : {};
+
+  try {
+    const contents = await Content.find(query).sort({ _id: -1 }).lean().exec();
+
     ctx.body = contents.map((content) => ({
       ...content,
       body: removeHtmlAndShorten(content.body),
@@ -177,17 +196,18 @@ export const remove = async (ctx) => {
 
 export const update = async (ctx) => {
   //객체의 필드를 검증하기 위함
-  const schema = Joi.object().keys({
-    title: Joi.string(),
-    body: Joi.string(),
-    taggedContest: Joi.string(),
-    videoURL: Joi.string(),
-    team: Joi.string(),
-    status: Joi.string(),
-    stars: Joi.number(),
-    star_edUser: Joi.array(),
-    prizedPlace: Joi.string(),
-  });
+  const schema = Joi.object()
+    .keys({
+      title: Joi.string(),
+      body: Joi.string(),
+      taggedContest: Joi.string(),
+      team: Joi.string(),
+      status: Joi.string(),
+      stars: Joi.number(),
+      star_edUser: Joi.array(),
+      prizedPlace: Joi.string(),
+    })
+    .unknown();
 
   //객체 필드 검증 결과가 result에 저장.
   const result = Joi.validate(ctx.request.body, schema);

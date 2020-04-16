@@ -144,6 +144,7 @@ const ContentViewer = ({
     status,
     stars,
     star_edUser,
+    github,
   } = content;
 
   //현재 유저가 star를 눌렀는지 안눌렀는지.

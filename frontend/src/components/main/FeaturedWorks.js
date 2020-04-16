@@ -98,7 +98,10 @@ const FeaturedWorks = ({ featuredWorks }) => {
         <FeaturedWorksWrapper>
           {featuredWorks.map((featuredItem) => {
             return (
-              <FeaturedWorkItem to={`/content/${featuredItem._id}`}>
+              <FeaturedWorkItem
+                key={featuredItem._id}
+                to={`/content/${featuredItem._id}`}
+              >
                 <img
                   src={thumbnails[getRandomNum(0, 6)]}
                   alt="featured work thumbnail"

@@ -8,6 +8,7 @@ export const contentWritePost = ({
   videoURL,
   team,
   status,
+  github,
 }) =>
   client.post('/api/contents', {
     title,
@@ -16,9 +17,10 @@ export const contentWritePost = ({
     videoURL,
     team,
     status,
+    github,
   });
 
-export const readContent = id => client.get(`/api/contents/${id}`);
+export const readContent = (id) => client.get(`/api/contents/${id}`);
 
 export const listContents = ({ page, taggedContest }) => {
   const queryString = qs.stringify({
@@ -41,6 +43,7 @@ export const updateContent = ({
   team,
   status,
   stars,
+  github,
 }) =>
   client.patch(`/api/contents/${id}`, {
     title,
@@ -50,9 +53,10 @@ export const updateContent = ({
     team,
     status,
     stars,
+    github,
   });
 
-export const removeContent = id => client.delete(`/api/contents/${id}`);
+export const removeContent = (id) => client.delete(`/api/contents/${id}`);
 
 //star 버튼 클릭 시 현재 작품의 star에 1을 더하고, star를 누른 유저 목록에 현재 로그인한 유저 등록.
 export const giveStar = ({ content, user }) => {
@@ -60,7 +64,7 @@ export const giveStar = ({ content, user }) => {
   if (user) {
     const { _id, stars, star_edUser } = content;
     //star누른 유저 목록에 현재 로그인한 유저가 없을 경우에만.
-    const isInList = star_edUser.find(item => item === user._id);
+    const isInList = star_edUser.find((item) => item === user._id);
     if (!isInList) {
       return client.patch(`/api/contents/${_id}`, {
         stars: stars + 1,
@@ -76,7 +80,7 @@ export const unStar = ({ content, user }) => {
   if (user) {
     const { _id, stars, star_edUser } = content;
     //star누른 유저 목록에 현재 로그인한 유저가 없을 경우에만.
-    const indexOfItem = star_edUser.findIndex(item => item === user._id);
+    const indexOfItem = star_edUser.findIndex((item) => item === user._id);
     //유저 목록에 현재 유저가 존재 할 때, unStar 작업 진행.
     if (indexOfItem > -1) {
       let star_edUserCopy = JSON.parse(JSON.stringify(star_edUser));

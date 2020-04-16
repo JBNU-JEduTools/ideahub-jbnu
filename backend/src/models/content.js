@@ -10,6 +10,7 @@ const ContentSchema = new Schema({
   team: String,
   status: String,
   stars: Number,
+  github: String,
   //작품에 star를 누른 유저의 _id 목록.
   star_edUser: [String],
   publishDate: {

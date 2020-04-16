@@ -33,12 +33,7 @@ const MainViewer = ({ contents, loading, error }) => {
 
   if (!loading && contents) {
     //star 개수 순으로 작품들을 정렬.
-    featuredWorks = contents.sort(
-      //sort의 파라미터로 순서를 정해주는 함수를 넣어줌
-      (content1, content2) => {
-        return content1.stars <= content2.stars ? 1 : -1;
-      },
-    );
+    featuredWorks = contents;
     //수상 우선순위 순으로 작품들을 정렬
     prizedWorks = contents
       //수상 우선순위가 숫자인(수상 목록 안에 있는) 작품들을 filter한 뒤,
