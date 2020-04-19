@@ -5,6 +5,7 @@ export const contentWritePost = ({
   title,
   body,
   taggedContest,
+  taggedContestID,
   videoURL,
   team,
   status,
@@ -14,6 +15,7 @@ export const contentWritePost = ({
     title,
     body,
     taggedContest,
+    taggedContestID,
     videoURL,
     team,
     status,
@@ -22,14 +24,14 @@ export const contentWritePost = ({
 
 export const readContent = (id) => client.get(`/api/contents/${id}`);
 
-export const listContents = ({ page, taggedContest }) => {
+export const listContents = ({ page, taggedContestID }) => {
   const queryString = qs.stringify({
     page,
-    taggedContest,
+    taggedContestID,
   });
   return client.get(`/api/contents?${queryString}`, {
     params: {
-      taggedContest: queryString.taggedContest,
+      taggedContestID: queryString.taggedContestID,
     },
   });
 };
@@ -39,6 +41,7 @@ export const updateContent = ({
   title,
   body,
   taggedContest,
+  taggedContestID,
   videoURL,
   team,
   status,
@@ -49,6 +52,7 @@ export const updateContent = ({
     title,
     body,
     taggedContest,
+    taggedContestID,
     videoURL,
     team,
     status,

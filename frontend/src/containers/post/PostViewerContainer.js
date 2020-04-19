@@ -17,20 +17,20 @@ const PostViewerContainer = ({ match, history }) => {
   const dispatch = useDispatch();
   //post === state.post.post, error === state.post.error, ...
   const { post, error, loading, user, contestName, contentsList } = useSelector(
-    ({ post, loading, user, contestName, contentsList }) => ({
+    ({ post, loading, user, contestName, contestID, contentsList }) => ({
       //state.post, state.loading, state.user
       post: post.post,
       error: post.error,
       loading: loading['post/READ_POST'],
       user: user.user,
-      contestName: contestName.contestName,
+      contestName: contestName,
       contentsList: post.contentsList,
     }),
   );
 
   //대회 정보 로딩이 끝난 후, contestName 상태와 현재 포스트의 제목이 다른 경우 contestName 상태를 업데이트.
-  if (post && loading && contestName !== post.title) {
-    dispatch(setContestName(post.title));
+  if (post && loading && contestName.contestName !== post.title) {
+    dispatch(setContestName(post));
   }
 
   useEffect(() => {

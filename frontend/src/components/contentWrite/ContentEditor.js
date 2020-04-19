@@ -85,6 +85,7 @@ const ContentEditor = ({
   team,
   onChangeField,
   taggedContest,
+  taggedContestID,
   github,
 }) => {
   //videoURL 옵션을 보여줄지 결정.

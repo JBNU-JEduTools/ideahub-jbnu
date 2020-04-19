@@ -20,7 +20,7 @@ export const writePost = ({
   });
 
 //requests post info
-export const readPost = id => client.get(`/api/posts/${id}`);
+export const readPost = (id) => client.get(`/api/posts/${id}`);
 
 export const listPosts = ({ page, username }) => {
   const queryString = qs.stringify({
@@ -48,14 +48,14 @@ export const updatePost = ({
     description,
   });
 
-export const removePost = id => client.delete(`/api/posts/${id}`);
+export const removePost = (id) => client.delete(`/api/posts/${id}`);
 
 //특정 대회(taggedContest)에 등록된 작품 목록을 받아옴.
-export const listContentItem = taggedContest => {
-  const query = qs.stringify({ taggedContest });
-  console.log('taggedContest:', taggedContest);
+export const listContentItem = (taggedContestID) => {
+  const query = qs.stringify({ taggedContestID });
+  console.log('taggedContestID:', taggedContestID);
 
   return client.get(`/api/contents?${query}`, {
-    taggedContest,
+    taggedContestID,
   });
 };

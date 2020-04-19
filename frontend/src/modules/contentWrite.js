@@ -22,10 +22,7 @@ const [
 ] = createRequestActionTypes('contentwrite/UPDATE_CONTENT'); //포스트 수정
 
 //action creating functions
-export const setInitialState = createAction(
-  SET_INITIAL_STATE,
-  (contestName) => contestName,
-);
+export const setInitialState = createAction(SET_INITIAL_STATE);
 export const initialize = createAction(INITIALIZE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
@@ -33,10 +30,20 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
 }));
 export const contentWritePost = createAction(
   CONTENT_WRITE_POST,
-  ({ title, body, taggedContest, videoURL, team, status, github }) => ({
+  ({
     title,
     body,
     taggedContest,
+    taggedContestID,
+    videoURL,
+    team,
+    status,
+    github,
+  }) => ({
+    title,
+    body,
+    taggedContest,
+    taggedContestID,
     videoURL,
     team,
     status,
@@ -49,10 +56,20 @@ export const setOriginalContent = createAction(
 );
 export const updateContent = createAction(
   UPDATE_CONTENT,
-  ({ title, body, taggedContest, videoURL, team, status, github }) => ({
+  ({
     title,
     body,
     taggedContest,
+    taggedContestID,
+    videoURL,
+    team,
+    status,
+    github,
+  }) => ({
+    title,
+    body,
+    taggedContest,
+    taggedContestID,
     videoURL,
     team,
     status,
@@ -79,6 +96,7 @@ const initialState = {
   title: '',
   body: '',
   taggedContest: '',
+  taggedContestID: '',
   videoURL: '',
   team: '',
   status: '',
@@ -93,7 +111,8 @@ const contentWrite = handleActions(
   {
     [SET_INITIAL_STATE]: (state, { payload: contestName }) => ({
       ...initialState,
-      taggedContest: contestName,
+      taggedContest: contestName.contestName,
+      taggedContestID: contestName.contestID,
     }),
     [INITIALIZE]: (state) => initialState,
     [CHANGE_FIELD]: (state, { payload: { key, value } }) => ({
@@ -118,6 +137,7 @@ const contentWrite = handleActions(
       title: content.title,
       body: content.body,
       taggedContest: content.taggedContest,
+      taggedContestID: content.taggedContestID,
       videoURL: content.videoURL,
       team: content.team,
       status: content.status,

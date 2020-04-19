@@ -19,7 +19,7 @@ const StyledTextContainer = styled.div`
   margin-bottom: 1rem;
   padding: 0 0.5rem;
   text-align: center;
-  ${props =>
+  ${(props) =>
     props.summary &&
     css`
       padding-bottom: 0.75rem;
@@ -55,7 +55,14 @@ const StatusBox = styled.div`
   padding-top: 2px;
 `;
 
-const ContentInfoSide = ({ title, taggedContest, team, status, stars }) => {
+const ContentInfoSide = ({
+  title,
+  taggedContest,
+  taggedContestID,
+  team,
+  status,
+  stars,
+}) => {
   return (
     <Wraper>
       <StyledTextContainer summary>Summary</StyledTextContainer>

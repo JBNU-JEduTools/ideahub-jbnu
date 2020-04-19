@@ -17,7 +17,7 @@ const StyledTextContainer = styled.div`
   color: ${palette.gray[7]}
   margin-bottom: 1rem;
   text-align: center;
-  ${props =>
+  ${(props) =>
     props.summary &&
     css`
       padding-bottom: 0.75rem;
@@ -68,6 +68,7 @@ const FakeButton = styled.div`
 `;
 
 const PostInfoSide = ({
+  _id,
   title,
   category,
   status,
@@ -122,7 +123,7 @@ const PostInfoSide = ({
 
       {isAllowed()}
       <Button
-        to={`/contentlist?taggedContest=${title}`}
+        to={`/contentlist?taggedContestID=${_id}`}
         toDefaultColor
         fullWidth
       >

@@ -70,40 +70,45 @@ const TitleArea = styled.div`
 `;
 
 const StarBox = styled.div`
-  width: 10rem;
+  display: flex;
+  width: 100%;
+  justify-content: center;
   margin: auto;
   margin-top: 5rem;
   margin-bottom: 5rem;
-  border: 1px solid ${palette.gray[5]};
-  border-radius: 5px;
+  border-radius: 2px;
 `;
 
 const StarButton = styled.button`
-  width: 100%;
+  width: 12rem;
   height: 100%;
+  margin-right: 0.25rem;
+  background: ${palette.mainColor};
   padding: 1rem;
-  color: ${palette.mainColor};
+  color: white;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 1.5rem;
-  background: none;
+  font-size: 1.1rem;
   outline: none;
   cursor: pointer;
   border: none;
-  h1 {
-    color: ${palette.gray[7]};
-    font-size: 1rem;
-    margin: 0;
-  }
-  h2 {
-    font-weight: 100;
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-  }
+  border-radius: 2px;
+  font-weight: 100;
   &:hover {
-    background: ${palette.gray[1]};
+    background: ${palette.mainColorHovered};
   }
+`;
+
+const StarNum = styled.div`
+  height: 100%;
+  background: ${palette.gray[1]};
+  padding: 1rem;
+  color: ${palette.gray[6]};
+  text-align: center;
+  border: 1px solid ${palette.gray[3]};
+  border-radius: 2px;
+  font-weight: 100;
 `;
 
 const ContentViewer = ({
@@ -139,6 +144,7 @@ const ContentViewer = ({
     title,
     body,
     taggedContest,
+    taggedContestID,
     videoURL,
     team,
     status,
@@ -206,9 +212,9 @@ const ContentViewer = ({
 
         <StarBox>
           <StarButton onClick={onStar}>
-            <h1>{isUnstarButton() ? 'UNSTAR' : 'STAR'}</h1>
-            <h2>{stars}</h2>
+            {isUnstarButton() ? '추천 취소' : '추천하기'}
           </StarButton>
+          <StarNum>{stars}</StarNum>
         </StarBox>
 
         <Disqus.DiscussionEmbed shortname={disqusShortname} />

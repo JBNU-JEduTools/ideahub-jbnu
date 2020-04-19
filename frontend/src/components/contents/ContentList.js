@@ -164,6 +164,7 @@ const ContentItem = ({ content }) => {
   const {
     title,
     taggedContest,
+    taggedContestID,
     status,
     body,
     _id,
@@ -206,7 +207,7 @@ const ContentList = ({ contents, loading, error, showWriteButton }) => {
     <ContentListBlock>
       {!loading && contents && (
         <div>
-          {contents.map(content => {
+          {contents.map((content) => {
             return (
               <ContentItem
                 className="ContentItem"

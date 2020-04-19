@@ -16,11 +16,13 @@ const ContentEditorContainer = () => {
     videoURL,
     team,
     taggedContest,
+    taggedContestID,
     github,
   } = useSelector(({ contentWrite }) => ({
     title: contentWrite.title,
     body: contentWrite.body,
     taggedContest: contentWrite.taggedContest,
+    taggedContestID: contentWrite.taggedContestID,
     videoURL: contentWrite.videoURL,
     team: contentWrite.team,
     status: contentWrite.status,
@@ -44,6 +46,7 @@ const ContentEditorContainer = () => {
       title={title}
       body={body}
       taggedContest={taggedContest}
+      taggedContestID={taggedContestID}
       videoURL={videoURL}
       team={team}
       status={status}

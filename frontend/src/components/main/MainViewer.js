@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import Button from '../common/Button';
@@ -12,10 +12,6 @@ import MainSubMenuBar from './MainSubMenuBar';
 const MainViewerBlock = styled(Responsive)`
   margin-top: 3rem;
   text-align: center;
-`;
-
-const Spacer = styled.div`
-  height: 16rem;
 `;
 
 const MainViewer = ({ contents, loading, error }) => {

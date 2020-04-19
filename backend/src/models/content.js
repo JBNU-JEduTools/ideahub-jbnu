@@ -6,6 +6,7 @@ const ContentSchema = new Schema({
   title: String,
   body: String,
   taggedContest: String,
+  taggedContestID: String,
   videoURL: String,
   team: String,
   status: String,

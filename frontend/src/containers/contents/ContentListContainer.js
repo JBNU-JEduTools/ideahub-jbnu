@@ -16,10 +16,10 @@ const ContentListContainer = ({ location }) => {
     }),
   );
   useEffect(() => {
-    const { taggedContest, page } = qs.parse(location.search, {
+    const { taggedContestID, page } = qs.parse(location.search, {
       ignoreQueryPrefix: true,
     });
-    dispatch(listContents({ taggedContest, page }));
+    dispatch(listContents({ taggedContestID, page }));
   }, [dispatch, location.search]);
 
   return (

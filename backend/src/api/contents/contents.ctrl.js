@@ -64,6 +64,7 @@ export const write = async (ctx) => {
     title,
     body,
     taggedContest,
+    taggedContestID,
     videoURL,
     team,
     status,
@@ -73,6 +74,7 @@ export const write = async (ctx) => {
     title,
     body,
     taggedContest,
+    taggedContestID,
     videoURL,
     team,
     status,
@@ -128,8 +130,8 @@ export const list = async (ctx) => {
   }
 
   //get taggedContest from url
-  const contest = ctx.query.taggedContest;
-  const query = contest ? { taggedContest: contest } : {};
+  const contest = ctx.query.taggedContestID;
+  const query = contest ? { taggedContestID: contest } : {};
 
   try {
     //Content는 content 모델
@@ -152,8 +154,8 @@ export const list = async (ctx) => {
 
 //전체 contents를 불러옴
 export const fullList = async (ctx) => {
-  const contest = ctx.query.taggedContest;
-  const query = contest ? { taggedContest: contest } : {};
+  const contest = ctx.query.taggedContestID;
+  const query = contest ? { taggedContestID: contest } : {};
 
   try {
     const contents = await Content.find(query).sort({ _id: -1 }).lean().exec();

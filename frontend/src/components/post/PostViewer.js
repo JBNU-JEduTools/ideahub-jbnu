@@ -105,7 +105,7 @@ const PostViewer = ({
   }
 
   //contentsList는 현재 대회에 등록된 작품 목록.
-  const { title, category, status, date, place, description } = post;
+  const { _id, title, category, status, date, place, description } = post;
 
   const isOwnPost = () => {
     const ownPostResult =
@@ -163,6 +163,7 @@ const PostViewer = ({
                 place={place}
                 user={user}
                 onWrite={onWrite}
+                _id={_id}
               />
             </ContentsHolder>
           </div>

@@ -12,8 +12,8 @@ const removeHtmlAndShorten = (body) => {
 
 //전체 contents를 불러옴
 export const fullList = async (ctx) => {
-  const contest = ctx.query.taggedContest;
-  const query = contest ? { taggedContest: contest } : {};
+  const contest = ctx.query.taggedContestID;
+  const query = contest ? { taggedContestID: contest } : {};
 
   try {
     const contents = await Content.find(query)
