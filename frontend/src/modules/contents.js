@@ -31,13 +31,18 @@ export function* contentsSaga() {
 const initialState = {
   contents: null,
   error: null,
+  lastPage: 1,
 };
 
 const contents = handleActions(
   {
-    [LIST_CONTENTS_SUCCESS]: (state, { payload: contents }) => ({
+    [LIST_CONTENTS_SUCCESS]: (
+      state,
+      { payload: contents, meta: response },
+    ) => ({
       ...state,
       contents,
+      lastPage: parseInt(response.headers['last-page'], 10),
     }),
     [LIST_CONTENTS_FAILURE]: (state, { payload: error }) => ({
       ...state,

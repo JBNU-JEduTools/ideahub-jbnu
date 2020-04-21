@@ -62,6 +62,11 @@ const PostViewerContainer = ({ match, history }) => {
     }
   };
 
+  const toContentList = () => {
+    console.log(post._id);
+    history.push(`/contentlist?taggedContestID=${post._id}`);
+  };
+
   return (
     <PostViewer
       post={post}
@@ -71,6 +76,7 @@ const PostViewerContainer = ({ match, history }) => {
       actionButtons={<PostActionButtons onEdit={onEdit} onRemove={onRemove} />}
       contestName={contestName}
       onWrite={onWrite}
+      toContentList={toContentList}
       contentsList={contentsList}
     />
   );

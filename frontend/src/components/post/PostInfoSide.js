@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
+import { Link } from 'react-router-dom';
 
 const PostInfoSideBlock = styled.div`
   width: 300px;
@@ -76,6 +77,7 @@ const PostInfoSide = ({
   place,
   user,
   onWrite,
+  toContentList,
 }) => {
   //유저와 대회 상태에 따라 작품 등록 버튼을 활성화할지 결정.
   //결과에 따라 활성/비활성화된 버튼을 리턴함.
@@ -122,11 +124,7 @@ const PostInfoSide = ({
       </PostInfoSideBlock>
 
       {isAllowed()}
-      <Button
-        to={`/contentlist?taggedContestID=${_id}`}
-        toDefaultColor
-        fullWidth
-      >
+      <Button onClick={toContentList} toDefaultColor fullWidth>
         작품 목록
       </Button>
     </Wraper>

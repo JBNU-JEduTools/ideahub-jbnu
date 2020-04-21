@@ -73,6 +73,7 @@ const PostViewer = ({
   actionButtons,
   onWrite,
   contentsList,
+  toContentList,
 }) => {
   if (error) {
     if (error.response && error.response.status === 404) {
@@ -164,6 +165,7 @@ const PostViewer = ({
                 user={user}
                 onWrite={onWrite}
                 _id={_id}
+                toContentList={toContentList}
               />
             </ContentsHolder>
           </div>
