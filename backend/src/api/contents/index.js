@@ -30,6 +30,8 @@ content.patch(
   contentsCtrl.checkOwnContent,
   contentsCtrl.update,
 );
+//star 기능은 로그인 여부만 확인하면 됨
+content.patch('/star', checkLoggedIn, contentsCtrl.update);
 
 contents.use('/:id', contentsCtrl.getContentById, content.routes());
 

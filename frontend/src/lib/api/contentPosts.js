@@ -70,7 +70,7 @@ export const giveStar = ({ content, user }) => {
     //star누른 유저 목록에 현재 로그인한 유저가 없을 경우에만.
     const isInList = star_edUser.find((item) => item === user._id);
     if (!isInList) {
-      return client.patch(`/api/contents/${_id}`, {
+      return client.patch(`/api/contents/${_id}/star`, {
         stars: stars + 1,
         star_edUser: [...star_edUser, user._id],
       });
@@ -90,7 +90,7 @@ export const unStar = ({ content, user }) => {
       let star_edUserCopy = JSON.parse(JSON.stringify(star_edUser));
       star_edUserCopy.splice(indexOfItem, 1);
 
-      return client.patch(`/api/contents/${_id}`, {
+      return client.patch(`/api/contents/${_id}/star`, {
         stars: stars - 1,
         star_edUser: star_edUserCopy,
       });
