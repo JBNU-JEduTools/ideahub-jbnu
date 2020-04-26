@@ -57,6 +57,7 @@ export const setOriginalContent = createAction(
 export const updateContent = createAction(
   UPDATE_CONTENT,
   ({
+    id,
     title,
     body,
     taggedContest,
@@ -66,6 +67,7 @@ export const updateContent = createAction(
     status,
     github,
   }) => ({
+    id,
     title,
     body,
     taggedContest,

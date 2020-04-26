@@ -50,7 +50,7 @@ export const updatePost = ({
 
 export const removePost = (id) => client.delete(`/api/posts/${id}`);
 
-//특정 대회(taggedContest)에 등록된 작품 목록을 받아옴.
+//특정 대회(taggedContestID)에 등록된 작품 목록을 받아옴.
 export const listContentItem = (taggedContestID) => {
   const query = qs.stringify({ taggedContestID });
   console.log('taggedContestID:', taggedContestID);

@@ -8,29 +8,34 @@ import Responsive from '../common/Responsive';
 import prizeLeft from '../../images/prizeLeft.png';
 import prizeRight from '../../images/prizeRight.png';
 
-const WholeContentsHolder = styled.div`
+const WholeContentsHolder = styled(Responsive)`
+  margin-top: 3rem;
   background: #fbf8ef;
   padding: 3rem 0;
 `;
 
 const PrizedListHolder = styled(Responsive)`
-  margin-top: 3rem;
-  display: flex;
+  padding: 3rem 3rem;
+  margin-bottom: 5rem;
+  @media (max-width: 1152px) {
+    padding: 3rem 1rem;
+  }
 `;
 
 const PrizedItemHolder = styled(Link)`
+  display: flex;
   width: 100%;
-  float: right;
   padding: 1rem;
-  border: 1px solid ${palette.mainColor};
-  border-radius: 5px;
   margin-bottom: 0.5rem;
   word-break: break-all;
   background: white;
-  color: black;
+  color: ${palette.gray[8]};
   p {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    margin: 0.5rem 0.2rem;
+  }
+  &:hover {
+    background: ${palette.gray[2]};
   }
 `;
 
@@ -79,7 +84,7 @@ const TitleHolder = styled.div`
 const TitleImgHolder = styled.div`
   width: 100%;
   display: flex;
-  margin: 5rem 0;
+  margin: 4.5rem 0;
   justify-content: center;
   img {
     height: 15rem;
@@ -92,9 +97,24 @@ const TitleImgHolder = styled.div`
   }
 `;
 
-const BackgroundPainter = styled.div`
+const PrizedPlaceHolder = styled.div`
   width: 100%;
-  background: #fbf8ef;
+  color: black;
+  margin: 2rem 0 1rem 0;
+  border-left: 5px solid ${palette.mainColor};
+  padding: 0 0.6rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+`;
+
+const ThanksHolder = styled.div`
+  background: ${palette.mainColor};
+  opacity: 0.7;
+  color: white;
+  padding: 1rem 0;
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 1rem;
 `;
 
 //prizedItem는 post 객체 내의 배열 prized의 각각의 element를 나타냄.
@@ -102,8 +122,9 @@ const PrizedItem = ({ prizedItem }) => {
   const { _id, title, team } = prizedItem;
   return (
     <PrizedItemHolder to={`/content/${_id}`}>
-      <h1>{title}</h1>
-      <h2>{team}</h2>
+      <p>{team}</p>
+      <p>-</p>
+      <p>"{title}"</p>
     </PrizedItemHolder>
   );
 };
@@ -137,7 +158,7 @@ const PrizedList = ({ prized, post, loading }) => {
     //prizedListArray에 저장된 각각의 컴포넌트들을 모두 렌더링
     return (
       <div>
-        {prizedListArray.map(item => {
+        {prizedListArray.map((item) => {
           return item;
         })}
       </div>
@@ -147,16 +168,16 @@ const PrizedList = ({ prized, post, loading }) => {
   const showPrizedList = (currentPriority, prized, maxPriority) => {
     if (currentPriority > maxPriority) return null;
     //수상 작품 목록 중 우선순위가 currentPriority와 같은 것들만 골라 리스트를 만듦.
-    let tempPrized = prized.filter(item => {
+    let tempPrized = prized.filter((item) => {
       return item.prizedPlace == currentPriority; //item.prizedPlace의 type은 string이므로, ==를 사용.(형변환 후 비교)
     });
 
     return (
       <div>
-        <h1>{currentPriority}위</h1>
+        <PrizedPlaceHolder>{currentPriority}위</PrizedPlaceHolder>
         {!loading && prized && (
           <div>
-            {tempPrized.map(item => {
+            {tempPrized.map((item) => {
               return <PrizedItem prizedItem={item} key={item._id} />; //key를 지정하는 이유: 리스트 내부의 어떤 item 정보가 변경되었을 경우, list 전체를 리렌더링 하지 않고, 그 item만 리렌더링 하기 위해.
             })}
           </div>
@@ -177,11 +198,8 @@ const PrizedList = ({ prized, post, loading }) => {
         <img src={prizeRight} alter="prizeRight" />
       </TitleImgHolder>
 
-      <BackgroundPainter>
-        <PrizedListHolder>
-          <div>{showPrizedListHandler()}</div>
-        </PrizedListHolder>
-      </BackgroundPainter>
+      <PrizedListHolder>{showPrizedListHandler()}</PrizedListHolder>
+      <ThanksHolder>참여해주신 모든 분들 진심으로 감사합니다</ThanksHolder>
     </WholeContentsHolder>
   );
 };

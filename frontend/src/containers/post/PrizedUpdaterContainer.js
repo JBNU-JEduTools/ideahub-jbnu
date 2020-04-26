@@ -27,7 +27,7 @@ const PrizedUpdaterContainer = ({
     }),
   );
   useEffect(() => {
-    dispatch(listContentItem(post.title));
+    dispatch(listContentItem(post._id));
   }, [dispatch]);
 
   //수상 작품 등록 시 select에 변경이 있을 경우 즉시 실행.
