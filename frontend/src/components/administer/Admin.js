@@ -6,7 +6,7 @@ import ErrorNotifier from '../common/ErrorNotifier';
 import UserRoleUpdateButtons from './UserRoleUpdateButtons';
 
 const Wrapper = styled.div`
-  background: ${palette.gray[1]};
+  background: ${palette.gray[0]};
 `;
 
 const UserListHolder = styled(Responsive)``;
@@ -79,7 +79,7 @@ const Admin = ({
       <UserListHolder>
         {!loading && users && (
           <div>
-            {users.map(userItem => (
+            {users.map((userItem) => (
               <UserItem
                 userItem={userItem}
                 key={userItem._id}

@@ -6,6 +6,7 @@ import checkCRUDPermission from '../../lib/checkCRUDPermission';
 const posts = new Router();
 
 posts.get('/', postsCtrl.list);
+posts.get('/recommended', postsCtrl.listRecommendedPosts);
 posts.post('/', checkLoggedIn, checkCRUDPermission, postsCtrl.write);
 
 const post = new Router(); // /api/posts/:id

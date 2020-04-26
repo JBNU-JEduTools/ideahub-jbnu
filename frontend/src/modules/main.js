@@ -6,34 +6,57 @@ import * as mainAPI from '../lib/api/main';
 import { takeLatest } from 'redux-saga/effects';
 
 const [
-  LIST_ALL_CONTENTS,
-  LIST_ALL_CONTENTS_SUCCESS,
-  LIST_ALL_CONTENTS_FAILURE,
-] = createRequestActionTypes('main/LIST_ALL_CONTENTS');
+  LIST_CONTENTS_BY_STAR,
+  LIST_CONTENTS_BY_STAR_SUCCESS,
+  LIST_CONTENTS_BY_STAR_FAILURE,
+] = createRequestActionTypes('main/LIST_CONTENTS_BY_STAR');
+const [
+  LIST_CONTENTS_BY_PRIZE,
+  LIST_CONTENTS_BY_PRIZE_SUCCESS,
+  LIST_CONTENTS_BY_PRIZE_FAILURE,
+] = createRequestActionTypes('main/LIST_CONTENTS_BY_PRIZE');
 
-export const listAllContents = createAction(LIST_ALL_CONTENTS);
+export const listContentsByStar = createAction(LIST_CONTENTS_BY_STAR);
+export const listContentsByPrize = createAction(LIST_CONTENTS_BY_PRIZE);
 
-const listAllContentsSaga = createRequestSaga(
-  LIST_ALL_CONTENTS,
-  mainAPI.listAllContents,
+const listContentsByStarSaga = createRequestSaga(
+  LIST_CONTENTS_BY_STAR,
+  mainAPI.listContentsByStar,
+);
+const listContentsByPrizeSaga = createRequestSaga(
+  LIST_CONTENTS_BY_PRIZE,
+  mainAPI.listContentsByPrize,
 );
 
 export function* mainSaga() {
-  yield takeLatest(LIST_ALL_CONTENTS, listAllContentsSaga);
+  yield takeLatest(LIST_CONTENTS_BY_STAR, listContentsByStarSaga);
+  yield takeLatest(LIST_CONTENTS_BY_PRIZE, listContentsByPrizeSaga);
 }
 
 const initialState = {
-  allContents: null,
+  contentsByStar: null,
+  contentsByPrize: null,
   error: null,
 };
 
 const main = handleActions(
   {
-    [LIST_ALL_CONTENTS_SUCCESS]: (state, { payload: allContents }) => ({
+    [LIST_CONTENTS_BY_STAR_SUCCESS]: (state, { payload: contentsByStar }) => ({
       ...state,
-      allContents,
+      contentsByStar,
     }),
-    [LIST_ALL_CONTENTS_FAILURE]: (state, { payload: error }) => ({
+    [LIST_CONTENTS_BY_STAR_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      error,
+    }),
+    [LIST_CONTENTS_BY_PRIZE_SUCCESS]: (
+      state,
+      { payload: contentsByPrize },
+    ) => ({
+      ...state,
+      contentsByPrize,
+    }),
+    [LIST_CONTENTS_BY_PRIZE_FAILURE]: (state, { payload: error }) => ({
       ...state,
       error,
     }),

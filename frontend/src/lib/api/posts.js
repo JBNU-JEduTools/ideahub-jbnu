@@ -30,6 +30,10 @@ export const listPosts = ({ page, username }) => {
   return client.get(`/api/posts?${queryString}`);
 };
 
+export const listRecommendedPosts = () => {
+  return client.get('/api/posts/recommended');
+};
+
 export const updatePost = ({
   id,
   title,

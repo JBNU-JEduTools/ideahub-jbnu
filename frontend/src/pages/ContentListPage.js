@@ -14,7 +14,7 @@ const Spacer = styled.div`
 
 const ContentListPage = () => {
   return (
-    <div style={{ backgroundColor: palette.gray[1] }}>
+    <div style={{ backgroundColor: palette.gray[0] }}>
       <HeaderWithHamburger />
       <Spacer />
       <TopSpace title="작품 정보" description="작품 정보 및 소개" />

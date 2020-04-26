@@ -10,14 +10,32 @@ const removeHtmlAndShorten = (body) => {
   return filtered.length < 200 ? filtered : `${filtered.slice(0, 200)}...`;
 };
 
-//전체 contents를 불러옴
-export const fullList = async (ctx) => {
-  const contest = ctx.query.taggedContestID;
-  const query = contest ? { taggedContestID: contest } : {};
-
+//전체 작품들 중 작품 8개 목록을 불러오고, star순으로 정렬.
+export const listByStar = async (ctx) => {
   try {
-    const contents = await Content.find(query)
+    const contents = await Content.find()
       .sort({ stars: -1 })
+      .limit(8)
+      .lean()
+      .exec();
+
+    ctx.body = contents.map((content) => ({
+      ...content,
+      body: removeHtmlAndShorten(content.body),
+    }));
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+//전체 작품들 중 prizedPlace가 0에서 9 사이인 작품 8개 목록을 불러옴.
+export const listByPrize = async (ctx) => {
+  try {
+    const contents = await Content.find({
+      prizedPlace: { $gte: '0', $lte: '9' }, //prizedPlace가 0에서 9사이인 작품 목록만 불러옴
+    })
+      .sort({ prizedPlace: 1 })
+      .limit(8)
       .lean()
       .exec();
 

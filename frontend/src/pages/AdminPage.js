@@ -13,7 +13,7 @@ const Spacer = styled.div`
 
 const AdminPage = () => {
   return (
-    <div style={{ backgroundColor: palette.gray[1] }}>
+    <div style={{ backgroundColor: palette.gray[0] }}>
       <HeaderWithHamburger />
       <Spacer />
       <TopSpace title="Administer" description="관리자 페이지" />

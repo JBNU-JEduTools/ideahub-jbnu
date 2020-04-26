@@ -14,7 +14,7 @@ const AlerterHolder = styled.div`
   margin-top: 3rem;
   padding: 2rem;
   text-align: center;
-  background: ${palette.gray[1]};
+  background: ${palette.gray[0]};
   border-radius: 5px;
   border-color: ${palette.mainColor};
   h1 {

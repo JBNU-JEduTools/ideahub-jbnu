@@ -46,7 +46,7 @@ const TitleSlideHolder = styled(Link)`
 const BackgroundHolder = styled.div`
   width: 100%;
   height: 100%;
-  background: ${palette.gray[1]};
+  background: ${palette.gray[0]};
   opacity: 0.5;
 `;
 

@@ -66,7 +66,7 @@ const WholeItemHoler = styled.div`
   height: 300px;
   min-height: 300px;
   max-height: 600px;
-  background: ${palette.gray[1]};
+  background: ${palette.gray[0]};
   margin: 2rem 0;
   padding: 1rem;
   overflow-y: scroll;
@@ -117,7 +117,7 @@ const PrizedContentItem = ({
         <h2 className="priorityH2">우선순위</h2>
         <select
           name="priority"
-          onChange={e => {
+          onChange={(e) => {
             onChangePriority({
               content: contentItem,
               priority: e.target.value,
@@ -164,7 +164,7 @@ const PrizeModal = ({ contents, visible, onChangePriority }) => {
         </p>
         <WholeItemHoler>
           {contents.length !== 0 ? (
-            contents.map(contentItem => {
+            contents.map((contentItem) => {
               return (
                 <PrizedContentItem
                   contentItem={contentItem}

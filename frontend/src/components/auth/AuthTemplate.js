@@ -27,7 +27,7 @@ const WhiteBox = styled(Responsive)`
   padding: 2rem;
   width: 40rem;
   background-color: white;
-  border: 0.5px solid ${palette.gray[4]};
+  border: 0.5px solid ${palette.gray[2]};
 `;
 
 const AuthTemplate = ({ children }) => {

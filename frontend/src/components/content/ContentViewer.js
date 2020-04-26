@@ -102,7 +102,7 @@ const StarButton = styled.button`
 
 const StarNum = styled.div`
   height: 100%;
-  background: ${palette.gray[1]};
+  background: ${palette.gray[0]};
   padding: 1rem;
   color: ${palette.gray[6]};
   text-align: center;

@@ -3,6 +3,7 @@ import * as mainCtrl from './main.ctrl';
 
 const main = new Router();
 
-main.get('/', mainCtrl.fullList);
+main.get('/star', mainCtrl.listByStar);
+main.get('/prize', mainCtrl.listByPrize);
 
 export default main;

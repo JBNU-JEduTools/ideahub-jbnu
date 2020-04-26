@@ -2,25 +2,35 @@ import React, { useEffect } from 'react';
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { listAllContents } from '../../modules/main';
+import { listContentsByStar, listContentsByPrize } from '../../modules/main';
 import MainViewer from '../../components/main/MainViewer';
 
 const MainViewerContainer = ({ location }) => {
   const dispatch = useDispatch();
-  const { contents, error, loading } = useSelector(({ main, loading }) => ({
-    contents: main.allContents,
-    error: main.error,
-    loading: loading['main/LIST_ALL_CONTENTS'],
-  }));
+  const { contentsByStar, contentsByPrize, error, loading } = useSelector(
+    ({ main, loading }) => ({
+      contentsByStar: main.contentsByStar,
+      contentsByPrize: main.contentsByPrize,
+      error: main.error,
+      loading:
+        loading[('main/LIST_CONTENTS_BY_STAR', 'main/LIST_CONTENTS_BY_PRIZE')],
+    }),
+  );
   useEffect(() => {
     // const { taggedContest, page } = qs.parse(location.search, {
     //   ignoreQueryPrefix: true,
     // });
-    dispatch(listAllContents());
+    dispatch(listContentsByStar());
+    dispatch(listContentsByPrize());
   }, [dispatch, location.search]);
-
-  console.log(contents);
-  return <MainViewer loading={loading} error={error} contents={contents} />;
+  return (
+    <MainViewer
+      loading={loading}
+      error={error}
+      contentsByStar={contentsByStar}
+      contentsByPrize={contentsByPrize}
+    />
+  );
 };
 
 export default withRouter(MainViewerContainer);

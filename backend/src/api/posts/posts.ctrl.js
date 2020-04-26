@@ -108,11 +108,8 @@ const removeHtmlAndShorten = (body) => {
   return filtered.length < 300 ? filtered : `${filtered.slice(0, 300)}...`;
 };
 
-//������ ��ȸ
 export const list = async (ctx) => {
-  //http://localhost:4000/api/posts?page=2 �� �������� �����Ͽ� ��ȸ
-  //page �������� ������ �� ���� int�� �Ľ��ϰ�, ������ 1�� �Ľ�
-  const page = parseInt(ctx.query.page || '1', 5);
+  const page = parseInt(ctx.query.page || '1', 8);
 
   if (page < 1) {
     ctx.status = 400;
@@ -129,12 +126,29 @@ export const list = async (ctx) => {
   try {
     const posts = await Post.find(query)
       .sort({ _id: -1 })
-      .limit(5)
-      .skip((page - 1) * 5)
+      .limit(8)
+      .skip((page - 1) * 8)
       .exec();
     const postCount = await Post.countDocuments().exec();
-    ctx.set('Last-Page', Math.ceil(postCount / 5));
+    ctx.set('Last-Page', Math.ceil(postCount / 8));
     ctx.body = posts
+      .map((post) => post.toJSON())
+      .map((post) => ({
+        ...post,
+        description: removeHtmlAndShorten(post.description),
+      }));
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+export const listRecommendedPosts = async (ctx) => {
+  try {
+    const recommendedPosts = await Post.find({ status: '접수중' })
+      .sort({ _id: -1 })
+      .limit(6)
+      .exec();
+    ctx.body = recommendedPosts
       .map((post) => post.toJSON())
       .map((post) => ({
         ...post,
