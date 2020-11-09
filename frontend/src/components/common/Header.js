@@ -59,7 +59,7 @@ const Header = ({ user, onLogout, drawerClickHandler }) => {
       <HeaderBlock>
         <Wrapper>
           <Link to="/" className="logo">
-            IDEA HUB
+            IDEA
           </Link>
           <div style={{ display: 'flex', height: '100%' }}>
             <Button
