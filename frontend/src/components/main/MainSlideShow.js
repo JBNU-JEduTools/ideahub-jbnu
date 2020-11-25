@@ -118,6 +118,7 @@ const MainSlideShow = () => {
   //     setIsAutoSlide(true);
   //   }
   // })();
+  
 
   const test = 1;
 
