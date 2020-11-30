@@ -59,13 +59,14 @@ const Header = ({ user, onLogout, drawerClickHandler }) => {
       <HeaderBlock>
         <Wrapper>
           <Link to="/" className="logo">
-            IDEA
+            IDEA HUB
           </Link>
           <div style={{ display: 'flex', height: '100%' }}>
             <Button
               to="/postlist"
               fullHeight
               toDefaultColor
+              style={{paddingTop:'1.5rem'}}
               className="innerComponents"
             >
               대회 목록
@@ -74,6 +75,7 @@ const Header = ({ user, onLogout, drawerClickHandler }) => {
               to="/contentlist"
               fullHeight
               toDefaultColor
+              style={{paddingTop:'1.5rem'}}
               className="innerComponents"
             >
               작품 정보
@@ -86,7 +88,7 @@ const Header = ({ user, onLogout, drawerClickHandler }) => {
                 <Button
                   onClick={onLogout}
                   fullHeight
-                  style={{ paddingTop: '0px' }}
+                  style={{ paddingTop: '1.5rem' }}
                   className="innerComponents"
                 >
                   로그아웃
@@ -97,7 +99,7 @@ const Header = ({ user, onLogout, drawerClickHandler }) => {
                 <Button
                   to="/register"
                   fullHeight
-                  style={{ background: palette.gray[8], paddingTop: '1.3rem' }}
+                  style={{ paddingTop: '1.5rem' }}
                   className="innerComponents"
                 >
                   회원가입
@@ -105,7 +107,7 @@ const Header = ({ user, onLogout, drawerClickHandler }) => {
                 <Button
                   to="/login"
                   fullHeight
-                  style={{ paddingTop: '1.3rem' }}
+                  style={{ paddingTop: '1.5rem' }}
                   className="innerComponents"
                 >
                   로그인

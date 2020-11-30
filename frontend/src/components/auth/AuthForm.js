@@ -7,6 +7,7 @@ import palette from '../../lib/styles/palette';
 const loginOrRegister = {
   login: '로그인',
   register: '회원가입',
+  findpw: '비밀번호찾기'
 };
 
 const AuthFormBlock = styled.div`
@@ -37,6 +38,14 @@ const RegisterText = styled.div`
     color: #f1404b;
   }
 `;
+const FindText = styled.div`
+  margin-top: 2rem;
+  text-align: right;
+  a {
+    color: #f1404b;
+  }
+`;
+
 
 const ErrorMessage = styled.div`
   color: red;
@@ -89,7 +98,8 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
               value={form.email}
             />
           </div>
-        )}
+        )
+        }
         <Button fullWidth toDefaultColor style={{ marginTop: '1rem' }}>
           {text}
         </Button>
@@ -107,6 +117,14 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
           <Link to="/login">로그인</Link>
         )}
       </RegisterText>
+      <FindText>
+        <div className ="search_user_info_div">
+          비밀번호가 기억이 안나시나요?
+          <Link style={{ marginLeft: '0.5rem' }} to="/findpw">
+            비밀번호찾기
+          </Link>
+        </div>
+      </FindText>
     </AuthFormBlock>
   );
 };

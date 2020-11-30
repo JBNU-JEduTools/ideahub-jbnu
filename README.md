@@ -33,6 +33,9 @@ JWT_SECRET=YOUR_SECRET_KEY
 ```
 cd YOURDIRECTORY\cmanager\frontend
 yarn start
+or
+npm install
+npm start
 ```
 
 3. move into backend directory then run the following code.

@@ -11,6 +11,7 @@ import ContentPostPage from './pages/ContentPostPage';
 import ContentListPage from './pages/ContentListPage';
 import AdminPage from './pages/AdminPage';
 import AboutPage from './pages/AboutPage';
+import FindPWPage from './pages/FindPWPage';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
       />
       <Route component={LoginPage} path="/login" />
       <Route component={RegisterPage} path="/register" />
+      <Route component={FindPWPage} path='/findpw' />
       <Route component={WritePage} path="/write" />
       <Route component={PostPage} path="/@:username/:postId" />
       <Route component={AdminPage} path="/administer" />
