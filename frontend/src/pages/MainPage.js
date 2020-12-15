@@ -11,8 +11,8 @@ const MainPage = () => {
     <div>
       <HeaderWithHamburger />
       <MainSlideShow />
-      <MainSubMenu />
       <MainViewerContainer />
+      <MainSubMenu />
       <ToTopButton />
       <BottomInfo />
     </div>

@@ -91,47 +91,59 @@ const MainSubMenuItem = ({ title, body, url, imgUrl }) => {
   );
 };
 
+const ContentsHolder = styled.div`
+  margin-top: 50px;
+  width: 100%;
+  text-align:center;
+  font-size: 22px;
+  color: #FF814B;
+`;
+
 const MainSubMenu = () => {
-  //MainSubMenu를 변경하고 싶다면, 이 subMenuArray 배열을 수정해주세요.
+   //MainSubMenu를 변경하고 싶다면, 이 subMenuArray 배열을 수정해주세요.
+   //title : 작품제목 , body: 팀장
   const subMenuArray = [
     {
-      title: '강아지',
-      body: '귀여운 강아지',
+      title: 'For_Disable',
+      body: '김기완',
       url: '',
       imgUrl:
-        'https://cdn.pixabay.com/photo/2019/06/22/14/57/dog-4291715_960_720.jpg',
+      'https://cse.jbnu.ac.kr/sites/cse/atchmnfl/bbs/oldEditor/1912/2a0c5a4462cd896a76660ce529b76086_1576205887_5899.jpg',
     },
     {
-      title: '고양이',
-      body: '귀여운 고양이',
+      title: 'AWS와 AI를 활용한 Smart Restaurant Prototype',
+      body: '조성국, 정윤성, 성주용',
       url: '',
       imgUrl:
-        'https://cdn.pixabay.com/photo/2014/11/30/14/11/kitty-551554_960_720.jpg',
+      'https://cse.jbnu.ac.kr/sites/cse/atchmnfl/bbs/oldEditor/1912/2a0c5a4462cd896a76660ce529b76086_1576205887_5899.jpg',
     },
     {
-      title: '강아지',
-      body: '귀여운 강아지',
+      title: 'Review Hub',
+      body: '박성필, 김유민',
       url: '',
       imgUrl:
-        'https://cdn.pixabay.com/photo/2019/06/22/14/57/dog-4291715_960_720.jpg',
+      'https://cse.jbnu.ac.kr/sites/cse/atchmnfl/bbs/oldEditor/1912/2a0c5a4462cd896a76660ce529b76086_1576205887_5899.jpg',
     },
     {
-      title: '고양이',
-      body: '귀여운 고양이',
+      title: '스마트 LED 조명 블라인드',
+      body: '조하연, 최선근',
       url: '',
       imgUrl:
-        'https://cdn.pixabay.com/photo/2014/11/30/14/11/kitty-551554_960_720.jpg',
+      'https://cse.jbnu.ac.kr/sites/cse/atchmnfl/bbs/oldEditor/1912/2a0c5a4462cd896a76660ce529b76086_1576205887_5899.jpg',
     },
     {
-      title: '강아지',
-      body: '귀여운 강아지',
+      title: 'Lol Run',
+      body: '이승도, 인기찬, 김기완',
       url: '',
       imgUrl:
-        'https://cdn.pixabay.com/photo/2019/06/22/14/57/dog-4291715_960_720.jpg',
+      'https://cse.jbnu.ac.kr/sites/cse/atchmnfl/bbs/oldEditor/1912/2a0c5a4462cd896a76660ce529b76086_1576205887_5899.jpg',
     },
   ];
   return (
     <MainSubMenuBackground>
+      <ContentsHolder>
+      <h1 className="coloredH1">2019년 수상작품</h1>
+      </ContentsHolder>
       <MainSubMenuHolder>
         {subMenuArray.map((item) => (
           <MainSubMenuItem

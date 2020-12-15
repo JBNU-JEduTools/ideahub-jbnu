@@ -51,7 +51,7 @@ const ErrorMessage = styled.div`
   color: red;
   margin-top: 1rem;
 `;
-
+// 비밀번호 찾기 컴포넌트 추가
 const AuthFormF = ({ type, form, onChange, onSubmit, error }) => {
   const text = loginOrRegister[type];
   return (

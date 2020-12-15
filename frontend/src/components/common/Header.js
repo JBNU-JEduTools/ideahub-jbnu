@@ -48,11 +48,12 @@ const UserInfo = styled.div`
   padding-top: 1.3rem;
 `;
 
-//Header에 콘텐츠가 가려지지 않도록 삽입
+ //Header에 콘텐츠가 가려지지 않도록 삽입
 const Spacer = styled.div`
   height: 2rem;
 `;
 
+// 헤더 로고, 네비게이터 리스트 불러오기 
 const Header = ({ user, onLogout, drawerClickHandler }) => {
   return (
     <>

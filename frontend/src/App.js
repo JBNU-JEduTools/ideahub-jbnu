@@ -16,7 +16,7 @@ import FindPWPage from './pages/FindPWPage';
 const App = () => {
   return (
     <div>
-      <Route component={MainPage} path="/" exact />
+      <Route component={MainPage} path="/" exact />   
       <Route component={ContentWritePage} path="/contentwrite" />
       <Route component={ContentPostPage} path="/content/:contentId" />
       <Route component={ContentListPage} path="/contentlist" />
@@ -34,5 +34,5 @@ const App = () => {
     </div>
   );
 };
-
+//리액트에서 페이지 컴포넌트 바꾸는 코드
 export default App;

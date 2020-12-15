@@ -54,7 +54,7 @@ const StatusBox = styled.div`
   font-size: 0.8rem;
   padding-top: 2px;
 `;
-
+// 작품 정보 나타내줌
 const ContentInfoSide = ({
   title,
   taggedContest,
