@@ -141,9 +141,6 @@ const MainSubMenu = () => {
   ];
   return (
     <MainSubMenuBackground>
-      <ContentsHolder>
-      <h1 className="coloredH1">2019년 수상작품</h1>
-      </ContentsHolder>
       <MainSubMenuHolder>
         {subMenuArray.map((item) => (
           <MainSubMenuItem
