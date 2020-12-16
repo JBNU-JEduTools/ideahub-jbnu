@@ -101,7 +101,7 @@ const ContentsHolder = styled.div`
 
 const MainSubMenu = () => {
    //MainSubMenu를 변경하고 싶다면, 이 subMenuArray 배열을 수정해주세요.
-   //title : 작품제목 , body: 팀장
+   //title : 작품제목 , body: 팀장 imgUrl : 컴퓨터 공학부 홈페이지 수상이미지 링크
   const subMenuArray = [
     {
       title: 'For_Disable',
