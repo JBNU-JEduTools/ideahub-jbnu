@@ -62,6 +62,7 @@ const ContentInfoSide = ({
   team,
   status,
   stars,
+  github,
 }) => {
   return (
     <Wraper>
@@ -82,6 +83,7 @@ const ContentInfoSide = ({
           </StyledTextContainer>
           <StatusBox>{status}</StatusBox>
           <StyledTextContainer>팀원 : {team}</StyledTextContainer>
+          <StyledTextContainer>깃허브 : {github}</StyledTextContainer>
         </div>
       </ContentInfoSideBlock>
     </Wraper>
