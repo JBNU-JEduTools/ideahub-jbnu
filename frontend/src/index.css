@@ -40,3 +40,22 @@ code {
 .footerInfoContributor {
   margin-left: 10px;
 }
+.aboutInfo {
+  padding: 80px;
+}
+.aboutInfoL1 {
+  font-size: 25px;
+}
+.aboutInfoL2 {
+  font-size: 20px;
+}
+.aboutInfoL3 {
+  font-size: 20px;
+}
+.aboutReason {
+  font-size: 23px;
+}
+.aboutReasonL {
+  list-style: none;
+  margin-top: 5px;
+}
