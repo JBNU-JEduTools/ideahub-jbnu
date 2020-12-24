@@ -11,6 +11,7 @@ const HeaderBlock = styled.div`
   position: fixed;
   width: 100%;
   background: ${palette.mainColor};
+  z-index: 100;
 `;
 
 const Wrapper = styled(Responsive)`
@@ -47,11 +48,12 @@ const UserInfo = styled.div`
   padding-top: 1.3rem;
 `;
 
-//Header에 콘텐츠가 가려지지 않도록 삽입
+ //Header에 콘텐츠가 가려지지 않도록 삽입
 const Spacer = styled.div`
   height: 2rem;
 `;
 
+// 헤더 로고, 네비게이터 리스트 불러오기 
 const Header = ({ user, onLogout, drawerClickHandler }) => {
   return (
     <>
@@ -65,6 +67,7 @@ const Header = ({ user, onLogout, drawerClickHandler }) => {
               to="/postlist"
               fullHeight
               toDefaultColor
+              style={{paddingTop:'1.5rem'}}
               className="innerComponents"
             >
               대회 목록
@@ -73,6 +76,7 @@ const Header = ({ user, onLogout, drawerClickHandler }) => {
               to="/contentlist"
               fullHeight
               toDefaultColor
+              style={{paddingTop:'1.5rem'}}
               className="innerComponents"
             >
               작품 정보
@@ -85,7 +89,7 @@ const Header = ({ user, onLogout, drawerClickHandler }) => {
                 <Button
                   onClick={onLogout}
                   fullHeight
-                  style={{ paddingTop: '0px' }}
+                  style={{ paddingTop: '1.5rem' }}
                   className="innerComponents"
                 >
                   로그아웃
@@ -96,7 +100,7 @@ const Header = ({ user, onLogout, drawerClickHandler }) => {
                 <Button
                   to="/register"
                   fullHeight
-                  style={{ background: palette.gray[8], paddingTop: '1.3rem' }}
+                  style={{ paddingTop: '1.5rem' }}
                   className="innerComponents"
                 >
                   회원가입
@@ -104,7 +108,7 @@ const Header = ({ user, onLogout, drawerClickHandler }) => {
                 <Button
                   to="/login"
                   fullHeight
-                  style={{ paddingTop: '1.3rem' }}
+                  style={{ paddingTop: '1.5rem' }}
                   className="innerComponents"
                 >
                   로그인

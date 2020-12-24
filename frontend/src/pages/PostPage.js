@@ -4,6 +4,7 @@ import PostViewerContainer from '../containers/post/PostViewerContainer';
 import styled from 'styled-components';
 import BottomInfo from '../components/common/BottomInfo';
 import HeaderWithHamburger from '../components/common/HeaderWithHamburger';
+import ToTopButton from '../components/common/ToTopButton';
 
 const Spacer = styled.div`
   height: 2rem;
@@ -19,6 +20,7 @@ const PostPage = () => {
         description="상세 대회 정보 및 참가 작품 목록"
       />
       <PostViewerContainer />
+      <ToTopButton />
       <BottomInfo />
     </>
   );

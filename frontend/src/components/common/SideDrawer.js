@@ -37,6 +37,7 @@ const SideDrawerBlock = styled.nav`
   }
 `;
 
+//너비에 따라 헤더 네비게이터 햄버거 매뉴로 구현
 const SideDrawer = ({ show }) => {
   let drawerClasses = ['side-drawer'];
   if (show) {

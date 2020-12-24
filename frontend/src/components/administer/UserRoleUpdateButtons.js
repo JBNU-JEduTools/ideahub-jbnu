@@ -19,7 +19,7 @@ const ChangeButton = styled.button`
     background: ${palette.mainColorHovered};
   }
 `;
-
+//유저 롤 등록 
 const UserRoleUpdateButtons = ({ userItem, toAdmin, toWriter, toVisiter }) => {
   return (
     <UserRoleUpdateButtonsHolder>

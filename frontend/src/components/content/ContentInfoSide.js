@@ -17,8 +17,9 @@ const ContentInfoSideBlock = styled.div`
 const StyledTextContainer = styled.div`
   color: ${palette.gray[7]}
   margin-bottom: 1rem;
+  padding: 0 0.5rem;
   text-align: center;
-  ${props =>
+  ${(props) =>
     props.summary &&
     css`
       padding-bottom: 0.75rem;
@@ -53,8 +54,16 @@ const StatusBox = styled.div`
   font-size: 0.8rem;
   padding-top: 2px;
 `;
-
-const ContentInfoSide = ({ title, taggedContest, team, status, stars }) => {
+// 작품 정보 나타내줌
+const ContentInfoSide = ({
+  title,
+  taggedContest,
+  taggedContestID,
+  team,
+  status,
+  stars,
+  github,
+}) => {
   return (
     <Wraper>
       <StyledTextContainer summary>Summary</StyledTextContainer>
@@ -74,6 +83,7 @@ const ContentInfoSide = ({ title, taggedContest, team, status, stars }) => {
           </StyledTextContainer>
           <StatusBox>{status}</StatusBox>
           <StyledTextContainer>팀원 : {team}</StyledTextContainer>
+          <StyledTextContainer>깃허브 : {github}</StyledTextContainer>
         </div>
       </ContentInfoSideBlock>
     </Wraper>

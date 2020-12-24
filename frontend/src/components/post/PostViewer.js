@@ -6,7 +6,8 @@ import PostInfoSide from './PostInfoSide';
 import ErrorNotifier from '../common/ErrorNotifier';
 import Disqus from 'disqus-react';
 import SubMenuBar from './SubMenuBar';
-import NoPrizedAlerter from './NoPrizedAlerter';
+import PrizedList from './PrizedList';
+import PrizedUpdaterContainer from '../../containers/post/PrizedUpdaterContainer';
 
 //대회 정보와 수상 작품 목록을 보여주기 위한 responsive 블록
 const PostViewerBlock = styled(Responsive)`
@@ -20,7 +21,7 @@ const PostViewerBlock = styled(Responsive)`
   }
 `;
 
-const PrizeListBlock = styled(Responsive)``;
+const PrizeListBlock = styled.div``;
 
 const PostHead = styled.div`
   border-bottom: 1px solid ${palette.gray[2]};
@@ -29,6 +30,7 @@ const PostHead = styled.div`
   h1 {
     font-size: 2rem;
     margin: 0;
+    font-weight: 500;
   }
 `;
 
@@ -63,20 +65,29 @@ const ContentsHolder = styled(Responsive)`
   }
 `;
 
-const PostViewer = ({ post, user, error, loading, actionButtons }) => {
+const PostViewer = ({
+  post,
+  user,
+  error,
+  loading,
+  actionButtons,
+  onWrite,
+  contentsList,
+  toContentList,
+}) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       return (
         <ErrorNotifier
           errorTitle="404 Not Found"
-          errorMessage="이런! 강아지가 페이지를 물고 도망갔나봐요"
+          errorMessage="이런! 페이지를 찾을 수 없습니다."
         />
       );
     }
     return (
       <ErrorNotifier
         errorTitle="Cannot find page"
-        errorMessage="이런! 강아지가 페이지를 물고 도망갔나봐요"
+        errorMessage="이런! 페이지를 찾을 수 없습니다."
       />
     );
   }
@@ -85,10 +96,21 @@ const PostViewer = ({ post, user, error, loading, actionButtons }) => {
     return null;
   }
 
-  const { title, category, status, date, place, description, prized } = post;
+  //contentsList는 현재 대회에 등록된 작품 목록.
+  //이 목록에서, prizedPlace (수상 순위)가 숫자로 등록되어있는 경우에만 수상 작품 페이지에 보이도록.
+  let prized = null;
+  if (contentsList) {
+    prized = contentsList.filter(
+      (contentItem) => !isNaN(contentItem.prizedPlace),
+    );
+  }
+
+  //contentsList는 현재 대회에 등록된 작품 목록.
+  const { _id, title, category, status, date, place, description } = post;
 
   const isOwnPost = () => {
-    let ownPostResult = user && post && user._id === post.user._id;
+    const ownPostResult =
+      user && post && (user._id === post.user._id || user.role == 'admin');
     console.log('ownPostResult: ', ownPostResult);
     return ownPostResult;
   };
@@ -102,51 +124,53 @@ const PostViewer = ({ post, user, error, loading, actionButtons }) => {
   //현재 URL의 마지막에 'prized'가 붙어있으면 true, 아니면 false
   const isPrizePage = splitedURL[splitedURL.length - 1] === 'prized';
   //현재 대회에 수상 작품 목록이 등록되어있지 않으면 true
-  const isPrizeEmpty = prized.length === 0;
+  const isPrizeEmpty = !prized || prized.length === 0;
 
   return (
     <div>
       <SubMenuBar post={post} />
-      {//현재 URL의 끝에 prized가 붙어있으면 수상 목록 페이지를 보여주고, 아니면 대회 정보 페이지 보여주기
-      isPrizePage ? (
-        <div>
-          {isPrizeEmpty ? (
+      {
+        //현재 URL의 끝에 prized가 붙어있으면 수상 목록 페이지를 보여주고, 아니면 대회 정보 페이지 보여주기
+        isPrizePage ? (
+          <div>
             <PrizeListBlock>
-              <NoPrizedAlerter />
-            </PrizeListBlock>
-          ) : (
-            <PostViewerBlock>
-              <p>수상 작품이 등록되어있습니다.</p>
-            </PostViewerBlock>
-          )}
-        </div>
-      ) : (
-        <div>
-          <ContentsHolder>
-            <PostViewerBlock>
-              <PostHead>
-                <SubContents>카테고리 #{category}</SubContents>
-                <h1>{title}</h1>
-              </PostHead>
-              {isOwnPost() ? actionButtons : <div />}
-              <PostContent
-                dangerouslySetInnerHTML={{
-                  __html: description,
-                }}
+              <PrizedUpdaterContainer
+                isPrizeEmpty={isPrizeEmpty}
+                prized={prized}
               />
-              <Disqus.DiscussionEmbed shortname={disqusShortname} />
-            </PostViewerBlock>
-            <PostInfoSide
-              title={title}
-              category={category}
-              status={status}
-              date={date}
-              place={place}
-              user={user}
-            />
-          </ContentsHolder>
-        </div>
-      )}
+            </PrizeListBlock>
+          </div>
+        ) : (
+          <div>
+            <ContentsHolder>
+              <PostViewerBlock>
+                <PostHead>
+                  <SubContents>카테고리 #{category}</SubContents>
+                  <h1>{title}</h1>
+                </PostHead>
+                {isOwnPost() ? actionButtons : <div />}
+                <PostContent
+                  dangerouslySetInnerHTML={{
+                    __html: description,
+                  }}
+                />
+                <Disqus.DiscussionEmbed shortname={disqusShortname} />
+              </PostViewerBlock>
+              <PostInfoSide
+                title={title}
+                category={category}
+                status={status}
+                date={date}
+                place={place}
+                user={user}
+                onWrite={onWrite}
+                _id={_id}
+                toContentList={toContentList}
+              />
+            </ContentsHolder>
+          </div>
+        )
+      }
     </div>
   );
 };

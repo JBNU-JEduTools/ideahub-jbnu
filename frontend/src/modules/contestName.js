@@ -8,24 +8,23 @@ import { createAction, handleActions } from 'redux-actions';
 const SET_CONTEST_NAME = 'contestName/SET_CONTEST_NAME';
 const RESET_CONTEST_NAME = 'contestName/RESET_CONTEST_NAME'; //페이지를 벗어날 때 contestName 상태를 초기화해주기 위함
 
-export const setContestName = createAction(
-  SET_CONTEST_NAME,
-  contestName => contestName,
-);
+export const setContestName = createAction(SET_CONTEST_NAME);
 //페이지를 벗어날 때 contestName 상태를 초기화해주기 위함
 export const resetContestName = createAction(RESET_CONTEST_NAME);
 
 //initial state
 const initialState = {
   contestName: '',
+  contestID: '',
 };
 
 //reducer
 const contestName = handleActions(
   {
-    [SET_CONTEST_NAME]: (state, { payload: contestName }) => ({
+    [SET_CONTEST_NAME]: (state, { payload: post }) => ({
       ...state,
-      contestName,
+      contestName: post.title,
+      contestID: post._id,
     }),
     [RESET_CONTEST_NAME]: () => initialState,
   },

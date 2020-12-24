@@ -6,13 +6,25 @@ const ContentSchema = new Schema({
   title: String,
   body: String,
   taggedContest: String,
+  taggedContestID: String,
   videoURL: String,
   team: String,
   status: String,
   stars: Number,
+  github: String,
+  //작품에 star를 누른 유저의 _id 목록.
+  star_edUser: [String],
   publishDate: {
     type: Date,
     default: Date.now,
+  },
+  prizedPlace: {
+    //수상 순위. 기본값은 '-'으로, 수상 우선 순위가 높을수록 낮은 수가 할당.
+    //e.g.) 해당 대회의 1위작: 1,
+    //      해당 대회의 2위작: 2,
+    //      해당 대회의 공동 2위작: 2
+    type: String,
+    default: '-',
   },
   user: {
     _id: mongoose.Types.ObjectId,

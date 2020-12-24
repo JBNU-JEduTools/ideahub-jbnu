@@ -6,7 +6,7 @@ import ErrorNotifier from '../common/ErrorNotifier';
 import UserRoleUpdateButtons from './UserRoleUpdateButtons';
 
 const Wrapper = styled.div`
-  background: ${palette.gray[1]};
+  background: ${palette.gray[0]};
 `;
 
 const UserListHolder = styled(Responsive)``;
@@ -28,7 +28,7 @@ const ChangeRoleButton = styled.button`
   font-size: 1rem;
 `;
 
-//유저 하나의 정보를 보여주는 컴포넌트.
+ //유저 하나의 정보를 보여주는 컴포넌트.
 const UserItem = ({ userItem, toAdmin, toWriter, toVisiter }) => {
   const { _id, username, role } = userItem;
   return (
@@ -48,7 +48,7 @@ const UserItem = ({ userItem, toAdmin, toWriter, toVisiter }) => {
   );
 };
 
-//여러 유저들의 정보를 리스트로 보여주는 컴포넌트.
+  //여러 유저들의 정보를 리스트로 보여주는 컴포넌트.
 const Admin = ({
   users,
   loading,
@@ -73,13 +73,13 @@ const Admin = ({
     );
   }
 
-  //유저 목록을 받아서, 그 개수만큼 UserItem 컴포넌트를 보여줌
+   //유저 목록을 받아서, 그 개수만큼 UserItem 컴포넌트를 보여줌
   return (
     <Wrapper>
       <UserListHolder>
         {!loading && users && (
           <div>
-            {users.map(userItem => (
+            {users.map((userItem) => (
               <UserItem
                 userItem={userItem}
                 key={userItem._id}

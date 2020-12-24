@@ -16,37 +16,41 @@ const ContentEditorContainer = () => {
     videoURL,
     team,
     taggedContest,
-    contestName,
-  } = useSelector(({ contentWrite, contestName }) => ({
+    taggedContestID,
+    github,
+  } = useSelector(({ contentWrite }) => ({
     title: contentWrite.title,
     body: contentWrite.body,
     taggedContest: contentWrite.taggedContest,
+    taggedContestID: contentWrite.taggedContestID,
     videoURL: contentWrite.videoURL,
     team: contentWrite.team,
     status: contentWrite.status,
-    contestName: contestName.contestName,
+    github: contentWrite.github,
   }));
-  const onChangeField = useCallback(payload => dispatch(changeField(payload)), [
-    dispatch,
-  ]);
+  const onChangeField = useCallback(
+    (payload) => dispatch(changeField(payload)),
+    [dispatch],
+  );
 
   useEffect(() => {
-    //☆★☆★☆★☆★☆★수정 시에도 작동함..
-    dispatch(setInitialState(contestName));
     return () => {
       //unmount시 contentWrite와 관련된 상태를 초기화 하는데 사용
       dispatch(initialize());
     };
   }, [dispatch]);
+
   return (
     <ContentEditor
       onChangeField={onChangeField}
       title={title}
       body={body}
-      taggedContest={contestName}
+      taggedContest={taggedContest}
+      taggedContestID={taggedContestID}
       videoURL={videoURL}
       team={team}
       status={status}
+      github={github}
     />
   );
 };

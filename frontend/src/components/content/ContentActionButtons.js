@@ -17,7 +17,7 @@ const ActionButton = styled.button`
   border: none;
   font-size: 1rem;
   &:hover {
-    background: ${palette.gray[1]};
+    background: ${palette.gray[0]};
     color: black;
   }
 `;

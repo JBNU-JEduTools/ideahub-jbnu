@@ -26,17 +26,18 @@ export const getPostById = async (ctx, next) => {
   }
 };
 
+//자신이 개최한 대회인지 결정. 관리자일 경우에도 true
 export const checkOwnPost = (ctx, next) => {
   const { user, post } = ctx.state;
   //mongoDB에서 조회한 데이터의 id값을 문자열과 비교하기 위해 toString 사용
-  if (post.user._id.toString() !== user._id) {
+  if (user.role !== 'admin' && post.user._id.toString() !== user._id) {
     ctx.status = 403;
     return;
   }
   return next();
 };
 
-export const write = async ctx => {
+export const write = async (ctx) => {
   const schema = Joi.object().keys({
     title: Joi.string().required(),
     category: Joi.string().required(),
@@ -80,7 +81,7 @@ export const write = async ctx => {
 };
 
 //removes html tags, slices paragraph.
-const removeHtmlAndShorten = body => {
+const removeHtmlAndShorten = (body) => {
   const filtered = sanitizeHtml(body, {
     allowedTags: [],
     //   'h1',
@@ -107,11 +108,8 @@ const removeHtmlAndShorten = body => {
   return filtered.length < 300 ? filtered : `${filtered.slice(0, 300)}...`;
 };
 
-//������ ��ȸ
-export const list = async ctx => {
-  //http://localhost:4000/api/posts?page=2 �� �������� �����Ͽ� ��ȸ
-  //page �������� ������ �� ���� int�� �Ľ��ϰ�, ������ 1�� �Ľ�
-  const page = parseInt(ctx.query.page || '1', 5);
+export const list = async (ctx) => {
+  const page = parseInt(ctx.query.page || '1', 8);
 
   if (page < 1) {
     ctx.status = 400;
@@ -128,14 +126,31 @@ export const list = async ctx => {
   try {
     const posts = await Post.find(query)
       .sort({ _id: -1 })
-      .limit(5)
-      .skip((page - 1) * 5)
+      .limit(8)
+      .skip((page - 1) * 8)
       .exec();
     const postCount = await Post.countDocuments().exec();
-    ctx.set('Last-Page', Math.ceil(postCount / 5));
+    ctx.set('Last-Page', Math.ceil(postCount / 8));
     ctx.body = posts
-      .map(post => post.toJSON())
-      .map(post => ({
+      .map((post) => post.toJSON())
+      .map((post) => ({
+        ...post,
+        description: removeHtmlAndShorten(post.description),
+      }));
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+export const listRecommendedPosts = async (ctx) => {
+  try {
+    const recommendedPosts = await Post.find({ status: '접수중' })
+      .sort({ _id: -1 })
+      .limit(6)
+      .exec();
+    ctx.body = recommendedPosts
+      .map((post) => post.toJSON())
+      .map((post) => ({
         ...post,
         description: removeHtmlAndShorten(post.description),
       }));
@@ -145,11 +160,11 @@ export const list = async ctx => {
 };
 
 //getPostById에서 ctx.state.post에 포스트 정보를 넣어주므로.
-export const read = ctx => {
+export const read = (ctx) => {
   ctx.body = ctx.state.post;
 };
 
-export const remove = async ctx => {
+export const remove = async (ctx) => {
   const { id } = ctx.params;
   try {
     await Post.findByIdAndRemove(id).exec();
@@ -158,7 +173,7 @@ export const remove = async ctx => {
     ctx.throw(500, e);
   }
 };
-export const update = async ctx => {
+export const update = async (ctx) => {
   const schema = Joi.object().keys({
     title: Joi.string(),
     category: Joi.string(),
@@ -166,6 +181,7 @@ export const update = async ctx => {
     date: Joi.string(),
     place: Joi.string(),
     description: Joi.string(),
+    prized: Joi.array(),
   });
 
   const result = Joi.validate(ctx.request.body, schema);
@@ -177,7 +193,10 @@ export const update = async ctx => {
 
   const { id } = ctx.params;
   try {
-    const post = Post.findByIdAndUpdate(id, ctx.request.body, {
+    //await 구문을 넣지 않았을 때에는, post에 프로미스가 할당되었으나, await구문을 넣어 해결.
+    //https://github.com/koajs/koa/issues/881
+    //https://joshua1988.github.io/web-development/javascript/js-async-await/
+    const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
       new: true,
     }).exec();
     if (!post) {

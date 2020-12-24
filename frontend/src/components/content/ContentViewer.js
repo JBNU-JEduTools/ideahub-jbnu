@@ -65,43 +65,73 @@ const TitleArea = styled.div`
   h1 {
     font-size: 2rem;
     margin: 0;
+    font-weight: 400;
   }
 `;
 
 const StarBox = styled.div`
   display: flex;
-  border: solid 1px;
-  border-radius: 5px;
-  height: 2rem;
-  border-color: ${palette.gray[5]};
-  button {
-    background: ${palette.gray[2]};
-    fontsize: 16px;
-    color: black;
-    &:hover {
-      background: ${palette.gray[3]};
-    }
-  }
-  div {
-    font-size: 16px;
-    padding: 0.2rem 0.5rem;
+  width: 100%;
+  justify-content: center;
+  margin: auto;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  border-radius: 2px;
+`;
+
+const StarButton = styled.button`
+  width: 12rem;
+  height: 100%;
+  margin-right: 0.25rem;
+  background: ${palette.mainColor};
+  padding: 1rem;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.1rem;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+  font-weight: 100;
+  &:hover {
+    background: ${palette.mainColorHovered};
   }
 `;
 
-const ContentViewer = ({ content, error, loading, actionButtons, user }) => {
+const StarNum = styled.div`
+  height: 100%;
+  background: ${palette.gray[0]};
+  padding: 1rem;
+  color: ${palette.gray[6]};
+  text-align: center;
+  border: 1px solid ${palette.gray[3]};
+  border-radius: 2px;
+  font-weight: 100;
+`;
+
+const ContentViewer = ({
+  content,
+  error,
+  loading,
+  actionButtons,
+  user,
+  onStar,
+}) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       return (
         <ErrorNotifier
           errorTitle="404 Not Found"
-          errorMessage="이런! 강아지가 페이지를 물고 도망갔나봐요"
+          errorMessage="이런! 페이지를 찾을 수 없습니다."
         />
       );
     }
     return (
       <ErrorNotifier
         errorTitle="Cannot find page"
-        errorMessage="이런! 강아지가 페이지를 물고 도망갔나봐요"
+        errorMessage="이런! 페이지를 찾을 수 없습니다."
       />
     );
   }
@@ -110,11 +140,38 @@ const ContentViewer = ({ content, error, loading, actionButtons, user }) => {
     return null;
   }
 
-  const { title, body, taggedContest, videoURL, team, status, stars } = content;
+  const {
+    title,
+    body,
+    taggedContest,
+    taggedContestID,
+    videoURL,
+    team,
+    status,
+    stars,
+    star_edUser,
+    github,
+  } = content;
+
+  //현재 유저가 star를 눌렀는지 안눌렀는지.
+  const isUnstarButton = () => {
+    if (user) {
+      //star_edUser에 현재 유저가 존재하면, star 버튼이 unStar 버튼으로 대체되어야 함을 의미.
+      const isUnstar = star_edUser.find((item) => item === user._id);
+      if (isUnstar) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
 
   //자신이 content를 작성한 user인지 검사
   const isOwnContent = () => {
-    let ownContentResult = user && content && user._id === content.user._id;
+    const ownContentResult =
+      user &&
+      content //&&
+      //(user._id === content.user._id || user.role == 'admin');
     console.log('ownContentResult: ', ownContentResult);
     return ownContentResult;
   };
@@ -128,30 +185,38 @@ const ContentViewer = ({ content, error, loading, actionButtons, user }) => {
           <SubContents>#{taggedContest}</SubContents>
           <TitleArea>
             <h1>{title}</h1>
-            <StarBox>
-              <Button>star</Button>
-              <div>{stars}</div>
-            </StarBox>
           </TitleArea>
         </ContentHead>
 
-        {//자신이 작성한 작품이어야 버튼을 보여줌
-        isOwnContent() ? actionButtons : <div />}
+        {
+          //자신이 작성한 작품이어야 버튼을 보여줌
+          isOwnContent() ? actionButtons : <div />
+        }
 
-        <iframe
-          width="100%"
-          height="480"
-          src={videoURL}
-          frameborder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
+        {videoURL ? (
+          <iframe
+            width="100%"
+            height="480"
+            src={`https://www.youtube.com/embed/${videoURL}`}
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        ) : null}
 
         <ContentContent
           dangerouslySetInnerHTML={{
             __html: body,
           }}
         />
+
+        <StarBox>
+          <StarButton onClick={onStar}>
+            {isUnstarButton() ? '추천 취소' : '추천하기'}
+          </StarButton>
+          <StarNum>{stars}</StarNum>
+        </StarBox>
+
         <Disqus.DiscussionEmbed shortname={disqusShortname} />
       </ContentViewerBlock>
       <ContentInfoSide
@@ -161,6 +226,7 @@ const ContentViewer = ({ content, error, loading, actionButtons, user }) => {
         status={status}
         team={team}
         stars={stars}
+        github={github}
       />
     </ContentsHolder>
   );

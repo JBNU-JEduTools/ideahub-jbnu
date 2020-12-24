@@ -1,18 +1,19 @@
 import React from 'react';
-import HeaderContainer from '../containers/common/HeaerContainer';
-import MainViewer from '../components/main/MainViewer';
-import MainTitle from '../components/main/MainTitle';
 import BottomInfo from '../components/common/BottomInfo';
-import SideDrawer from '../components/common/SideDrawer';
-import BackgroundBlinder from '../components/common/BackgroundBlinder';
 import HeaderWithHamburger from '../components/common/HeaderWithHamburger';
+import MainSlideShow from '../components/main/MainSlideShow';
+import MainViewerContainer from '../containers/main/MainViewerContainer';
+import MainSubMenu from '../components/main/MainSubMenu';
+import ToTopButton from '../components/common/ToTopButton';
 
 const MainPage = () => {
   return (
     <div>
       <HeaderWithHamburger />
-      <MainTitle />
-      <MainViewer />
+      <MainSlideShow />
+      <MainViewerContainer />
+      <MainSubMenu />
+      <ToTopButton />
       <BottomInfo />
     </div>
   );

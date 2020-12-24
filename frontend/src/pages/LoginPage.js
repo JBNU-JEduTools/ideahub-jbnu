@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import TopSpace from '../components/common/TopSpace';
 import BottomInfo from '../components/common/BottomInfo';
 import HeaderWithHamburger from '../components/common/HeaderWithHamburger';
+import ToTopButton from '../components/common/ToTopButton';
 
 const Spacer = styled.div`
   height: 2rem;
@@ -24,6 +25,7 @@ const LoginPage = () => {
       <Spacer />
       <Spacer />
       <Spacer />
+      <ToTopButton />
       <BottomInfo />
     </>
   );

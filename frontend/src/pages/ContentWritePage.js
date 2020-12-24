@@ -6,6 +6,7 @@ import ContentWriteActionButtonsContainer from '../containers/contentWrite/Conte
 import styled from 'styled-components';
 import BottomInfo from '../components/common/BottomInfo';
 import HeaderWithHamburger from '../components/common/HeaderWithHamburger';
+import ToTopButton from '../components/common/ToTopButton';
 
 const Spacer = styled.div`
   height: 2rem;
@@ -21,6 +22,7 @@ const ContentWritePage = () => {
         <ContentEditorContainer />
         <ContentWriteActionButtonsContainer />
       </Responsive>
+      <ToTopButton />
       <BottomInfo />
     </>
   );

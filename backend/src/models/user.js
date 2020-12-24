@@ -6,7 +6,10 @@ import jwt from 'jsonwebtoken';
 
 const UserSchema = new Schema({
   username: String,
-  role: String, //사용자의 역할(admin, writer, visiter)
+  role: {
+    type: String,
+    default: 'visiter',
+  }, //사용자의 역할(admin, writer, visiter)
   hashedPassword: String,
 });
 
