@@ -52,6 +52,7 @@ const ErrorMessage = styled.div`
   margin-top: 1rem;
 `;
 
+//로그인 , 로그아웃, 회원가입 컴포넌트 구현
 const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
   const text = loginOrRegister[type];
   return (

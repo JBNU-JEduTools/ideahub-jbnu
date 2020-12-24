@@ -112,12 +112,12 @@ const MainSlideShow = () => {
     console.log('x:', x);
   };
 
-  //슬라이드 자동 스크롤을 위한 즉시 실행 함수. 미완
-  // (() => {
-  //   if (!isAutoSlide) {
-  //     setIsAutoSlide(true);
-  //   }
-  // })();
+    //슬라이드 자동 스크롤을 위한 즉시 실행 함수. 미완
+    // (() => {
+    //   if (!isAutoSlide) {
+    //     setIsAutoSlide(true);
+    //   }
+    // })();
   
 
   const test = 1;

@@ -29,7 +29,7 @@ const WhiteBox = styled(Responsive)`
   background-color: white;
   border: 0.5px solid ${palette.gray[2]};
 `;
-
+// Header의 가장 왼쪽 타이틀로고 부분
 const AuthTemplate = ({ children }) => {
   return (
     <AuthTemplateBlock>

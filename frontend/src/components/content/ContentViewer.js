@@ -170,8 +170,8 @@ const ContentViewer = ({
   const isOwnContent = () => {
     const ownContentResult =
       user &&
-      content &&
-      (user._id === content.user._id || user.role == 'admin');
+      content //&&
+      //(user._id === content.user._id || user.role == 'admin');
     console.log('ownContentResult: ', ownContentResult);
     return ownContentResult;
   };
@@ -226,6 +226,7 @@ const ContentViewer = ({
         status={status}
         team={team}
         stars={stars}
+        github={github}
       />
     </ContentsHolder>
   );

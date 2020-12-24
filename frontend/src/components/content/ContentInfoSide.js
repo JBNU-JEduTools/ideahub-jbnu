@@ -54,7 +54,7 @@ const StatusBox = styled.div`
   font-size: 0.8rem;
   padding-top: 2px;
 `;
-
+// 작품 정보 나타내줌
 const ContentInfoSide = ({
   title,
   taggedContest,
@@ -62,6 +62,7 @@ const ContentInfoSide = ({
   team,
   status,
   stars,
+  github,
 }) => {
   return (
     <Wraper>
@@ -82,6 +83,7 @@ const ContentInfoSide = ({
           </StyledTextContainer>
           <StatusBox>{status}</StatusBox>
           <StyledTextContainer>팀원 : {team}</StyledTextContainer>
+          <StyledTextContainer>깃허브 : {github}</StyledTextContainer>
         </div>
       </ContentInfoSideBlock>
     </Wraper>

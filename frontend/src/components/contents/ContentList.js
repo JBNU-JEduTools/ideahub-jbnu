@@ -138,7 +138,7 @@ const StarBox = styled.div`
   justify-content: space-between;
 `;
 
-//taggedContest, 수상 여부 정보를 보여주는 공간
+ //taggedContest, 수상 여부 정보를 보여주는 공간
 const TopInfoHolder = styled.div`
   display: flex;
   justify-content: space-between;
